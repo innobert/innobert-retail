@@ -1,0 +1,40 @@
+# Entornos virtuales
+venv/
+env/
+Lib/
+Scripts/
+Include/
+pip-selfcheck.json
+pyvenv.cfg
+
+# Archivos compilados de Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Base de datos local (el usuario la generará al ejecutar)
+*.db
+pos.db
+
+# Configuraciones locales (contienen rutas o datos sensibles)
+config.json
+pdf_config.json
+
+# Imágenes subidas por el usuario (excepto la default)
+fotos/*.png
+fotos/*.jpg
+fotos/*.jpeg
+!fotos/default.png
+
+# Logo personalizado (se genera en tiempo de ejecución)
+Logo/logo.png
+
+# Archivos de empaquetado
+build/
+dist/
+*.spec
+
+# Archivos temporales del sistema
+*.log
+.DS_Store
+Thumbs.db
