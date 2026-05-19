@@ -722,7 +722,10 @@ class Inventario(tk.Frame):
                 parent=dialog,
                 initialdir=self.ultimo_directorio,
                 title="Seleccionar imagen",
-                filetypes=[("Imágenes", "*.png;*.jpg;*.jpeg;*.bmp;*.gif")]
+                filetypes=[
+                    ("Imágenes", "*.png;*.jpg;*.jpeg;*.bmp;*.gif;*.webp;*.tiff;*.ico"),
+                    ("Todos los archivos", "*.*"),
+                ]
             )
             dialog.destroy()
             if file_path:

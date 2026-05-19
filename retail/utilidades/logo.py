@@ -47,20 +47,21 @@ def cambiar_logo(parent):
         file_path = filedialog.askopenfilename(
             parent=top,
             title="Seleccionar imagen",
-            filetypes=[("Imágenes", "*.png;*.jpg;*.jpeg;*.bmp;*.gif")],
+            filetypes=[
+                ("Imágenes", "*.png;*.jpg;*.jpeg;*.bmp;*.gif;*.webp;*.tiff;*.ico"),
+                ("Todos los archivos", "*.*"),
+            ],
             initialdir=os.path.expanduser("~"),
         )
         if file_path:
             try:
-                # Copiar imagen a la carpeta Logo con nombre original (opcional)
-                nombre = os.path.basename(file_path)
-                destino = os.path.join(logo_dir, nombre)
-                with open(file_path, "rb") as src, open(destino, "wb") as dst:
-                    dst.write(src.read())
-                # Actualizar logo principal (logo.png)
+                img = Image.open(file_path)
+                img = img.convert("RGBA")
+                img = img.resize((300, 200), Image.LANCZOS)
+
                 logo_actual = os.path.join(logo_dir, "logo.png")
-                with open(file_path, "rb") as src, open(logo_actual, "wb") as dst:
-                    dst.write(src.read())
+                img.save(logo_actual, format="PNG")
+
                 mostrar_logo(logo_actual)
                 messagebox.showinfo("Éxito", "Logo actualizado correctamente.", parent=top)
             except Exception as e:
