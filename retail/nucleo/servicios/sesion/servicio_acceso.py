@@ -61,7 +61,7 @@ class ServicioAcceso:
 
     @staticmethod
     def es_desarrollador(usuario: str, contrasena: str) -> bool:
-        """Verifica si es el usuario desarrollador (innobertdev)."""
+        """Verifica si es el usuario desarrollador (desarrolador)."""
         # En una implementación real, se consultaría la tabla desarrollador.
         # Por ahora, comparación directa.
-        return usuario == "innobertdev" and contrasena == "ingsoftware.99"
+        return usuario == "innobertdev" and contrasena == "contraseña"
