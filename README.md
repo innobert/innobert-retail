@@ -20,10 +20,8 @@
 | 📦 **Inventario** | CRUD completo de productos, soporte de imágenes (PNG, JPG, WEBP, GIF, BMP, TIFF, ICO), control de stock, historial |
 | 👥 **Clientes** | Registro rápido, gestión directa en tabla, autocompletado inteligente |
 | 📈 **Ganancias** | Reportes diario, semanal, mensual y anual desde la primera transacción |
-| 🔐 **Seguridad** | Autenticación con suscripción de 30 días, contraseñas hasheadas (SHA-256) |
 | 🗑️ **Papelera** | Recuperación de registros eliminados, limpieza automática de datos antiguos (>30 días) |
 | 🎨 **Personalización** | Cambio de logo por transacción, múltiples formatos de imagen soportados |
-| 🔐 **Seguridad y sesión** | Login local con control, contraseñas hasheadas y acceso básico al sistema |
 
 ---
 
@@ -107,11 +105,6 @@ python inicio.py
 ### Credenciales de prueba
 - **Usuario:** `prueba`
 - **Contraseña:** `prueba`
-
-✅ La base de datos se crea automáticamente en:
-- Windows: `%APPDATA%\InnobertRetail`
-- Linux/macOS: `~/.local/share/innobert-retail`
-
 ---
 
 ## 📁 Estructura del proyecto
