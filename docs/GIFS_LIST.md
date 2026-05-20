@@ -6,6 +6,13 @@ Esta es la lista completa de GIFs que necesitan grabarse para completar la docum
 
 - [x] `inventario_agregar_producto.gif` - Agregar un producto con imagen
 - [x] `inventario_editar_producto.gif` - Editar producto (grabado)
+- [x] `inventario_eliminar_producto.gif` - Eliminar producto del inventario
+- [x] `inventario_historial.gif` - Ver historial de inventario
+- [x] `inventario_buscar.gif` - Buscar producto en inventario
+- [x] `clientes_agregar.gif` - Agregar cliente, llenar datos, guardar
+- [x] `clientes_editar.gif` - Editar cliente en tabla
+- [x] `clientes_eliminar.gif` - Eliminar cliente de la lista
+- [x] `clientes_filtrar.gif` - Filtrar clientes en la tabla
 - [x] `ventas_agregar_carrito.gif` - Doble clic en producto, elegir cantidad, agregar
 - [x] `ventas_pagar.gif` - Abrir carrito, ingresar monto, ver vuelto, confirmar
 - [x] `ventas_ver_factura.gif` - Abrir factura, seleccionar factura, botón VER, cerrar
@@ -17,23 +24,13 @@ Esta es la lista completa de GIFs que necesitan grabarse para completar la docum
 
 ## ⏳ Pendientes
 
-### 📦 Módulo Inventario (4 faltantes)
+### 📦 Módulo Inventario
 
-| # | GIF | Descripción | Duración |
-|---|-----|-------------|----------|
-| 1 | `inventario_editar_producto.gif` | Doble clic en producto, editar precio/stock, guardar | 8-10s |
-| 2 | `inventario_eliminar_producto.gif` | Seleccionar, clic eliminar, confirmar | 6-8s |
-| 3 | `inventario_historial.gif` | Seleccionar producto, botón Historial, ver tabla | 8-10s |
-| 4 | `inventario_buscar.gif` | Escribir nombre parcial, filtro automático | 6-8s |
+> ✅ Módulo Inventario completado. Todos los GIFs ya están en `docs/gifs/`.
 
-### 👥 Módulo Clientes (4 GIFs)
+### 👥 Módulo Clientes
 
-| # | GIF | Descripción | Duración |
-|---|-----|-------------|----------|
-| 1 | `clientes_agregar.gif` | Agregar cliente, llenar datos, guardar | 8-10s |
-| 2 | `clientes_editar.gif` | Doble clic en celda, editar datos, guardar | 8-10s |
-| 3 | `clientes_eliminar.gif` | Seleccionar fila, botón Eliminar, confirmar | 6-8s |
-| 4 | `clientes_filtrar.gif` | Escribir en búsqueda, tabla se filtra | 6-8s |
+> ✅ Módulo Clientes completado. Todos los GIFs ya están en `docs/gifs/`.
 
 ### 🛒 Módulo Ventas
 
@@ -61,9 +58,9 @@ Esta es la lista completa de GIFs que necesitan grabarse para completar la docum
 
 ## 📊 Resumen
 
-- **Total completados:** 10
-- **Total pendientes:** 14
-- **Tiempo total estimado:** 2-3 horas de grabación y edición
+- **Total completados:** 18
+- **Total pendientes:** 8
+- **Tiempo total estimado:** 1-2 horas de grabación y edición
 
 ---
 

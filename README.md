@@ -198,7 +198,7 @@ innobert-retail/
 ---
 
 #### 1.3 Eliminar Producto
-> GIF pendiente: inventario_eliminar_producto.gif — archivo no presente en docs/gifs/. Ver [docs/GIFS_LIST.md](docs/GIFS_LIST.md)
+![Eliminar producto](docs/gifs/inventario_eliminar_producto.gif)
 
 **Pasos:**
 1. Selecciona un producto del canvas
@@ -209,7 +209,7 @@ innobert-retail/
 ---
 
 #### 1.4 Ver Historial de Inventario
-> GIF pendiente: inventario_historial.gif — archivo no presente en docs/gifs/. Ver [docs/GIFS_LIST.md](docs/GIFS_LIST.md)
+![Historial de inventario](docs/gifs/inventario_historial.gif)
 
 **Pasos:**
 1. Selecciona un producto
@@ -220,7 +220,7 @@ innobert-retail/
 ---
 
 #### 1.5 Filtro de Búsqueda
-> GIF pendiente: inventario_buscar.gif — archivo no presente en docs/gifs/. Ver [docs/GIFS_LIST.md](docs/GIFS_LIST.md)
+![Filtro de inventario](docs/gifs/inventario_buscar.gif)
 
 **Pasos:**
 1. Escribe el nombre parcial en el campo de búsqueda
@@ -233,7 +233,7 @@ innobert-retail/
 ### 👥 Módulo 2: Clientes
 
 #### 2.1 Agregar Cliente
-> GIF pendiente: clientes_agregar.gif — archivo no presente en docs/gifs/. Ver [docs/GIFS_LIST.md](docs/GIFS_LIST.md)
+![Agregar cliente](docs/gifs/clientes_agregar.gif)
 
 **Pasos:**
 1. Haz clic en **Agregar**
@@ -244,7 +244,7 @@ innobert-retail/
 ---
 
 #### 2.2 Editar Cliente
-> GIF pendiente: clientes_editar.gif — archivo no presente en docs/gifs/. Ver [docs/GIFS_LIST.md](docs/GIFS_LIST.md)
+![Editar cliente](docs/gifs/clientes_editar.gif)
 
 **Pasos:**
 1. Haz doble clic en una celda de la tabla
@@ -255,7 +255,7 @@ innobert-retail/
 ---
 
 #### 2.3 Eliminar Cliente
-> GIF pendiente: clientes_eliminar.gif — archivo no presente en docs/gifs/. Ver [docs/GIFS_LIST.md](docs/GIFS_LIST.md)
+![Eliminar cliente](docs/gifs/clientes_eliminar.gif)
 
 **Pasos:**
 1. Selecciona una fila de la tabla
@@ -266,7 +266,7 @@ innobert-retail/
 ---
 
 #### 2.4 Filtrar Clientes
-> GIF pendiente: clientes_filtrar.gif — archivo no presente en docs/gifs/. Ver [docs/GIFS_LIST.md](docs/GIFS_LIST.md)
+![Filtrar clientes](docs/gifs/clientes_filtrar.gif)
 
 **Pasos:**
 1. Escribe en el campo de búsqueda
