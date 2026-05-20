@@ -198,7 +198,7 @@ innobert-retail/
 ---
 
 #### 1.3 Eliminar Producto
-![Eliminar producto](docs/gifs/inventario_eliminar_producto.gif)
+> GIF pendiente: inventario_eliminar_producto.gif — archivo no presente en docs/gifs/. Ver [docs/GIFS_LIST.md](docs/GIFS_LIST.md)
 
 **Pasos:**
 1. Selecciona un producto del canvas
@@ -209,7 +209,7 @@ innobert-retail/
 ---
 
 #### 1.4 Ver Historial de Inventario
-![Historial de inventario](docs/gifs/inventario_historial.gif)
+> GIF pendiente: inventario_historial.gif — archivo no presente en docs/gifs/. Ver [docs/GIFS_LIST.md](docs/GIFS_LIST.md)
 
 **Pasos:**
 1. Selecciona un producto
@@ -220,7 +220,7 @@ innobert-retail/
 ---
 
 #### 1.5 Filtro de Búsqueda
-![Buscar producto](docs/gifs/inventario_buscar.gif)
+> GIF pendiente: inventario_buscar.gif — archivo no presente en docs/gifs/. Ver [docs/GIFS_LIST.md](docs/GIFS_LIST.md)
 
 **Pasos:**
 1. Escribe el nombre parcial en el campo de búsqueda
@@ -233,7 +233,7 @@ innobert-retail/
 ### 👥 Módulo 2: Clientes
 
 #### 2.1 Agregar Cliente
-![Agregar cliente](docs/gifs/clientes_agregar.gif)
+> GIF pendiente: clientes_agregar.gif — archivo no presente en docs/gifs/. Ver [docs/GIFS_LIST.md](docs/GIFS_LIST.md)
 
 **Pasos:**
 1. Haz clic en **Agregar**
@@ -244,7 +244,7 @@ innobert-retail/
 ---
 
 #### 2.2 Editar Cliente
-![Editar cliente](docs/gifs/clientes_editar.gif)
+> GIF pendiente: clientes_editar.gif — archivo no presente en docs/gifs/. Ver [docs/GIFS_LIST.md](docs/GIFS_LIST.md)
 
 **Pasos:**
 1. Haz doble clic en una celda de la tabla
@@ -255,7 +255,7 @@ innobert-retail/
 ---
 
 #### 2.3 Eliminar Cliente
-![Eliminar cliente](docs/gifs/clientes_eliminar.gif)
+> GIF pendiente: clientes_eliminar.gif — archivo no presente en docs/gifs/. Ver [docs/GIFS_LIST.md](docs/GIFS_LIST.md)
 
 **Pasos:**
 1. Selecciona una fila de la tabla
@@ -266,7 +266,7 @@ innobert-retail/
 ---
 
 #### 2.4 Filtrar Clientes
-![Filtrar clientes](docs/gifs/clientes_filtrar.gif)
+> GIF pendiente: clientes_filtrar.gif — archivo no presente en docs/gifs/. Ver [docs/GIFS_LIST.md](docs/GIFS_LIST.md)
 
 **Pasos:**
 1. Escribe en el campo de búsqueda
@@ -279,7 +279,8 @@ innobert-retail/
 ### 🛒 Módulo 3: Ventas
 
 #### 3.1 Agregar Producto al Carrito
-![Agregar al carrito](docs/gifs/ventas_agregar_carrito.gif)
+
+![Agregar producto al carrito](docs/gifs/ventas_agregar_carrito.gif)
 
 **Pasos:**
 1. Selecciona un **Cliente**
@@ -291,7 +292,8 @@ innobert-retail/
 ---
 
 #### 3.2 Ver Carrito y Pagar
-![Pagar carrito](docs/gifs/ventas_pagar.gif)
+
+![Pagar venta](docs/gifs/ventas_pagar.gif)
 
 **Pasos:**
 1. Abre el **Carrito** de la venta
@@ -303,6 +305,7 @@ innobert-retail/
 ---
 
 #### 3.3 Editar Factura
+
 ![Editar factura](docs/gifs/ventas_editar_factura.gif)
 
 **Pasos:**
@@ -315,6 +318,7 @@ innobert-retail/
 ---
 
 #### 3.4 Historial de Ventas
+
 ![Historial de ventas](docs/gifs/ventas_historial.gif)
 
 **Pasos:**
@@ -328,7 +332,7 @@ innobert-retail/
 ### 💸 Módulo 4: Deudas
 
 #### 4.1 Registrar Deuda
-![Registrar deuda](docs/gifs/deudas_registrar.gif)
+> GIF pendiente: deudas_registrar.gif — archivo no presente en docs/gifs/. Ver [docs/GIFS_LIST.md](docs/GIFS_LIST.md)
 
 **Pasos:**
 1. Selecciona un **Cliente** (obligatorio)
@@ -340,7 +344,7 @@ innobert-retail/
 ---
 
 #### 4.2 Pagar Deuda (Abono)
-![Pagar deuda](docs/gifs/deudas_pagar.gif)
+> GIF pendiente: deudas_pagar.gif — archivo no presente en docs/gifs/. Ver [docs/GIFS_LIST.md](docs/GIFS_LIST.md)
 
 **Pasos:**
 1. Ve a **Facturas de Deudas**
@@ -352,7 +356,7 @@ innobert-retail/
 ---
 
 #### 4.3 Historial de Deuda
-![Historial de deuda](docs/gifs/deudas_historial.gif)
+> GIF pendiente: deudas_historial.gif — archivo no presente en docs/gifs/. Ver [docs/GIFS_LIST.md](docs/GIFS_LIST.md)
 
 **Pasos:**
 1. Selecciona una deuda
@@ -365,7 +369,7 @@ innobert-retail/
 ---
 
 #### 4.4 Ver Deudas Pagadas
-![Deudas pagadas](docs/gifs/deudas_pagadas.gif)
+> GIF pendiente: deudas_pagadas.gif — archivo no presente en docs/gifs/. Ver [docs/GIFS_LIST.md](docs/GIFS_LIST.md)
 
 **Pasos:**
 1. Ve a pestaña **Pagadas**
@@ -378,7 +382,7 @@ innobert-retail/
 ### 📈 Módulo 5: Ganancias
 
 #### 5.1 Reporte Diario
-![Reporte diario](docs/gifs/ganancias_diario.gif)
+> GIF pendiente: ganancias_diario.gif — archivo no presente en docs/gifs/. Ver [docs/GIFS_LIST.md](docs/GIFS_LIST.md)
 
 **Pasos:**
 1. Abre **Ganancias → Diario**
@@ -390,7 +394,7 @@ innobert-retail/
 ---
 
 #### 5.2 Reporte Semanal
-![Reporte semanal](docs/gifs/ganancias_semanal.gif)
+> GIF pendiente: ganancias_semanal.gif — archivo no presente en docs/gifs/. Ver [docs/GIFS_LIST.md](docs/GIFS_LIST.md)
 
 **Pasos:**
 1. Abre **Ganancias → Semanal**
@@ -402,7 +406,7 @@ innobert-retail/
 ---
 
 #### 5.3 Reporte Mensual
-![Reporte mensual](docs/gifs/ganancias_mensual.gif)
+> GIF pendiente: ganancias_mensual.gif — archivo no presente en docs/gifs/. Ver [docs/GIFS_LIST.md](docs/GIFS_LIST.md)
 
 **Pasos:**
 1. Abre **Ganancias → Mensual**
@@ -414,7 +418,7 @@ innobert-retail/
 ---
 
 #### 5.4 Reporte Anual
-![Reporte anual](docs/gifs/ganancias_anual.gif)
+> GIF pendiente: ganancias_anual.gif — archivo no presente en docs/gifs/. Ver [docs/GIFS_LIST.md](docs/GIFS_LIST.md)
 
 **Pasos:**
 1. Abre **Ganancias → Anual**

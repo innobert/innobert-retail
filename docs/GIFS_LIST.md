@@ -5,6 +5,15 @@ Esta es la lista completa de GIFs que necesitan grabarse para completar la docum
 ## ✅ Completados
 
 - [x] `inventario_agregar_producto.gif` - Agregar un producto con imagen
+- [x] `inventario_editar_producto.gif` - Editar producto (grabado)
+- [x] `ventas_agregar_carrito.gif` - Doble clic en producto, elegir cantidad, agregar
+- [x] `ventas_pagar.gif` - Abrir carrito, ingresar monto, ver vuelto, confirmar
+- [x] `ventas_ver_factura.gif` - Abrir factura, seleccionar factura, botón VER, cerrar
+- [x] `ventas_imprimir_factura.gif` - Abrir factura, seleccionar factura, botón IMPRIMIR, guardar
+- [x] `ventas_historial.gif` - Abrir factura, seleccionar factura, botón Historial, ver tabla
+- [x] `ventas_eliminar_factura.gif` - Abrir factura, seleccionar factura, botón ELIMINAR, ver tabla
+- [x] `ventas_editar_factura.gif` - Abrir factura, seleccionar factura, editar contenido
+- [x] `ventas_papelera.gif` - Abrir factura, seleccionar factura, ver papelera
 
 ## ⏳ Pendientes
 
@@ -26,14 +35,9 @@ Esta es la lista completa de GIFs que necesitan grabarse para completar la docum
 | 3 | `clientes_eliminar.gif` | Seleccionar fila, botón Eliminar, confirmar | 6-8s |
 | 4 | `clientes_filtrar.gif` | Escribir en búsqueda, tabla se filtra | 6-8s |
 
-### 🛒 Módulo Ventas (4 GIFs)
+### 🛒 Módulo Ventas
 
-| # | GIF | Descripción | Duración |
-|---|-----|-------------|----------|
-| 1 | `ventas_agregar_carrito.gif` | Doble clic en producto, elegir cantidad, agregar | 10-12s |
-| 2 | `ventas_pagar.gif` | Abrir carrito, ingresar monto, ver vuelto, confirmar | 10-12s |
-| 3 | `ventas_editar_factura.gif` | Abrir factura, editar cantidad, guardar | 8-10s |
-| 4 | `ventas_historial.gif` | Seleccionar factura, botón Historial, ver tabla | 8-10s |
+> ✅ Módulo Ventas completado. Todos los GIFs ya están en `docs/gifs/`.
 
 ### 💸 Módulo Deudas (4 GIFs)
 
@@ -57,9 +61,9 @@ Esta es la lista completa de GIFs que necesitan grabarse para completar la docum
 
 ## 📊 Resumen
 
-- **Total completados:** 1
-- **Total pendientes:** 19
-- **Tiempo total estimado:** 3-4 horas de grabación y edición
+- **Total completados:** 10
+- **Total pendientes:** 14
+- **Tiempo total estimado:** 2-3 horas de grabación y edición
 
 ---
 

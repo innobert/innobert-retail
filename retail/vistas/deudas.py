@@ -4,6 +4,7 @@ from tkinter import ttk, messagebox
 from PIL import Image, ImageTk
 
 from retail.nucleo.servicios.deudas.servicio_deudas import DeudasServicio
+from retail.nucleo.configuraciones import rutas
 
 
 def peso_colombiano(value):
@@ -307,15 +308,28 @@ class Deudas(tk.Frame):
                 "imagen": producto["imagen"],
             }
 
-            # Imagen
+            # Imagen (resolver via rutas y fallback a default)
             try:
-                imagen = Image.open(producto["imagen"])
-                imagen.thumbnail((max_image_size, max_image_size), Image.LANCZOS)
-                imagen_tk = ImageTk.PhotoImage(imagen)
-                img_label = tk.Label(frame_producto, image=imagen_tk, bg="white")
-                img_label.image = imagen_tk
-                img_label.pack(fill="x", pady=(10, 6))
+                img_path = producto.get("imagen") or "default.png"
+                img_file = rutas(img_path) if not os.path.isabs(img_path) else img_path
+                imagen = Image.open(img_file)
             except Exception:
+                try:
+                    imagen = Image.open(rutas(os.path.join("fotos", "default.png")))
+                except Exception:
+                    imagen = None
+
+            if imagen:
+                try:
+                    imagen.thumbnail((max_image_size, max_image_size), Image.LANCZOS)
+                    imagen_tk = ImageTk.PhotoImage(imagen)
+                    img_label = tk.Label(frame_producto, image=imagen_tk, bg="white")
+                    img_label.image = imagen_tk
+                    img_label.pack(fill="x", pady=(10, 6))
+                except Exception:
+                    img_label = tk.Label(frame_producto, text="Sin imagen", bg="white", font=("Helvetica", 10))
+                    img_label.pack(fill="x", pady=(20, 6))
+            else:
                 img_label = tk.Label(frame_producto, text="Sin imagen", bg="white", font=("Helvetica", 10))
                 img_label.pack(fill="x", pady=(20, 6))
 
@@ -338,11 +352,11 @@ class Deudas(tk.Frame):
 
             tk.Label(
                 frame_producto,
-                text=producto["producto"],
-                font=("Helvetica", 12, "bold"),
+                text=producto["producto"].upper(),
+                font=("Helvetica", 11, "bold"),
                 bg="white",
                 anchor="center",
-                wraplength=200,
+                wraplength=180,
                 justify="center"
             ).pack(fill="both", expand=True, padx=6, pady=(4, 2))
 
@@ -356,7 +370,7 @@ class Deudas(tk.Frame):
             ).pack(fill="x", padx=6, pady=(0, 6))
 
             columnas += 1
-            if columnas >= 4:
+            if columnas >= 3:
                 columnas = 0
                 row += 1
 

@@ -292,8 +292,8 @@ class Inventario(tk.Frame):
             widget.destroy()
 
         for idx, producto in enumerate(productos):
-            row = idx // 4
-            col = idx % 4
+            row = idx // 3
+            col = idx % 3
             self.mostrar_producto(
                 id_producto=producto["id_producto"],
                 producto=producto["producto"],

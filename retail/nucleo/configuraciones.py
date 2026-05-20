@@ -43,6 +43,18 @@ def copiar_fotos_default():
                     shutil.copy2(default_src, default_dst)
                 except Exception as e:
                     print(f"Error al copiar default.png: {e}")
+    # A veces el código busca default.png directamente en APPDATA_PATH
+    # Para evitar errores, copiar también default.png a la raíz de APPDATA_PATH si no existe
+    try:
+        default_root_dst = os.path.join(APPDATA_PATH, "default.png")
+        default_src = os.path.join(carpeta_fotos_origen, "default.png")
+        if os.path.exists(default_src) and not os.path.exists(default_root_dst):
+            try:
+                shutil.copy2(default_src, default_root_dst)
+            except Exception as e:
+                print(f"Error al copiar default.png a APPDATA_PATH: {e}")
+    except Exception:
+        pass
 
 def copiar_logo_default():
     """
