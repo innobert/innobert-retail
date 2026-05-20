@@ -41,9 +41,13 @@ Esta es la lista completa de GIFs que necesitan grabarse para completar la docum
 | # | GIF | Descripción | Duración |
 |---|-----|-------------|----------|
 | 1 | `deudas_registrar.gif` | Seleccionar cliente, agregar productos, confirmar deuda | 12-15s |
+| 2 | `deudas_ver_factura.gif` | Seleccionar deuda, hacer abono parcial, guardar | 10-12s |
+| 2 | `deudas_imprimir_factura.gif` | Seleccionar deuda, hacer abono parcial, guardar | 10-12s |
 | 2 | `deudas_pagar.gif` | Seleccionar deuda, hacer abono parcial, guardar | 10-12s |
 | 3 | `deudas_historial.gif` | Seleccionar deuda, botón Historial, ver tabla | 8-10s |
 | 4 | `deudas_pagadas.gif` | Ver pestaña Pagadas, visualizar deudas completadas | 6-8s |
+| 5 | `editar_deudas.gif` | Ver pestaña Pagadas, visualizar deudas completadas | 6-8s |
+
 
 ### 📈 Módulo Ganancias (4 GIFs)
 
@@ -53,6 +57,7 @@ Esta es la lista completa de GIFs que necesitan grabarse para completar la docum
 | 2 | `ganancias_semanal.gif` | Abrir Semanal, navegar semanas, ver totales, PDF | 10-12s |
 | 3 | `ganancias_mensual.gif` | Abrir Mensual, seleccionar mes/año, totales, PDF | 10-12s |
 | 4 | `ganancias_anual.gif` | Abrir Anual, seleccionar año, totales mensuales, PDF | 10-12s |
+
 
 ---
 

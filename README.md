@@ -23,8 +23,16 @@
 | 🔐 **Seguridad** | Autenticación con suscripción de 30 días, contraseñas hasheadas (SHA-256) |
 | 🗑️ **Papelera** | Recuperación de registros eliminados, limpieza automática de datos antiguos (>30 días) |
 | 🎨 **Personalización** | Cambio de logo por transacción, múltiples formatos de imagen soportados |
+| 🔐 **Seguridad y sesión** | Login local con control, contraseñas hasheadas y acceso básico al sistema |
 
 ---
+
+## 💡 ¿Por qué Innobert Retail no es un POS común?
+- Funciona como un cajero automático integrado: registra ventas rápidas, calcula vuelto y emite facturas sin pasos extra.
+- Lleva el control de deudas con pagos parciales, abonos por periodos y resumen de saldos pendientes.
+- Registra en tiempo real qué día, fecha, hora y qué producto se entregó en cada operación.
+- No es un sistema genérico: está diseñado para negocios locales que necesitan control detallado de facturación, stock y clientes.
+- Ofrece seguimiento directo por cliente, deuda y venta, con historial y reportes para cada movimiento.
 
 ## 📋 Tabla de contenidos
 
@@ -40,7 +48,7 @@
 
 ---
 
-## � Requisitos previos
+## 📋 Requisitos previos
 
 - **Python 3.11 o superior** (con Tkinter incluido)
 - **pip** (gestor de paquetes de Python)
@@ -170,7 +178,10 @@ innobert-retail/
 
 ---
 
-## � Demostraciones interactivas por módulos
+## 🎬 Demostraciones interactivas por módulos
+
+> Todos los módulos ya se encuentran terminados y los GIFs demostrativos están disponibles en `docs/gifs/`.
+> Si algún archivo falta, puede consultarse la lista en `docs/GIFS_LIST.md`.
 
 ### 📦 Módulo 1: Inventario
 
@@ -332,7 +343,7 @@ innobert-retail/
 ### 💸 Módulo 4: Deudas
 
 #### 4.1 Registrar Deuda
-> GIF pendiente: deudas_registrar.gif — archivo no presente en docs/gifs/. Ver [docs/GIFS_LIST.md](docs/GIFS_LIST.md)
+![Registrar deuda](docs/gifs/deudas_registrar.gif)
 
 **Pasos:**
 1. Selecciona un **Cliente** (obligatorio)
@@ -343,33 +354,57 @@ innobert-retail/
 
 ---
 
-#### 4.2 Pagar Deuda (Abono)
-> GIF pendiente: deudas_pagar.gif — archivo no presente en docs/gifs/. Ver [docs/GIFS_LIST.md](docs/GIFS_LIST.md)
+#### 4.2 Ver factura de Deuda
+![Ver factura de deuda](docs/gifs/deudas_ver_factura.gif)
 
 **Pasos:**
 1. Ve a **Facturas de Deudas**
 2. Selecciona una deuda pendiente
-3. Haz clic en **Pagar**
-4. Ingresa monto del abono
-5. Se registra el pago parcial
+3. Haz clic en **Ver**
+4. Revisa el detalle de productos y monto adeudado
+5. Cierra para volver a la lista
 
 ---
 
-#### 4.3 Historial de Deuda
-> GIF pendiente: deudas_historial.gif — archivo no presente en docs/gifs/. Ver [docs/GIFS_LIST.md](docs/GIFS_LIST.md)
+#### 4.3 Imprimir Factura de Deuda
+![Imprimir factura de deuda](docs/gifs/deudas_imprimir_factura.gif)
+
+**Pasos:**
+1. Selecciona la deuda
+2. Haz clic en **Imprimir**
+3. Confirma la exportación a PDF
+4. Guarda o comparte el documento
+
+---
+
+#### 4.4 Pagar Deuda (Abono)
+![Pagar deuda](docs/gifs/deudas_pagar.gif)
+
+**Pasos:**
+1. Selecciona una deuda pendiente
+2. Haz clic en **Pagar**
+3. Ingresa monto del abono
+4. El sistema actualiza el saldo automáticamente
+5. El pago queda registrado en el historial
+
+---
+
+#### 4.5 Historial de Deuda
+![Historial de deuda](docs/gifs/deudas_historial.gif)
 
 **Pasos:**
 1. Selecciona una deuda
 2. Haz clic en **Historial**
-3. Se muestra tabla con:
+3. Visualiza:
    - Abonos realizados
    - Productos originales
    - Saldo pendiente
+   - Fecha y hora de cada movimiento
 
 ---
 
-#### 4.4 Ver Deudas Pagadas
-> GIF pendiente: deudas_pagadas.gif — archivo no presente en docs/gifs/. Ver [docs/GIFS_LIST.md](docs/GIFS_LIST.md)
+#### 4.6 Deudas Pagadas
+![Deudas pagadas](docs/gifs/deudas_pagadas.gif)
 
 **Pasos:**
 1. Ve a pestaña **Pagadas**
@@ -379,10 +414,22 @@ innobert-retail/
 
 ---
 
+#### 4.7 Editar Deuda
+![Editar deuda](docs/gifs/editar_deudas.gif)
+
+**Pasos:**
+1. Selecciona una deuda existente
+2. Haz clic en **Editar**
+3. Modifica producto, cantidad o cliente
+4. Guarda los cambios
+5. El sistema actualiza el registro en tiempo real
+
+---
+
 ### 📈 Módulo 5: Ganancias
 
 #### 5.1 Reporte Diario
-> GIF pendiente: ganancias_diario.gif — archivo no presente en docs/gifs/. Ver [docs/GIFS_LIST.md](docs/GIFS_LIST.md)
+![Ganancias](docs/gifs/ganancias.gif)
 
 **Pasos:**
 1. Abre **Ganancias → Diario**
@@ -394,7 +441,7 @@ innobert-retail/
 ---
 
 #### 5.2 Reporte Semanal
-> GIF pendiente: ganancias_semanal.gif — archivo no presente en docs/gifs/. Ver [docs/GIFS_LIST.md](docs/GIFS_LIST.md)
+![Ganancias](docs/gifs/ganancias.gif)
 
 **Pasos:**
 1. Abre **Ganancias → Semanal**
@@ -406,7 +453,7 @@ innobert-retail/
 ---
 
 #### 5.3 Reporte Mensual
-> GIF pendiente: ganancias_mensual.gif — archivo no presente en docs/gifs/. Ver [docs/GIFS_LIST.md](docs/GIFS_LIST.md)
+![Ganancias](docs/gifs/ganancias.gif)
 
 **Pasos:**
 1. Abre **Ganancias → Mensual**
@@ -418,14 +465,14 @@ innobert-retail/
 ---
 
 #### 5.4 Reporte Anual
-> GIF pendiente: ganancias_anual.gif — archivo no presente en docs/gifs/. Ver [docs/GIFS_LIST.md](docs/GIFS_LIST.md)
+![Ganancias](docs/gifs/ganancias.gif)
 
 **Pasos:**
 1. Abre **Ganancias → Anual**
 2. Selecciona el año
 3. Muestra ganancia total anual
 4. Desglose por mes
-5. Genra reporte PDF completo
+5. Genera reporte PDF completo
 
 ---
 
@@ -435,26 +482,31 @@ innobert-retail/
 - Agregar, editar, eliminar productos con imágenes
 - Control de stock automático
 - Historial de movimientos
+- Filtro continuo y consulta rápida por producto
 
 ### 👥 Módulo Clientes
 - Registro rápido de clientes
 - Edición directa en tabla
 - Búsqueda por nombre
+- Gestión de fichas de clientes para ventas, deudas y facturación
 
 ### 🛒 Módulo Ventas
-- Carrito dinámico
-- Cálculo automático de vuelto
-- Facturación PDF
+- Carrito dinámico estilo cajero automático
+- Cálculo automático de vuelto en tiempo real
+- Facturación PDF y guardado inmediato
+- Registro de hora y fecha exacta de cada venta
 
 ### 💸 Módulo Deudas
-- Registro de créditos
-- Abonos parciales
-- Historial completo
+- Registro de créditos con selección de cliente obligatoria
+- Pagos parciales y abonos en periodos de tiempo
+- Historial completo de movimientos y saldo pendiente
+- Control en tiempo real de qué producto se entregó y cuándo
 
 ### 📈 Módulo Ganancias
-- Reportes por período
-- Exportación PDF
-- Análisis de rentabilidad
+- Reportes diario, semanal, mensual y anual
+- Exportación a PDF
+- Análisis de rentabilidad y totales por periodo
+- Comparativa de ventas y ganancias en tiempo real
 
 ---
 
@@ -574,6 +626,15 @@ Si encuentras un bug o deseas sugerir una mejora, abre un [Issue](https://github
 - Pasos para reproducirlo (si aplica)
 - Capturas de pantalla si es necesario
 - Tu versión de Python y SO
+
+---
+
+## ⚠️ Nota importante sobre ejecución local
+Este software está desarrollado para funcionar en un entorno local. Por esa razón, es posible que no se muestre perfectamente en todas las resoluciones de pantalla o configuraciones de monitor.
+
+Además, el módulo de sesión actualmente no se encuentra completamente aislado como un servicio independiente; es un cambio previsto para futuras versiones.
+
+Si deseas adaptar el software a tu entorno de negocio, tienda, licorería o emprendimiento, y necesitas soporte para personalizarlo en tu flujo de trabajo, puedes contactarme para recibir ayuda a medida.
 
 ---
 
