@@ -37,4 +37,7 @@ dist/
 # Archivos temporales del sistema
 *.log
 .DS_Store
-Thumbs.dbinnobert.iss
+Thumbs.db
+innobert.iss
+
+.gitignore seed_db.py

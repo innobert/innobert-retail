@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 import os
 from PIL import Image, ImageTk
-from retail.vistas.registro import VentanaRegistro
+from retail.sesion.registro import VentanaRegistro
 from retail.nucleo.servicios.sesion.servicio_acceso import ServicioAcceso
 
 
@@ -180,22 +180,21 @@ class Acceso(tk.Frame):
         recordar = self.recordar_var.get()
 
         if not usuario or not contrasena:
-            messagebox.showwarning("Advertencia", "Por favor, ingrese el usuario y la contraseña.")
+            messagebox.showwarning("Advertencia", "Ingrese usuario y contraseña.")
             return
 
-        # Verificar si es desarrollador
-        if ServicioAcceso.es_desarrollador(usuario, contrasena):
-            messagebox.showinfo("Login exitoso", f"Bienvenido, {usuario}!")
-            ServicioAcceso.guardar_preferencias_sesion(usuario, contrasena, recordar)
-            self.controlador.usuario_actual = usuario
-            self.controlador.geometry("1100x650+130+20")
-            self.controlador.show_frame("Contenedor")
-            return
-
-        # Autenticación normal
+        # Autenticación con validación de licencia (módulo independizado)
         exito, mensaje, datos_usuario = ServicioAcceso.autenticar_usuario(usuario, contrasena)
         if exito:
-            messagebox.showinfo("Login exitoso", f"Bienvenido, {usuario}!\nSerial actual: {datos_usuario['serial']}")
+            # Mostrar info de licencia (sin rutas de BD)
+            msg_bienvenida = f"Bienvenido, {usuario}!"
+            
+            if datos_usuario.get("dias_restantes") is not None:
+                dias = datos_usuario["dias_restantes"]
+                if dias <= 7:
+                    msg_bienvenida += f"\n⚠️ Licencia vence en {dias} días."
+            
+            messagebox.showinfo("Éxito", msg_bienvenida)
             ServicioAcceso.guardar_preferencias_sesion(usuario, contrasena, recordar)
             self.controlador.usuario_actual = usuario
             self.controlador.geometry("1100x650+130+20")
@@ -217,10 +216,13 @@ class Acceso(tk.Frame):
     def abrir_registro(self):
         usuario = self.entry_usuario.get().strip()
         contrasena = self.entry_contrasena.get().strip()
-        if ServicioAcceso.es_desarrollador(usuario, contrasena):
-            VentanaRegistro(self)
-        else:
+        
+        # Solo desarrollador puede acceder a registro
+        if not ServicioAcceso.puede_acceder_a_registro(usuario, contrasena):
             messagebox.showwarning(
                 "Acceso restringido",
-                "Solo el desarrollador del software puede acceder al registro de usuarios.",
+                "Registro de usuarios restringido para mantenimiento.",
             )
+            return
+        
+        VentanaRegistro(self)

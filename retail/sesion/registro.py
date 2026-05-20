@@ -89,16 +89,18 @@ class VentanaRegistro(tk.Toplevel):
         style.configure("Treeview", font=("Helvetica", 13), rowheight=32, background="#fff", fieldbackground="#fff")
         style.map("Treeview", background=[("selected", "#222")], foreground=[("selected", "#fff")])
 
-        columns = ("usuario", "fecha_inicio", "fecha_fin", "serial")
+        columns = ("usuario", "fecha_inicio", "fecha_fin", "dias_restantes", "serial")
         self.tabla = ttk.Treeview(tabla_frame, columns=columns, show="headings", height=7, style="Treeview")
         self.tabla.heading("usuario", text="Usuario")
         self.tabla.heading("fecha_inicio", text="Inicio")
         self.tabla.heading("fecha_fin", text="Fin")
+        self.tabla.heading("dias_restantes", text="Días")
         self.tabla.heading("serial", text="Serial")
-        self.tabla.column("usuario", width=120, anchor="center")
-        self.tabla.column("fecha_inicio", width=90, anchor="center")
-        self.tabla.column("fecha_fin", width=90, anchor="center")
-        self.tabla.column("serial", width=200, anchor="center")
+        self.tabla.column("usuario", width=100, anchor="center")
+        self.tabla.column("fecha_inicio", width=80, anchor="center")
+        self.tabla.column("fecha_fin", width=80, anchor="center")
+        self.tabla.column("dias_restantes", width=60, anchor="center")
+        self.tabla.column("serial", width=120, anchor="center")
         self.tabla.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 
         scrollbar = ttk.Scrollbar(tabla_frame, orient="vertical", command=self.tabla.yview)
@@ -249,4 +251,10 @@ class VentanaRegistro(tk.Toplevel):
         self.tabla.delete(*self.tabla.get_children())
         usuarios = ServicioRegistro.obtener_todos_usuarios(excluir_desarrollador=True)
         for u in usuarios:
-            self.tabla.insert("", tk.END, values=(u["usuario"], u["fecha_inicio"], u["fecha_fin"], u["serial"]))
+            self.tabla.insert("", tk.END, values=(
+                u["usuario"], 
+                u["fecha_inicio"], 
+                u["fecha_fin"], 
+                u.get("dias_restantes", 0), 
+                u["serial"]
+            ))
