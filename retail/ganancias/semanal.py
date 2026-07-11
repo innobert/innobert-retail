@@ -1,3 +1,4 @@
+import logging
 import tkinter as tk
 from tkinter import ttk, messagebox, filedialog
 import datetime
@@ -240,7 +241,7 @@ class Semana(tk.Frame):
             self.after(0, self._actualizar_totales, total_ganancia, total_ventas)
 
         except Exception as e:
-            print(f"Error cargando semanas: {e}")
+            logging.error(f"Error cargando semanas: {e}")
             self.after(0, lambda: messagebox.showerror("Error", f"No se pudieron cargar los datos: {e}", parent=self))
 
     def _mostrar_pagina(self):

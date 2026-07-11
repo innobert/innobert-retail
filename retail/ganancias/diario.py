@@ -1,3 +1,4 @@
+import logging
 import tkinter as tk
 from tkinter import ttk, messagebox, filedialog
 import datetime
@@ -286,7 +287,7 @@ class Dia(tk.Frame):
             self.after(0, self._actualizar_tabla, registros_tabla, total_ganancia, total_monto)
 
         except Exception as e:
-            print(f"Error cargando datos: {e}")
+            logging.error(f"Error cargando datos: {e}")
             self.after(0, lambda: messagebox.showerror("Error", f"No se pudieron cargar los datos: {e}", parent=self))
 
     def _actualizar_tabla(self, registros_tabla, total_ganancia, total_monto):

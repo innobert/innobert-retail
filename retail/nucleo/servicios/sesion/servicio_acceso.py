@@ -4,6 +4,7 @@ servicio_acceso.py
 Servicio para gestionar la autenticación de usuarios, validación de licencia y gestión de sesión.
 El módulo de sesión está independizado y desacoplado del resto del sistema.
 """
+import logging
 import datetime
 import hashlib
 from typing import Optional, Tuple
@@ -131,5 +132,5 @@ class ServicioAcceso:
             
             return True
         except Exception as e:
-            print(f"Error al crear usuario de prueba: {e}")
+            logging.error(f"Error al crear usuario de prueba: {e}")
             return False

@@ -6,6 +6,7 @@ Incluye paginación, filtro por número de factura y limpieza automática de reg
 Diseño compacto: buscador arriba, tabla central, paginación abajo.
 """
 
+import logging
 import tkinter as tk
 from tkinter import ttk, messagebox
 from retail.nucleo.servicios.ventas.servicio_papelera_ventas import ServicioPapeleraVentas
@@ -33,7 +34,7 @@ def ver_papelera_ventas(parent):
     # Limpieza automática al abrir (registros >30 días)
     eliminados = ServicioPapeleraVentas.limpiar_registros_antiguos(dias=30)
     if eliminados > 0:
-        print(f"[Papelera Ventas] {eliminados} registros antiguos eliminados automáticamente.")
+        logging.info(f"Papelera Ventas: {eliminados} registros antiguos eliminados automáticamente.")
 
     # ========== PAGINACIÓN ==========
     pagina_actual = 1

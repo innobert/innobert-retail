@@ -1,3 +1,4 @@
+import logging
 import tkinter as tk
 from tkinter import filedialog, ttk, messagebox
 from PIL import Image, ImageTk
@@ -461,7 +462,7 @@ class Inventario(tk.Frame):
                 lambda e, data=frame_producto.producto_data, f=frame_producto: self.tl_editar(data, f),
             )
         except Exception as e:
-            print(f"Error al cargar imagen: {e}")
+            logging.error(f"Error al cargar imagen: {e}")
             img_label = tk.Label(frame_producto, text="Sin imagen", bg="white")
             img_label.pack(pady=(3, 2))
 
@@ -595,7 +596,7 @@ class Inventario(tk.Frame):
             img_label.pack(fill="both", expand=True)
             self.image_path = default_image_path if not editar else datos["imagen"]
         except Exception as e:
-            print(f"Error al cargar imagen por defecto: {e}")
+            logging.error(f"Error al cargar imagen por defecto: {e}")
 
         btn_cargar_imagen = tk.Button(frame_principal, text="Cargar Imágen", font=("Helvetica", 11, "bold"),
                                       bg="#2196F3", fg="white", command=self.cargar_imagen)

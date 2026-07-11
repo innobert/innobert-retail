@@ -8,6 +8,7 @@ Servicio para gestionar la papelera de ventas:
 - Obtener totales (opcional)
 """
 
+import logging
 from typing import List, Dict, Any
 from datetime import datetime, timedelta
 from retail.nucleo.base_datos import get_connection
@@ -112,7 +113,7 @@ class ServicioPapeleraVentas:
             return eliminados
         except Exception as e:
             conn.rollback()
-            print(f"Error limpiando papelera de ventas: {e}")
+            logging.error(f"Error limpiando papelera de ventas: {e}")
             return 0
         finally:
             conn.close()

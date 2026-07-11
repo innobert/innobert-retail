@@ -11,6 +11,7 @@ Incluye funciones para conectar y obtener un cursor.
 # CONFIGURACIÓN Y CONEXIÓN
 # =========================
 
+import logging
 import sqlite3
 import os
 import datetime
@@ -860,7 +861,7 @@ def mover_venta_a_papelera(id_ventas, usuario_elimino, detalle_motivo=None):
     except Exception as e:
         conn.rollback()
         conn.close()
-        print(f"Error al mover venta a papelera: {e}")
+        logging.error(f"Error al mover venta a papelera: {e}")
         return False
 
 
@@ -918,7 +919,7 @@ def mover_deuda_a_papelera(id_deuda, usuario_elimino, detalle_motivo=None):
     except Exception as e:
         conn.rollback()
         conn.close()
-        print(f"Error al mover deuda a papelera: {e}")
+        logging.error(f"Error al mover deuda a papelera: {e}")
         return False
 
 
@@ -1156,4 +1157,4 @@ def combobox_clientes():
 
 if __name__ == "__main__":
     create_tables()
-    print("Base de datos creada/actualizada.")
+    logging.info("Base de datos creada/actualizada.")

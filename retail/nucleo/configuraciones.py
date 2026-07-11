@@ -1,4 +1,5 @@
 import json
+import logging
 import os
 import sys
 import shutil
@@ -19,6 +20,18 @@ def _obtener_ruta_base_datos_usuario() -> str:
         appdata = os.environ.get("XDG_DATA_HOME", os.path.expanduser("~/.local/share"))
     return os.path.join(appdata, "InnobertRetail")
 
+def configurar_logging():
+    ruta_log = os.path.join(_obtener_ruta_base_datos_usuario(), "app.log")
+    os.makedirs(os.path.dirname(ruta_log), exist_ok=True)
+    logging.basicConfig(
+        filename=ruta_log,
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
+        datefmt="%Y-%m-%d %H:%M:%S",
+    )
+
+configurar_logging()
+
 APPDATA_PATH = _obtener_ruta_base_datos_usuario()
 FOTOS_PATH = os.path.join(APPDATA_PATH, "fotos")
 LOGO_PATH = os.path.join(APPDATA_PATH, "Logo")
@@ -34,7 +47,7 @@ def copiar_fotos_default():
             try:
                 shutil.copytree(carpeta_fotos_origen, FOTOS_PATH)
             except Exception as e:
-                print(f"Error al copiar la carpeta de fotos por defecto: {e}")
+                logging.error(f"Error al copiar la carpeta de fotos por defecto: {e}")
         else:
             default_src = os.path.join(carpeta_fotos_origen, "default.png")
             default_dst = os.path.join(FOTOS_PATH, "default.png")
@@ -42,7 +55,7 @@ def copiar_fotos_default():
                 try:
                     shutil.copy2(default_src, default_dst)
                 except Exception as e:
-                    print(f"Error al copiar default.png: {e}")
+                    logging.error(f"Error al copiar default.png: {e}")
     # A veces el código busca default.png directamente en APPDATA_PATH
     # Para evitar errores, copiar también default.png a la raíz de APPDATA_PATH si no existe
     try:
@@ -52,7 +65,7 @@ def copiar_fotos_default():
             try:
                 shutil.copy2(default_src, default_root_dst)
             except Exception as e:
-                print(f"Error al copiar default.png a APPDATA_PATH: {e}")
+                logging.error(f"Error al copiar default.png a APPDATA_PATH: {e}")
     except Exception:
         pass
 
@@ -70,7 +83,7 @@ def copiar_logo_default():
             try:
                 shutil.copy2(logo_src, logo_dst)
             except Exception as e:
-                print(f"Error al copiar logo.png por defecto: {e}")
+                logging.error(f"Error al copiar logo.png por defecto: {e}")
 
 def asegurar_directorios():
     os.makedirs(APPDATA_PATH, exist_ok=True)
@@ -141,7 +154,7 @@ def eliminar_datos_completos():
             shutil.rmtree(APPDATA_PATH)
             return True
         except Exception as e:
-            print(f"Error al eliminar la carpeta de datos: {e}")
+            logging.error(f"Error al eliminar la carpeta de datos: {e}")
             return False
     return False
 
@@ -179,7 +192,7 @@ def _guardar_config_pdf(config: dict):
         with open(ruta_config, "w") as f:
             json.dump(config, f)
     except Exception as e:
-        print(f"Error guardando configuración de PDF: {e}")
+        logging.error(f"Error guardando configuración de PDF: {e}")
 
 def guardar_ultima_carpeta_pdf(tipo: str, carpeta: str):
     """
@@ -216,7 +229,7 @@ def abrir_archivo(ruta: str):
                     ctypes.windll.user32.SetForegroundWindow(hwnd)
                     ctypes.windll.user32.ShowWindow(hwnd, 5)  # SW_SHOW
             except Exception as e:
-                print(f"No se pudo traer la ventana al frente: {e}")
+                logging.warning(f"No se pudo traer la ventana al frente: {e}")
         threading.Thread(target=traer_al_frente, daemon=True).start()
     elif sys.platform == "darwin":  # macOS
         subprocess.run(["open", ruta])

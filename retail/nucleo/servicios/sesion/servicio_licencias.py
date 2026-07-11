@@ -5,6 +5,7 @@ Servicio independizado para gestionar licencias de usuarios.
 Controla la validación, generación y renovación de licencias.
 """
 
+import logging
 import datetime
 import hashlib
 import uuid
@@ -56,7 +57,7 @@ class ServicioLicencias:
             conn.close()
             return True
         except Exception as e:
-            print(f"Error al crear licencia: {e}")
+            logging.error(f"Error al crear licencia: {e}")
             return False
 
     @staticmethod
@@ -116,7 +117,7 @@ class ServicioLicencias:
                 "serial": serial
             }
         except Exception as e:
-            print(f"Error al obtener licencia: {e}")
+            logging.error(f"Error al obtener licencia: {e}")
             return None
 
     @staticmethod

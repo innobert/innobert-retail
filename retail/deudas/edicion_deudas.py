@@ -8,8 +8,10 @@ Permite:
 Los cambios se aplican directamente a la base de datos y se registran en el historial con la acción "EDITADO".
 """
 
+import logging
 import tkinter as tk
-from tkinter import ttk, messagebox
+from tkinter import ttk, messagebox, filedialog
+import os
 from PIL import Image, ImageTk
 import os
 
@@ -409,7 +411,7 @@ def _abrir_ventana_agregar_productos(parent, id_deuda, cliente, usuario_actual, 
                 lbl_img.image = img_tk
                 lbl_img.pack(fill="x", pady=(10, 6))
             except Exception as e:
-                print(f"Error cargando imagen para {prod['producto']}: {e}")
+                logging.error(f"Error cargando imagen para {prod['producto']}: {e}")
                 lbl_img = tk.Label(frame_producto, text="Sin imagen", bg="white", font=("Helvetica", 9))
                 lbl_img.pack(pady=(30, 2))
 

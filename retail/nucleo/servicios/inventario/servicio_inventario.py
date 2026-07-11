@@ -6,9 +6,10 @@ Centraliza operaciones CRUD, validaciones de stock, registro de historial,
 y actualización de vistas dependientes.
 """
 
+import logging
 from typing import List, Dict, Any, Optional, Tuple
 from datetime import datetime
-from tkinter import messagebox  # Para mostrar diálogos desde el servicio
+from tkinter import messagebox
 
 from retail.nucleo.base_datos import (
     add_producto,
@@ -246,7 +247,7 @@ class InventarioServicio:
             conn.commit()
             conn.close()
         except Exception as e:
-            print(f"Error al registrar historial: {e}")
+            logging.error(f"Error al registrar historial: {e}")
 
     @staticmethod
     def obtener_nombres_para_combobox() -> List[str]:

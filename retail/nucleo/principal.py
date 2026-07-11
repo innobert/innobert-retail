@@ -1,3 +1,4 @@
+import logging
 import tkinter as tk
 from tkinter import ttk, simpledialog, messagebox
 import os
@@ -31,7 +32,7 @@ class Principal(tk.Tk):
         try:
             base_de_datos.create_tables()
         except Exception as e:
-            print(f"Warning: error al crear o asegurar la base de datos: {e}")
+            logging.warning(f"Error al crear o asegurar la base de datos: {e}")
 
         # Configurar tema ttk
         style = ttk.Style(self)

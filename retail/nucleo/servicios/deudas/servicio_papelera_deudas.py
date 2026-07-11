@@ -8,6 +8,7 @@ Servicio para gestionar la papelera de deudas:
 - Obtener totales (suma de totales de deudas eliminadas)
 """
 
+import logging
 from typing import List, Dict, Any
 from datetime import datetime, timedelta
 from retail.nucleo.base_datos import get_connection
@@ -115,7 +116,7 @@ class ServicioPapeleraDeudas:
             return eliminados
         except Exception as e:
             conn.rollback()
-            print(f"Error limpiando papelera de deudas: {e}")
+            logging.error(f"Error limpiando papelera de deudas: {e}")
             return 0
         finally:
             conn.close()
