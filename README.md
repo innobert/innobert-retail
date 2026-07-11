@@ -216,43 +216,72 @@ python inicio.py
 
 ### Inventario
 
-![Inventario](docs/gifs/inventario_agregar_producto.gif)
-
-- Agregar, editar, eliminar productos con imágenes
+- **Agregar producto** — formulario con nombre, precio, costo, stock e imagen
+  ![Agregar](docs/gifs/inventario_agregar_producto.gif)
+- **Editar producto** — doble click en el grid para modificar cualquier campo
+  ![Editar](docs/gifs/inventario_editar_producto.gif)
+- **Eliminar producto** — seleccionar y confirmar baja
+  ![Eliminar](docs/gifs/inventario_eliminar_producto.gif)
+- **Buscar productos** — filtro en tiempo real mientras escribes
+  ![Buscar](docs/gifs/inventario_buscar.gif)
+- **Historial de movimientos** — auditoría de cambios por producto
+  ![Historial](docs/gifs/inventario_historial.gif)
 - Control de stock automático al vender
-- Historial de movimientos por producto
-- Filtro de búsqueda en tiempo real
 - Totales de valor, costo y ganancia potencial
 
 ### Clientes
 
-![Clientes](docs/gifs/clientes_agregar.gif)
-
-- Registro con validación de cédula y celular únicos
-- Edición directa en tabla (doble click)
+- **Agregar cliente** — registro con validación de cédula y celular únicos
+  ![Agregar](docs/gifs/clientes_agregar.gif)
+- **Editar cliente** — edición directa en tabla (doble click)
+  ![Editar](docs/gifs/clientes_editar.gif)
+- **Eliminar cliente** — seleccionar y confirmar
+  ![Eliminar](docs/gifs/clientes_eliminar.gif)
+- **Filtrar clientes** — búsqueda en tiempo real
+  ![Filtrar](docs/gifs/clientes_filtrar.gif)
 - Autocompletado inteligente
 - Paginación (20 clientes/página)
 
 ### Ventas
 
-![Ventas](docs/gifs/ventas_pagar.gif)
-
-- Carrito dinámico con validación de stock
-- Cálculo automático de vuelto en tiempo real
+- **Agregar al carrito** — seleccionar producto, definir cantidad y acumular
+  ![Agregar carrito](docs/gifs/ventas_agregar_carrito.gif)
+- **Pagar** — ingresar monto recibido, vuelto automático, confirmar venta
+  ![Pagar](docs/gifs/ventas_pagar.gif)
+- **Facturas** — listado paginado con filtro por número
+  ![Facturas](docs/gifs/ventas_abrir_facturas.gif)
+- **Editar factura** — modificar cantidades, eliminar o agregar productos
+  ![Editar factura](docs/gifs/ventas_editar_factura.gif)
+- **Eliminar factura** — mover a papelera con restauración de stock
+  ![Eliminar factura](docs/gifs/ventas_eliminar_factura.gif)
+- **Historial de cambios** — auditoría completa por factura
+  ![Historial](docs/gifs/ventas_historial.gif)
+- **Imprimir PDF** — factura con logo, detalles y totales
+  ![Imprimir](docs/gifs/ventas_imprimir_factura.gif)
+- **Papelera** — recuperación de facturas eliminadas
+  ![Papelera](docs/gifs/ventas_papelera.gif)
+- **Ver factura** — detalle completo en solo lectura
+  ![Ver factura](docs/gifs/ventas_ver_factura.gif)
 - Ventas rápidas (sin cliente) y por mayor
-- Facturación PDF con logo personalizado
-- Edición de facturas existentes
-- Historial completo de cambios
 
 ### Deudas
 
-![Deudas](docs/gifs/deudas_registrar.gif)
-
-- Créditos con cliente obligatorio
-- Abonos parciales con cálculo de vuelto
-- Pagos totales que cierran la deuda automáticamente
-- Historial por deuda y por cliente
-- Deudas pagadas con reportes PDF
+- **Registrar deuda** — crédito con cliente obligatorio
+  ![Registrar](docs/gifs/deudas_registrar.gif)
+- **Facturas** — listado de deudas abiertas con opciones
+  ![Facturas](docs/gifs/deudas_facturas.gif)
+- **Pagar deuda** — abono parcial o pago total con cálculo de vuelto
+  ![Pagar](docs/gifs/deudas_pagar.gif)
+- **Deudas pagadas** — reporte de deudas cerradas con PDF
+  ![Pagadas](docs/gifs/deudas_pagadas.gif)
+- **Editar deuda** — modificar cantidades, eliminar o agregar productos
+  ![Editar](docs/gifs/editar_deudas.gif)
+- **Historial** — auditoría de cambios y abonos por deuda
+  ![Historial](docs/gifs/deudas_historial.gif)
+- **Imprimir PDF** — factura de deuda con detalles
+  ![Imprimir](docs/gifs/deudas_imprimir_factura.gif)
+- **Ver deuda** — detalle completo en solo lectura
+  ![Ver deuda](docs/gifs/deudas_ver_factura.gif)
 
 ### Ganancias
 
