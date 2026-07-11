@@ -21,8 +21,11 @@ def _obtener_ruta_base_datos_usuario() -> str:
     return os.path.join(appdata, "InnobertRetail")
 
 def configurar_logging():
-    ruta_log = os.path.join(_obtener_ruta_base_datos_usuario(), "app.log")
-    os.makedirs(os.path.dirname(ruta_log), exist_ok=True)
+    try:
+        ruta_log = os.path.join(_obtener_ruta_base_datos_usuario(), "app.log")
+        os.makedirs(os.path.dirname(ruta_log), exist_ok=True)
+    except (OSError, PermissionError):
+        ruta_log = "app.log"
     logging.basicConfig(
         filename=ruta_log,
         level=logging.INFO,
@@ -167,8 +170,9 @@ def eliminar_datos_completos():
     return False
 
 def guardar_usuario(usuario, contrasena, recordar):
+    from retail.nucleo.cifrado import cifrar
     with open(obtener_ruta_config(), "w") as f:
-        json.dump({"usuario": usuario, "contrasena": contrasena, "recordar": recordar}, f)
+        json.dump({"usuario": usuario, "contrasena": cifrar(contrasena), "recordar": recordar}, f)
 
 def cargar_usuario():
     try:
@@ -176,7 +180,8 @@ def cargar_usuario():
             config = json.load(f)
             recordar = config.get("recordar", False)
             if recordar:
-                return config.get("usuario", ""), config.get("contrasena", ""), recordar
+                from retail.nucleo.cifrado import descifrar
+                return config.get("usuario", ""), descifrar(config.get("contrasena", "")), recordar
             else:
                 return "", "", recordar
     except FileNotFoundError:

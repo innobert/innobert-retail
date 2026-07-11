@@ -7,7 +7,7 @@ Servicio para gestionar la lógica del carrito de deudas:
 - Eliminación de productos del carrito
 - Cálculo de totales por cliente
 """
-from typing import List, Dict, Any, Tuple
+from typing import List, Dict, Any, Optional, Tuple
 from retail.nucleo.servicios.deudas.servicio_deudas import DeudasServicio
 
 
@@ -74,3 +74,49 @@ class ServicioCarritoDeudas:
     def calcular_total_general(carrito: List[Dict[str, Any]]) -> float:
         """Suma todos los subtotales del carrito."""
         return sum(item["subtotal"] for item in carrito)
+
+    @staticmethod
+    def agregar_al_carrito(
+        carrito: List[Dict[str, Any]],
+        producto_data: Dict[str, Any],
+        cantidad: int,
+        cliente_id: int,
+        cliente_nombre: str,
+    ) -> Tuple[List[Dict[str, Any]], str, Optional[Dict[str, Any]]]:
+        stock = DeudasServicio.obtener_stock_actual(producto_data["id_producto"])
+        if stock is None:
+            return carrito, "", {"error": "No se pudo obtener el stock"}
+
+        if cantidad > stock:
+            return carrito, "", {"error": "Stock insuficiente"}
+
+        for item in carrito:
+            if item["id_producto"] == producto_data["id_producto"] and item.get("cliente") == cliente_nombre:
+                return carrito, "", {"error": "duplicado"}
+
+        subtotal = cantidad * producto_data["precio"]
+        carrito.append({
+            "cliente": cliente_nombre,
+            "cliente_id": cliente_id,
+            "producto": producto_data.get("producto", ""),
+            "id_producto": producto_data["id_producto"],
+            "cantidad": cantidad,
+            "precio": producto_data["precio"],
+            "subtotal": subtotal,
+        })
+        return carrito, "", None
+
+    @staticmethod
+    def confirmar_deuda(
+        carrito: List[Dict[str, Any]],
+        id_cliente: int,
+        usuario: str,
+    ) -> Dict[str, Any]:
+        if not carrito:
+            raise ValueError("El carrito está vacío")
+
+        from retail.nucleo.base_datos import crear_deuda
+
+        total = sum(item["subtotal"] for item in carrito)
+        id_deuda = crear_deuda(id_cliente, carrito, usuario)
+        return {"id_deuda": id_deuda, "total": total}

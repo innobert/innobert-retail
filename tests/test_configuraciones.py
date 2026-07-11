@@ -8,9 +8,9 @@ class TestRutaDatosUsuario:
         monkeypatch.setattr("sys.platform", "win32")
         monkeypatch.setenv("APPDATA", "C:\\Users\\Test\\AppData\\Roaming")
 
-        from retail.nucleo.configuraciones import _obtener_ruta_datos_usuario
+        from retail.nucleo.configuraciones import _obtener_ruta_base_datos_usuario
 
-        ruta = _obtener_ruta_datos_usuario()
+        ruta = _obtener_ruta_base_datos_usuario()
         assert ruta == "C:\\Users\\Test\\AppData\\Roaming\\InnobertRetail"
 
     def test_linux_devuelve_xdg(self, monkeypatch):
@@ -21,7 +21,7 @@ class TestRutaDatosUsuario:
         import retail.nucleo.configuraciones as cfg
         importlib.reload(cfg)
 
-        ruta = cfg._obtener_ruta_datos_usuario()
+        ruta = cfg._obtener_ruta_base_datos_usuario()
         assert ruta.replace("\\", "/") == "/home/test/.local/share/InnobertRetail"
 
 

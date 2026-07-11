@@ -50,8 +50,8 @@ class ServicioLicencias:
             conn = obtener_conexion()
             cursor = conn.cursor()
             cursor.execute(
-                "INSERT OR REPLACE INTO usuarios (usuario, fecha_inicio, fecha_fin, serial) VALUES (?, ?, ?, ?)",
-                (usuario, fecha_inicio, fecha_fin, serial)
+                "UPDATE usuarios SET fecha_inicio = ?, fecha_fin = ?, serial = ? WHERE usuario = ?",
+                (fecha_inicio, fecha_fin, serial, usuario)
             )
             conn.commit()
             conn.close()

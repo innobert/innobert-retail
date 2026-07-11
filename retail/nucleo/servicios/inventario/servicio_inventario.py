@@ -257,6 +257,15 @@ class InventarioServicio:
         return combobox_productos()
     
     @staticmethod
+    def verificar_rentabilidad(precio: float, costo: float, stock: int) -> Optional[Dict[str, Any]]:
+        if precio > costo:
+            return None
+        if precio < costo:
+            perdida = (costo - precio) * stock
+            return {"tipo": "perdida", "mensaje": f"El producto genera pérdida de {peso_colombiano(perdida)}"}
+        return {"tipo": "sin_ganancia", "mensaje": "El producto no genera ganancia (precio = costo)"}
+
+    @staticmethod
     def obtener_producto_por_nombre(nombre: str) -> Optional[Dict[str, Any]]:
         """Retorna el producto con el nombre exacto (case-insensitive)."""
         productos = obtener_productos()
