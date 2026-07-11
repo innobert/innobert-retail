@@ -9,7 +9,7 @@ Servicio para gestionar la lógica de negocio del reporte diario de ganancias:
 
 import datetime
 from typing import List, Tuple, Dict, Any
-from retail.nucleo.base_datos import get_connection
+from retail.nucleo.base_datos import obtener_conexion
 
 
 class ServicioDiario:
@@ -18,7 +18,7 @@ class ServicioDiario:
     @staticmethod
     def contar_registros(fecha: str) -> int:
         """Devuelve el número total de registros (ventas + deudas pagadas) para la fecha."""
-        conn = get_connection()
+        conn = obtener_conexion()
         cursor = conn.cursor()
         try:
             # Ventas de contado
@@ -58,7 +58,7 @@ class ServicioDiario:
         Cada registro es una tupla con los campos:
         (fecha, hora, cliente, producto, cantidad, costo, precio, ganancia, monto, tipo)
         """
-        conn = get_connection()
+        conn = obtener_conexion()
         cursor = conn.cursor()
 
         # Ventas de contado
@@ -113,7 +113,7 @@ class ServicioDiario:
     @staticmethod
     def obtener_totales_fecha(fecha: str) -> Tuple[float, float]:
         """Suma total ganancia y total monto para la fecha completa (sin paginación)."""
-        conn = get_connection()
+        conn = obtener_conexion()
         cursor = conn.cursor()
         total_ganancia = 0.0
         total_monto = 0.0

@@ -8,7 +8,7 @@ import logging
 import datetime
 import hashlib
 from typing import Optional, Tuple
-from retail.nucleo.base_datos import get_connection, buscar_usuario as db_buscar_usuario
+from retail.nucleo.base_datos import obtener_conexion, buscar_usuario as db_buscar_usuario
 from retail.nucleo.configuraciones import guardar_usuario, cargar_usuario
 from retail.nucleo.servicios.sesion.servicio_licencias import ServicioLicencias
 
@@ -121,7 +121,7 @@ class ServicioAcceso:
             
             # Crear en BD
             contrasena_hash = hashlib.sha256(contrasena_prueba.encode()).hexdigest()
-            conn = get_connection()
+            conn = obtener_conexion()
             cursor = conn.cursor()
             cursor.execute(
                 "INSERT INTO usuarios (usuario, contrasena, fecha_inicio, fecha_fin, serial) VALUES (?, ?, ?, ?, ?)",

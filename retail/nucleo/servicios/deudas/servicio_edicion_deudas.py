@@ -11,7 +11,7 @@ Servicio para gestionar la edición de deudas:
 
 from typing import List, Dict, Any, Tuple
 import datetime
-from retail.nucleo.base_datos import get_connection, registrar_historial_deuda, mover_deuda_a_papelera
+from retail.nucleo.base_datos import obtener_conexion, registrar_historial_deuda, mover_deuda_a_papelera
 
 
 class ServicioEdicionDeudas:
@@ -22,7 +22,7 @@ class ServicioEdicionDeudas:
         """Devuelve lista de detalles de la deuda (incluyendo id_producto, precios, cantidades)."""
         close_conn = False
         if conn is None:
-            conn = get_connection()
+            conn = obtener_conexion()
             close_conn = True
         cursor = conn.cursor()
         cursor.execute("""
@@ -53,7 +53,7 @@ class ServicioEdicionDeudas:
         close_conn = False
         try:
             if conn is None:
-                conn = get_connection()
+                conn = obtener_conexion()
                 close_conn = True
             cursor = conn.cursor()
             cursor.execute("SELECT total, saldo FROM deudas WHERE id_deuda = ?", (id_deuda,))
@@ -76,7 +76,7 @@ class ServicioEdicionDeudas:
         close_conn = False
         if cursor is None:
             if conn is None:
-                conn = get_connection()
+                conn = obtener_conexion()
                 close_conn = True
             cursor = conn.cursor()
         elif conn is None:
@@ -144,7 +144,7 @@ class ServicioEdicionDeudas:
         close_conn = False
         if cursor is None:
             if conn is None:
-                conn = get_connection()
+                conn = obtener_conexion()
                 close_conn = True
             cursor = conn.cursor()
         elif conn is None:
@@ -225,7 +225,7 @@ class ServicioEdicionDeudas:
         close_conn = False
         if cursor is None:
             if conn is None:
-                conn = get_connection()
+                conn = obtener_conexion()
                 close_conn = True
             cursor = conn.cursor()
         elif conn is None:
@@ -297,7 +297,7 @@ class ServicioEdicionDeudas:
     @staticmethod
     def obtener_productos_paginado(filtro: str = "", offset: int = 0, limit: int = 12) -> List[Dict[str, Any]]:
         """Retorna lista de productos activos que coinciden con el filtro, incluyendo la imagen."""
-        conn = get_connection()
+        conn = obtener_conexion()
         cursor = conn.cursor()
         query = """
             SELECT id_producto, producto, precio, stock, imagen
@@ -329,7 +329,7 @@ class ServicioEdicionDeudas:
     @staticmethod
     def contar_productos_con_filtro(filtro: str = "") -> int:
         """Total de productos activos que coinciden con el filtro."""
-        conn = get_connection()
+        conn = obtener_conexion()
         cursor = conn.cursor()
         query = "SELECT COUNT(*) FROM inventario WHERE estado = 1"
         params = []

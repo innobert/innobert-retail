@@ -12,11 +12,11 @@ from datetime import datetime
 from tkinter import messagebox
 
 from retail.nucleo.base_datos import (
-    add_producto,
+    agregar_producto,
     obtener_productos,
     actualizar_producto,
-    dlt_producto,
-    get_connection,
+    eliminar_producto,
+    obtener_conexion,
     combobox_productos,
 )
 from retail.nucleo.configuraciones import rutas
@@ -131,7 +131,7 @@ class InventarioServicio:
 
         estado = 1 if stock > 0 else 0
         try:
-            add_producto(producto, precio, costo, stock, estado, imagen)
+            agregar_producto(producto, precio, costo, stock, estado, imagen)
             # Registrar historial
             InventarioServicio._registrar_historial_inventario(
                 producto, precio, costo, stock, "Agregar", stock
@@ -199,7 +199,7 @@ class InventarioServicio:
         Elimina un producto.
         """
         try:
-            dlt_producto(id_producto)
+            eliminar_producto(id_producto)
             return True, "Producto eliminado correctamente"
         except Exception as e:
             return False, f"Error al eliminar producto: {e}"
@@ -234,7 +234,7 @@ class InventarioServicio:
             ganancia = (precio - costo) * stock
             total = precio * stock
 
-            conn = get_connection()
+            conn = obtener_conexion()
             cursor = conn.cursor()
             cursor.execute(
                 """
@@ -289,7 +289,7 @@ class InventarioServicio:
         limit: cantidad de registros a obtener
         filtro: texto para filtrar por nombre (coincidencia parcial, case-insensitive)
         """
-        conn = get_connection()
+        conn = obtener_conexion()
         cursor = conn.cursor()
         if filtro:
             cursor.execute(
@@ -321,7 +321,7 @@ class InventarioServicio:
         """
         Retorna el número total de productos que coinciden con el filtro.
         """
-        conn = get_connection()
+        conn = obtener_conexion()
         cursor = conn.cursor()
         if filtro:
             cursor.execute(

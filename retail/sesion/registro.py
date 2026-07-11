@@ -4,6 +4,7 @@ from tkinter import ttk, messagebox
 from PIL import Image, ImageTk
 from retail.nucleo.servicios.sesion.servicio_registro import ServicioRegistro
 from retail.nucleo.servicios.sesion.servicio_acceso import ServicioAcceso
+from retail.sesion.licencias import VentanaLicencias
 
 
 class VentanaRegistro(tk.Toplevel):
@@ -67,6 +68,12 @@ class VentanaRegistro(tk.Toplevel):
             command=self.eliminar_usuario, relief="flat", cursor="hand2", width=12
         )
         self.btn_eliminar.pack(side=tk.LEFT, padx=8)
+
+        self.btn_licencias = tk.Button(
+            btn_frame, text="Licencias", bg="#9C27B0", fg="#fff", font=("Helvetica", 12, "bold"),
+            command=self.abrir_licencias, relief="flat", cursor="hand2", width=12
+        )
+        self.btn_licencias.pack(side=tk.LEFT, padx=8)
 
         # Imagen
         img_frame = tk.Frame(form_img_frame, bg="#FFFFFF")
@@ -246,6 +253,9 @@ class VentanaRegistro(tk.Toplevel):
             self.entry_confirmar.delete(0, tk.END)
         except Exception as e:
             messagebox.showerror("Error", f"No se pudo eliminar el usuario: {e}", parent=self)
+
+    def abrir_licencias(self):
+        VentanaLicencias(self)
 
     def cargar_usuarios(self):
         self.tabla.delete(*self.tabla.get_children())

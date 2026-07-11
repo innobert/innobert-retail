@@ -8,7 +8,7 @@ Servicio para gestionar la lógica de negocio del reporte mensual de ganancias.
 
 import datetime
 from typing import List, Tuple
-from retail.nucleo.base_datos import get_connection
+from retail.nucleo.base_datos import obtener_conexion
 
 MESES_ES = [
     "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
@@ -27,7 +27,7 @@ class ServicioMensual:
         Retorna lista de tuplas:
         (periodo_num, nombre_mes, start_date, end_date, total_ventas_str, total_ganancia_str, prod_vendidos, clientes)
         """
-        conn = get_connection()
+        conn = obtener_conexion()
         cursor = conn.cursor()
 
         # Obtener la fecha de la primera transacción
@@ -105,7 +105,7 @@ class ServicioMensual:
     @staticmethod
     def obtener_totales_globales() -> Tuple[float, float]:
         """Suma totales de todas las transacciones (sin paginación)."""
-        conn = get_connection()
+        conn = obtener_conexion()
         cursor = conn.cursor()
         total_ventas = 0.0
         total_ganancia = 0.0

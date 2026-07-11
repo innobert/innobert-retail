@@ -6,6 +6,7 @@ from PIL import Image, ImageTk
 from retail.nucleo.servicios.ventas.servicio_ventas import VentasServicio
 from retail.nucleo.configuraciones import rutas, PRODUCTOS_POR_PAGINA
 from retail.utilidades.paginacion import PaginacionWidget
+from retail.utilidades.producto_card import crear_producto_card
 
 
 class Ventas(tk.Frame):
@@ -270,108 +271,21 @@ class Ventas(tk.Frame):
         self._renderizar_productos(productos)
         self._actualizar_etiqueta_paginacion()
 
+    def _actualizar_etiqueta_paginacion(self):
+        if hasattr(self, 'paginacion'):
+            self.paginacion.actualizar()
+
     def _renderizar_productos(self, productos):
-        """Muestra la lista de productos en el canvas."""
         for widget in self.frame_contenedor.winfo_children():
             widget.destroy()
-
-        columnas = 0
-        row = 0
-        ancho_producto = 220
-        alto_producto = 240
-        separacion_x = 8
-        separacion_y = 8
-        max_image_size = 150
-
-        for producto in productos:
-            frame_producto = tk.Frame(
-                self.frame_contenedor,
-                bg="white",
-                width=ancho_producto,
-                height=alto_producto,
-                bd=1,
-                relief="solid",
-                highlightbackground="#DADADA",
-                highlightthickness=1,
+        for idx, producto in enumerate(productos):
+            row = idx // 3
+            col = idx % 3
+            crear_producto_card(
+                self.frame_contenedor, producto, row, col,
+                on_select=lambda f, s=self: s._seleccionar_producto_canvas(f),
+                on_double_click=lambda d, f, s=self: s._solicitar_cantidad_producto(d, f),
             )
-            frame_producto.grid(row=row, column=columnas, padx=separacion_x, pady=separacion_y, sticky="nsew")
-            frame_producto.grid_propagate(False)
-            frame_producto.producto_data = {
-                "id_producto": producto["id_producto"],
-                "producto": producto["producto"],
-                "precio": producto["precio"],
-                "costo": producto["costo"],
-                "stock": producto["stock"],
-                "estado": producto["estado"],
-                "imagen": producto["imagen"],
-            }
-
-            # Imagen (usar rutas() para resolver APPDATA y fallback a default.png)
-            try:
-                img_path = producto.get("imagen") or "default.png"
-                img_file = rutas(img_path) if not os.path.isabs(img_path) else img_path
-                imagen = Image.open(img_file)
-            except Exception:
-                try:
-                    imagen = Image.open(rutas(os.path.join("fotos", "default.png")))
-                except Exception:
-                    imagen = None
-
-            if imagen:
-                try:
-                    imagen.thumbnail((max_image_size, max_image_size), Image.LANCZOS)
-                    imagen_tk = ImageTk.PhotoImage(imagen)
-                    img_label = tk.Label(frame_producto, image=imagen_tk, bg="white")
-                    img_label.image = imagen_tk
-                    img_label.pack(fill="x", pady=(10, 6))
-                except Exception:
-                    img_label = tk.Label(frame_producto, text="Sin imagen", bg="white", font=("Helvetica", 10))
-                    img_label.pack(fill="x", pady=(20, 6))
-            else:
-                img_label = tk.Label(frame_producto, text="Sin imagen", bg="white", font=("Helvetica", 10))
-                img_label.pack(fill="x", pady=(20, 6))
-
-            img_label.bind(
-                "<Button-1>",
-                lambda e, frame=frame_producto: self._seleccionar_producto_canvas(frame),
-            )
-            img_label.bind(
-                "<Double-Button-1>",
-                lambda e, data=frame_producto.producto_data, frame=frame_producto: self._solicitar_cantidad_producto(data, frame),
-            )
-            frame_producto.bind(
-                "<Button-1>",
-                lambda e, frame=frame_producto: self._seleccionar_producto_canvas(frame),
-            )
-            frame_producto.bind(
-                "<Double-Button-1>",
-                lambda e, data=frame_producto.producto_data, frame=frame_producto: self._solicitar_cantidad_producto(data, frame),
-            )
-
-            tk.Label(
-                frame_producto,
-                text=producto["producto"].upper(),
-                font=("Helvetica", 11, "bold"),
-                bg="white",
-                anchor="center",
-                wraplength=180,
-                justify="center"
-            ).pack(fill="both", expand=True, padx=6, pady=(4, 2))
-
-            tk.Label(
-                frame_producto,
-                text=f"${producto['precio']:,.0f}".replace(",", "."),
-                font=("Helvetica", 12, "bold"),
-                bg="white",
-                fg="#1B5E20",
-                anchor="w"
-            ).pack(fill="x", padx=6, pady=(0, 6))
-
-            columnas += 1
-            if columnas >= 3:
-                columnas = 0
-                row += 1
-
         self.canvas.yview_moveto(0)
 
     def _texto_paginacion(self):

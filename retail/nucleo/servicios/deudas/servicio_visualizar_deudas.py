@@ -6,7 +6,7 @@ incluyendo todos sus productos, totales, cliente, etc.
 """
 
 from typing import Dict, Any, List
-from retail.nucleo.base_datos import get_connection
+from retail.nucleo.base_datos import obtener_conexion
 
 
 class ServicioVisualizarDeudas:
@@ -19,7 +19,7 @@ class ServicioVisualizarDeudas:
         - id_deuda, numero_factura, fecha, total, saldo, cliente
         - productos: lista de dicts con producto, cantidad, precio_unitario, subtotal
         """
-        conn = get_connection()
+        conn = obtener_conexion()
         cursor = conn.cursor()
 
         cursor.execute(

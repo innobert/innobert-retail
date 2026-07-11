@@ -11,7 +11,7 @@ Servicio para gestionar la papelera de deudas:
 import logging
 from typing import List, Dict, Any
 from datetime import datetime, timedelta
-from retail.nucleo.base_datos import get_connection
+from retail.nucleo.base_datos import obtener_conexion
 
 
 class ServicioPapeleraDeudas:
@@ -20,7 +20,7 @@ class ServicioPapeleraDeudas:
     @staticmethod
     def contar_papelera(filtro_factura: str = "") -> int:
         """Devuelve el número total de registros en la papelera que coinciden con el filtro."""
-        conn = get_connection()
+        conn = obtener_conexion()
         cursor = conn.cursor()
         if filtro_factura:
             cursor.execute(
@@ -36,7 +36,7 @@ class ServicioPapeleraDeudas:
     @staticmethod
     def obtener_pagina(offset: int, limit: int, filtro_factura: str = "") -> List[Dict[str, Any]]:
         """Retorna una página de registros de la papelera como lista de diccionarios."""
-        conn = get_connection()
+        conn = obtener_conexion()
         cursor = conn.cursor()
         if filtro_factura:
             cursor.execute(
@@ -70,7 +70,7 @@ class ServicioPapeleraDeudas:
             cliente_nombre = "Cliente eliminado"
             if row[3]:  # cliente_id
                 try:
-                    conn2 = get_connection()
+                    conn2 = obtener_conexion()
                     cursor2 = conn2.cursor()
                     cursor2.execute(
                         "SELECT nombres || ' ' || apellidos FROM clientes WHERE id_cliente = ?",
@@ -103,7 +103,7 @@ class ServicioPapeleraDeudas:
         Elimina permanentemente los registros de papelera con más de 'dias' días de antigüedad.
         Retorna el número de registros eliminados.
         """
-        conn = get_connection()
+        conn = obtener_conexion()
         cursor = conn.cursor()
         try:
             fecha_limite = (datetime.now() - timedelta(days=dias)).strftime("%Y-%m-%d")
@@ -124,7 +124,7 @@ class ServicioPapeleraDeudas:
     @staticmethod
     def obtener_total_eliminado(filtro_factura: str = "") -> float:
         """Suma el total de todas las deudas eliminadas que coinciden con el filtro."""
-        conn = get_connection()
+        conn = obtener_conexion()
         cursor = conn.cursor()
         if filtro_factura:
             cursor.execute(

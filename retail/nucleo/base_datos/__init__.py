@@ -35,8 +35,6 @@ from retail.nucleo.base_datos.conexion import (
     obtener_conexion,
 )
 
-get_connection = obtener_conexion
-
 # ------------------------------------------------------------------
 # indices.py
 # ------------------------------------------------------------------
@@ -77,7 +75,6 @@ from retail.nucleo.base_datos.inventario import (
     buscar_productos_por_nombre,
     combobox_productos,
     contar_productos,
-    dlt_producto,
     editar_producto,
     eliminar_producto,
     obtener_nombres_productos,
@@ -86,8 +83,6 @@ from retail.nucleo.base_datos.inventario import (
     paginar_productos,
     registrar_historial_inventario,
 )
-
-add_producto = agregar_producto
 
 # ------------------------------------------------------------------
 # ventas.py

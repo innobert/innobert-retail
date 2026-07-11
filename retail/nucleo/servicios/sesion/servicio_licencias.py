@@ -10,7 +10,7 @@ import datetime
 import hashlib
 import uuid
 from typing import Optional, Tuple, Dict, Any
-from retail.nucleo.base_datos import get_connection
+from retail.nucleo.base_datos import obtener_conexion
 
 
 class ServicioLicencias:
@@ -47,7 +47,7 @@ class ServicioLicencias:
     def crear_licencia_en_bd(usuario: str, fecha_inicio: str, fecha_fin: str, serial: str) -> bool:
         """Crea una licencia en la base de datos."""
         try:
-            conn = get_connection()
+            conn = obtener_conexion()
             cursor = conn.cursor()
             cursor.execute(
                 "INSERT OR REPLACE INTO usuarios (usuario, fecha_inicio, fecha_fin, serial) VALUES (?, ?, ?, ?)",
@@ -69,7 +69,7 @@ class ServicioLicencias:
             (es_válida, mensaje_error)
         """
         try:
-            conn = get_connection()
+            conn = obtener_conexion()
             cursor = conn.cursor()
             cursor.execute(
                 "SELECT fecha_fin FROM usuarios WHERE usuario = ? AND serial = ?",
@@ -97,7 +97,7 @@ class ServicioLicencias:
     def obtener_licencia(usuario: str) -> Optional[Dict[str, Any]]:
         """Obtiene datos de la licencia actual de un usuario."""
         try:
-            conn = get_connection()
+            conn = obtener_conexion()
             cursor = conn.cursor()
             cursor.execute(
                 "SELECT fecha_inicio, fecha_fin, serial FROM usuarios WHERE usuario = ?",

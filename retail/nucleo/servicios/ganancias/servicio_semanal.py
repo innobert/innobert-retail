@@ -9,7 +9,7 @@ Servicio para gestionar la lógica de negocio del reporte semanal de ganancias:
 
 import datetime
 from typing import List, Tuple, Dict, Any
-from retail.nucleo.base_datos import get_connection
+from retail.nucleo.base_datos import obtener_conexion
 
 
 class ServicioSemanal:
@@ -22,7 +22,7 @@ class ServicioSemanal:
         consecutivas a partir de la fecha de la primera transacción.
         Retorna lista de tuplas (week_num, start_date, end_date, total_ventas, total_ganancia, productos_vendidos, clientes)
         """
-        conn = get_connection()
+        conn = obtener_conexion()
         cursor = conn.cursor()
 
         # Obtener la fecha de la primera transacción
@@ -94,7 +94,7 @@ class ServicioSemanal:
     @staticmethod
     def obtener_totales_globales() -> Tuple[float, float]:
         """Suma totales de todas las transacciones (sin paginación)."""
-        conn = get_connection()
+        conn = obtener_conexion()
         cursor = conn.cursor()
         total_ventas = 0.0
         total_ganancia = 0.0

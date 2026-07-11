@@ -22,7 +22,7 @@ from tkinter import ttk, messagebox
 from PIL import Image, ImageTk
 import os
 
-from retail.nucleo.base_datos import get_connection
+from retail.nucleo.base_datos import obtener_conexion
 from retail.nucleo.servicios.ventas.servicio_edicion_ventas import ServicioEdicionVentas
 from retail.nucleo.servicios.ventas.servicio_ventas import VentasServicio
 from retail.nucleo.configuraciones import rutas, PRODUCTOS_POR_PAGINA
@@ -214,7 +214,7 @@ def _abrir_ventana_editar_factura(ventana_padre, id_ventas, cliente, monto_recib
     top.lift()
     top.focus_force()
 
-    conn_edicion = get_connection()
+    conn_edicion = obtener_conexion()
     cursor_edicion = conn_edicion.cursor()
     cambios_realizados = False
 

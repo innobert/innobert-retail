@@ -58,10 +58,6 @@ def eliminar_producto(id_producto: int) -> None:
         cursor.execute("DELETE FROM inventario WHERE id_producto = ?", (id_producto,))
 
 
-# Alias para compatibilidad con código existente
-dlt_producto = eliminar_producto
-
-
 def registrar_historial_inventario(
     id_producto: int,
     accion: str,

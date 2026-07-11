@@ -16,7 +16,7 @@ VALIDACIONES ADICIONALES:
 
 from typing import List, Dict, Any, Tuple
 import datetime
-from retail.nucleo.base_datos import get_connection, registrar_historial_venta
+from retail.nucleo.base_datos import obtener_conexion, registrar_historial_venta
 
 
 class VentaVaciaError(Exception):
@@ -38,7 +38,7 @@ class ServicioEdicionVentas:
         """
         close_conn = False
         if conn is None:
-            conn = get_connection()
+            conn = obtener_conexion()
             close_conn = True
         cursor = conn.cursor()
         cursor.execute("""
@@ -71,7 +71,7 @@ class ServicioEdicionVentas:
         close_conn = False
         try:
             if conn is None:
-                conn = get_connection()
+                conn = obtener_conexion()
                 close_conn = True
             cursor = conn.cursor()
             cursor.execute(
@@ -98,7 +98,7 @@ class ServicioEdicionVentas:
         close_conn = False
         if cursor is None:
             if conn is None:
-                conn = get_connection()
+                conn = obtener_conexion()
                 close_conn = True
             cursor = conn.cursor()
         elif conn is None:
@@ -173,7 +173,7 @@ class ServicioEdicionVentas:
         close_conn = False
         if cursor is None:
             if conn is None:
-                conn = get_connection()
+                conn = obtener_conexion()
                 close_conn = True
             cursor = conn.cursor()
         elif conn is None:
@@ -230,7 +230,7 @@ class ServicioEdicionVentas:
         close_conn = False
         if cursor is None:
             if conn is None:
-                conn = get_connection()
+                conn = obtener_conexion()
                 close_conn = True
             cursor = conn.cursor()
         elif conn is None:
@@ -322,7 +322,7 @@ class ServicioEdicionVentas:
         close_conn = False
         if cursor is None:
             if conn is None:
-                conn = get_connection()
+                conn = obtener_conexion()
                 close_conn = True
             cursor = conn.cursor()
         elif conn is None:
@@ -398,7 +398,7 @@ class ServicioEdicionVentas:
         """Retorna lista de productos activos que coinciden con el filtro, incluyendo la imagen."""
         close_conn = False
         if conn is None:
-            conn = get_connection()
+            conn = obtener_conexion()
             close_conn = True
         cursor = conn.cursor()
         query = """
@@ -434,7 +434,7 @@ class ServicioEdicionVentas:
         """Total de productos activos que coinciden con el filtro."""
         close_conn = False
         if conn is None:
-            conn = get_connection()
+            conn = obtener_conexion()
             close_conn = True
         cursor = conn.cursor()
         query = "SELECT COUNT(*) FROM inventario WHERE estado = 1"

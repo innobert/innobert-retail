@@ -6,6 +6,7 @@ import os
 
 from retail.nucleo.configuraciones import rutas, PRODUCTOS_POR_PAGINA
 from retail.utilidades.paginacion import PaginacionWidget
+from retail.utilidades.producto_card import crear_producto_card, peso_colombiano
 from retail.nucleo.servicios.inventario.servicio_inventario import InventarioServicio, peso_colombiano
 
 
@@ -288,24 +289,22 @@ class Inventario(tk.Frame):
         self._renderizar_productos(productos)
         self._actualizar_etiqueta_paginacion()
 
+    def _actualizar_etiqueta_paginacion(self):
+        if hasattr(self, 'paginacion'):
+            self.paginacion.actualizar()
+
     def _renderizar_productos(self, productos):
-        """Muestra la lista de productos en el canvas."""
         for widget in self.frame_contenedor.winfo_children():
             widget.destroy()
-
         for idx, producto in enumerate(productos):
             row = idx // 3
             col = idx % 3
-            self.mostrar_producto(
-                id_producto=producto["id_producto"],
-                producto=producto["producto"],
-                precio=producto["precio"],
-                imagen_path=producto["imagen"],
-                costo=producto["costo"],
-                stock=producto["stock"],
-                estado="Disponible" if producto["estado"] == 1 else "Agotado",
-                row=row,
-                col=col
+            crear_producto_card(
+                self.frame_contenedor, producto, row, col,
+                on_select=lambda d, f, s=self: s.mostrar_seleccion(d, f),
+                on_double_click=lambda d, f, s=self: s.tl_editar(d, f),
+                texto_estado=lambda e: "Disponible" if e == 1 else "Agotado",
+                formatear_precio=peso_colombiano,
             )
         self.canvas.yview_moveto(0)
 

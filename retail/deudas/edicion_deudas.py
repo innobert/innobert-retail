@@ -15,7 +15,7 @@ import os
 from PIL import Image, ImageTk
 import os
 
-from retail.nucleo.base_datos import get_connection
+from retail.nucleo.base_datos import obtener_conexion
 from retail.nucleo.configuraciones import PRODUCTOS_POR_PAGINA
 from retail.nucleo.servicios.deudas.servicio_edicion_deudas import ServicioEdicionDeudas
 from retail.nucleo.servicios.deudas.servicio_deudas import DeudasServicio
@@ -96,7 +96,7 @@ def _abrir_ventana_editar_factura(parent, id_deuda, cliente, usuario_actual, cal
     top.grab_set()
     top.transient(parent)
 
-    conn_edicion = get_connection()
+    conn_edicion = obtener_conexion()
     cursor_edicion = conn_edicion.cursor()
     cambios_realizados = False
 

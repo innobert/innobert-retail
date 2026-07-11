@@ -11,7 +11,7 @@ from retail.nucleo.base_datos import (
     obtener_clientes,
     buscar_productos_por_nombre,
     crear_deuda,
-    get_connection,           # Añadido para las nuevas funciones de paginación
+    obtener_conexion,           # Añadido para las nuevas funciones de paginación
 )
 from typing import List, Dict, Any, Optional, Tuple
 
@@ -249,7 +249,7 @@ class DeudasServicio:
         limit: cantidad de registros a obtener
         filtro: texto para filtrar por nombre (coincidencia parcial, case-insensitive)
         """
-        conn = get_connection()
+        conn = obtener_conexion()
         cursor = conn.cursor()
         if filtro:
             cursor.execute(
@@ -281,7 +281,7 @@ class DeudasServicio:
         """
         Retorna el número total de productos que coinciden con el filtro.
         """
-        conn = get_connection()
+        conn = obtener_conexion()
         cursor = conn.cursor()
         if filtro:
             cursor.execute(
@@ -300,7 +300,7 @@ class DeudasServicio:
         Retorna solo los nombres de productos que coinciden con el filtro.
         Útil para actualizar el combobox de búsqueda sin cargar datos completos.
         """
-        conn = get_connection()
+        conn = obtener_conexion()
         cursor = conn.cursor()
         if filtro:
             cursor.execute(

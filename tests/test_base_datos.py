@@ -484,7 +484,7 @@ class TestFuncionesInventario:
 
     def test_dlt_producto_directo(self, db: Any):
         pid = _insertar_producto(db, "Delete", 1000, 500, 5)
-        db.dlt_producto(pid)
+        db.eliminar_producto(pid)
         with db.conexion() as conn:
             cursor = conn.cursor()
             cursor.execute("SELECT COUNT(*) FROM inventario WHERE id_producto = ?", (pid,))

@@ -7,7 +7,7 @@ Incluye consultas SQL, paginación, totales, filtros y registro de pagos.
 
 import datetime
 from typing import List, Dict, Any, Optional, Tuple
-from retail.nucleo.base_datos import get_connection, registrar_historial_deuda
+from retail.nucleo.base_datos import obtener_conexion, registrar_historial_deuda
 
 
 class ServicioFacturasDeudas:
@@ -18,7 +18,7 @@ class ServicioFacturasDeudas:
         """
         Cuenta las deudas con estado 'ABIERTA' que coinciden con el filtro de cliente.
         """
-        conn = get_connection()
+        conn = obtener_conexion()
         cursor = conn.cursor()
         if filtro_cliente:
             cursor.execute(
@@ -46,7 +46,7 @@ class ServicioFacturasDeudas:
         Cada diccionario contiene: id_deuda, numero_factura, cliente, productos,
         fecha, total, saldo.
         """
-        conn = get_connection()
+        conn = obtener_conexion()
         cursor = conn.cursor()
         if filtro_cliente:
             cursor.execute(
@@ -110,7 +110,7 @@ class ServicioFacturasDeudas:
     @staticmethod
     def calcular_total_deudas(filtro_cliente: str = "") -> float:
         """Suma el saldo de todas las deudas abiertas que coinciden con el filtro."""
-        conn = get_connection()
+        conn = obtener_conexion()
         cursor = conn.cursor()
         if filtro_cliente:
             cursor.execute(
@@ -132,7 +132,7 @@ class ServicioFacturasDeudas:
     @staticmethod
     def obtener_lista_clientes(filtro_cliente: str = "") -> List[str]:
         """Retorna lista de nombres de clientes con deudas abiertas, opcionalmente filtrados."""
-        conn = get_connection()
+        conn = obtener_conexion()
         cursor = conn.cursor()
         if filtro_cliente:
             cursor.execute(
@@ -195,7 +195,7 @@ class ServicioFacturasDeudas:
             nuevo_estado = "PAGADA"
             mensaje = f"Pago registrado por {ServicioFacturasDeudas._formato_pesos(monto)}. Vuelto a entregar: {ServicioFacturasDeudas._formato_pesos(vuelto)}\n\nLa deuda ha sido pagada completamente y será movida a la sección Pagadas."
 
-        conn = get_connection()
+        conn = obtener_conexion()
         cursor = conn.cursor()
         try:
             fecha_hoy = datetime.datetime.now().date().isoformat()
@@ -244,7 +244,7 @@ class ServicioFacturasDeudas:
     @staticmethod
     def obtener_detalles_para_pdf(id_deuda: int) -> Dict[str, Any]:
         """Obtiene los detalles de productos y cliente para generar el PDF de la deuda."""
-        conn = get_connection()
+        conn = obtener_conexion()
         cursor = conn.cursor()
         cursor.execute(
             """

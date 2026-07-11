@@ -5,7 +5,7 @@ Servicio para obtener el historial de deudas (por deuda específica o por client
 """
 from typing import List, Dict, Any
 import datetime
-from retail.nucleo.base_datos import get_connection
+from retail.nucleo.base_datos import obtener_conexion
 
 
 class ServicioHistorialDeudas:
@@ -19,7 +19,7 @@ class ServicioHistorialDeudas:
         id_historial, producto, fecha, hora, cantidad, subtotal, accion,
         abono, recibido, vuelto, dia_semana, saldo_acumulado (calculado).
         """
-        conn = get_connection()
+        conn = obtener_conexion()
         cursor = conn.cursor()
         cursor.execute(
             """
@@ -41,7 +41,7 @@ class ServicioHistorialDeudas:
         """
         Devuelve el nombre completo del cliente asociado a una deuda.
         """
-        conn = get_connection()
+        conn = obtener_conexion()
         cursor = conn.cursor()
         cursor.execute(
             "SELECT c.nombres || ' ' || c.apellidos FROM deudas d JOIN clientes c ON d.cliente_id = c.id_cliente WHERE d.id_deuda = ?",
@@ -56,7 +56,7 @@ class ServicioHistorialDeudas:
         """
         Devuelve el número de factura asociado a una deuda.
         """
-        conn = get_connection()
+        conn = obtener_conexion()
         cursor = conn.cursor()
         cursor.execute(
             "SELECT numero_factura FROM deudas WHERE id_deuda = ?",
@@ -71,7 +71,7 @@ class ServicioHistorialDeudas:
         """
         Obtiene el historial de deudas para un cliente (por nombre o id).
         """
-        conn = get_connection()
+        conn = obtener_conexion()
         cursor = conn.cursor()
         if id_cliente is not None:
             cursor.execute(

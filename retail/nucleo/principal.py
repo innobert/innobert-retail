@@ -29,7 +29,7 @@ class Principal(tk.Tk):
         self.usuario_actual = None
 
         try:
-            base_de_datos.create_tables()
+            base_de_datos.crear_tablas()
         except Exception as e:
             logging.warning(f"Error al crear o asegurar la base de datos: {e}")
 

@@ -8,7 +8,7 @@ Ahora incluye las acciones 'AGREGADO' para reflejar productos añadidos posterio
 
 from typing import List, Dict, Any
 import datetime
-from retail.nucleo.base_datos import get_connection
+from retail.nucleo.base_datos import obtener_conexion
 
 
 class ServicioHistorialVentas:
@@ -22,7 +22,7 @@ class ServicioHistorialVentas:
         id_historial, producto, fecha, hora, cantidad, subtotal, accion,
         monto_recibido, vuelto, dia_semana.
         """
-        conn = get_connection()
+        conn = obtener_conexion()
         cursor = conn.cursor()
         cursor.execute(
             """
@@ -47,7 +47,7 @@ class ServicioHistorialVentas:
         Obtiene el historial de ventas para un cliente (por id o por cliente_rapido).
         Retorna lista de diccionarios con las mismas claves.
         """
-        conn = get_connection()
+        conn = obtener_conexion()
         cursor = conn.cursor()
         cursor.execute(
             """

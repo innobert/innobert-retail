@@ -4,7 +4,7 @@ servicio_facturas_ventas.py
 Servicio que encapsula la lógica de negocio y acceso a datos para las facturas de ventas.
 """
 from typing import List, Dict, Any
-from retail.nucleo.base_datos import get_connection, eliminar_venta
+from retail.nucleo.base_datos import obtener_conexion, eliminar_venta
 
 
 class ServicioFacturasVentas:
@@ -13,7 +13,7 @@ class ServicioFacturasVentas:
     @staticmethod
     def contar_facturas(filtro: str = "") -> int:
         """Retorna el número total de facturas que coinciden con el filtro."""
-        conn = get_connection()
+        conn = obtener_conexion()
         cursor = conn.cursor()
         if filtro:
             cursor.execute("""
@@ -45,7 +45,7 @@ class ServicioFacturasVentas:
     @staticmethod
     def obtener_pagina_facturas(offset: int, limit: int, filtro: str = "") -> List[Dict[str, Any]]:
         """Devuelve una lista de facturas (como diccionarios) para la página solicitada."""
-        conn = get_connection()
+        conn = obtener_conexion()
         cursor = conn.cursor()
         if filtro:
             cursor.execute("""
@@ -108,7 +108,7 @@ class ServicioFacturasVentas:
     @staticmethod
     def calcular_total_ventas(filtro: str = "") -> float:
         """Suma el total de las ventas que coinciden con el filtro."""
-        conn = get_connection()
+        conn = obtener_conexion()
         cursor = conn.cursor()
         if filtro:
             cursor.execute(
@@ -129,7 +129,7 @@ class ServicioFacturasVentas:
     @staticmethod
     def obtener_detalles_para_pdf(id_ventas: int) -> Dict[str, Any]:
         """Retorna la información necesaria para generar el PDF de una factura."""
-        conn = get_connection()
+        conn = obtener_conexion()
         cursor = conn.cursor()
         # Detalle de productos
         cursor.execute("""
@@ -161,7 +161,7 @@ class ServicioFacturasVentas:
     @staticmethod
     def obtener_lista_numeros_factura(filtro: str = "") -> List[str]:
         """Devuelve los números de factura únicos que coinciden con el filtro."""
-        conn = get_connection()
+        conn = obtener_conexion()
         cursor = conn.cursor()
         if filtro:
             cursor.execute(

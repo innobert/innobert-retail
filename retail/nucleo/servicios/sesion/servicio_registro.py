@@ -9,7 +9,7 @@ import datetime
 import hashlib
 import uuid
 from typing import List, Dict, Any
-from retail.nucleo.base_datos import get_connection
+from retail.nucleo.base_datos import obtener_conexion
 from retail.nucleo.servicios.sesion.servicio_licencias import ServicioLicencias
 
 
@@ -49,7 +49,7 @@ class ServicioRegistro:
         contrasena_hash = hashlib.sha256(contrasena.encode()).hexdigest()
         
         # Insertar en BD
-        conn = get_connection()
+        conn = obtener_conexion()
         cursor = conn.cursor()
         try:
             cursor.execute(
@@ -67,7 +67,7 @@ class ServicioRegistro:
         Retorna lista de usuarios con sus datos de licencia.
         Si excluir_desarrollador es True, omite al usuario 'innobertdev'.
         """
-        conn = get_connection()
+        conn = obtener_conexion()
         cursor = conn.cursor()
         try:
             if excluir_desarrollador:
@@ -105,7 +105,7 @@ class ServicioRegistro:
         if nueva_contrasena and len(nueva_contrasena) < 6:
             raise ValueError("Contraseña debe tener al menos 6 caracteres.")
         
-        conn = get_connection()
+        conn = obtener_conexion()
         cursor = conn.cursor()
         try:
             if nueva_contrasena:
@@ -134,7 +134,7 @@ class ServicioRegistro:
     @staticmethod
     def eliminar_usuario(usuario: str) -> bool:
         """Elimina un usuario de la BD."""
-        conn = get_connection()
+        conn = obtener_conexion()
         cursor = conn.cursor()
         try:
             cursor.execute("DELETE FROM usuarios WHERE usuario = ?", (usuario,))

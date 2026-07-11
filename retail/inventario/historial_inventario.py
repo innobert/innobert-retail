@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
-from retail.nucleo.base_datos import obtener_productos, get_connection
+from retail.nucleo.base_datos import obtener_productos, obtener_conexion
 import os
 from PIL import Image, ImageTk
 
@@ -25,7 +25,7 @@ def mostrar_historial_inventario(parent):
     id_producto = producto[0]
 
     # Obtener historial de la base de datos (sin mostrar el campo ID)
-    conn = get_connection()
+    conn = obtener_conexion()
     cursor = conn.cursor()
     cursor.execute(
         """

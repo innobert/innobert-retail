@@ -10,7 +10,7 @@ Servicio para gestionar las deudas pagadas:
 """
 
 from typing import List, Dict, Any, Tuple
-from retail.nucleo.base_datos import get_connection
+from retail.nucleo.base_datos import obtener_conexion
 
 
 class ServicioPagadas:
@@ -19,7 +19,7 @@ class ServicioPagadas:
     @staticmethod
     def contar_pagadas(filtro_cliente: str = "") -> int:
         """Cuenta las deudas con estado 'PAGADA' que coinciden con el filtro de cliente."""
-        conn = get_connection()
+        conn = obtener_conexion()
         cursor = conn.cursor()
         if filtro_cliente:
             cursor.execute(
@@ -41,7 +41,7 @@ class ServicioPagadas:
     @staticmethod
     def obtener_pagina(offset: int, limit: int, filtro_cliente: str = "") -> List[Dict[str, Any]]:
         """Retorna una página de deudas pagadas como lista de diccionarios."""
-        conn = get_connection()
+        conn = obtener_conexion()
         cursor = conn.cursor()
         if filtro_cliente:
             cursor.execute(
@@ -107,7 +107,7 @@ class ServicioPagadas:
     @staticmethod
     def calcular_total_pagado(filtro_cliente: str = "") -> float:
         """Suma el monto pagado de todas las deudas pagadas que coinciden con el filtro."""
-        conn = get_connection()
+        conn = obtener_conexion()
         cursor = conn.cursor()
         if filtro_cliente:
             cursor.execute(
@@ -129,7 +129,7 @@ class ServicioPagadas:
     @staticmethod
     def obtener_lista_clientes(filtro_cliente: str = "") -> List[str]:
         """Retorna lista de nombres de clientes con deudas pagadas, opcionalmente filtrados."""
-        conn = get_connection()
+        conn = obtener_conexion()
         cursor = conn.cursor()
         if filtro_cliente:
             cursor.execute(
@@ -160,7 +160,7 @@ class ServicioPagadas:
     @staticmethod
     def obtener_detalles_para_pdf(id_deuda: int) -> Tuple[List[tuple], str]:
         """Obtiene los detalles de productos y el nombre del cliente para generar el PDF."""
-        conn = get_connection()
+        conn = obtener_conexion()
         cursor = conn.cursor()
         cursor.execute(
             """

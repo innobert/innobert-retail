@@ -6,7 +6,7 @@ incluyendo todos sus productos, subtotales, totales, cliente, etc.
 """
 
 from typing import Dict, Any, List
-from retail.nucleo.base_datos import get_connection
+from retail.nucleo.base_datos import obtener_conexion
 
 
 class ServicioVisualizarVentas:
@@ -20,7 +20,7 @@ class ServicioVisualizarVentas:
         - cliente (nombre)
         - productos: lista de dicts con producto, cantidad, precio_unit, subtotal
         """
-        conn = get_connection()
+        conn = obtener_conexion()
         cursor = conn.cursor()
 
         # Datos principales de la venta y cliente

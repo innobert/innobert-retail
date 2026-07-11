@@ -18,7 +18,7 @@ from retail.nucleo.base_datos import (
     insertar_cliente,
     eliminar_cliente,
     actualizar_cliente,
-    get_connection,
+    obtener_conexion,
 )
 
 
@@ -127,7 +127,7 @@ class ClientesServicio:
         Retorna el número total de clientes que coinciden con el filtro
         (coincidencia parcial en nombres o apellidos).
         """
-        conexion = get_connection()
+        conexion = obtener_conexion()
         cursor = conexion.cursor()
         if filtro:
             cursor.execute("""
@@ -149,7 +149,7 @@ class ClientesServicio:
         """
         Obtiene una página de clientes ordenada por ID ascendente.
         """
-        conexion = get_connection()
+        conexion = obtener_conexion()
         cursor = conexion.cursor()
         if filtro:
             cursor.execute("""
@@ -186,7 +186,7 @@ class ClientesServicio:
         Retorna nombres completos de clientes que coinciden con el filtro,
         para autocompletado en el combobox.
         """
-        conexion = get_connection()
+        conexion = obtener_conexion()
         cursor = conexion.cursor()
         if filtro:
             cursor.execute("""
