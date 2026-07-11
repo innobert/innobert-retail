@@ -5,8 +5,8 @@
 [![Windows](https://img.shields.io/badge/Windows-10%2F11-0078D6?logo=windows&logoColor=white)]()
 [![Linux](https://img.shields.io/badge/Linux-Debian%20%7C%20Ubuntu-FCC624?logo=linux&logoColor=black)]()
 [![macOS](https://img.shields.io/badge/macOS-experimental-999999?logo=apple&logoColor=white)]()
-[![Tests](https://img.shields.io/badge/tests-250%2B-passing-green?logo=pytest)]()
-[![Lines](https://img.shields.io/badge/code-21.800%2B%20lines-blue)]()
+[![Tests](https://img.shields.io/badge/tests-372%20passed-green?logo=pytest)]()
+[![Lines](https://img.shields.io/badge/code-22.500%2B%20lines-blue)]()
 [![SQLite](https://img.shields.io/badge/database-SQLite-07405E?logo=sqlite&logoColor=white)]()
 [![ReportLab](https://img.shields.io/badge/PDF-ReportLab-red)]()
 
@@ -28,7 +28,6 @@
 - [Tecnologías](#tecnologías)
 - [Desarrollo](#desarrollo)
 - [Licencia](#licencia)
-- [Agente por Voz](#agente-por-voz)
 - [Contacto](#contacto)
 
 ---
@@ -68,42 +67,63 @@
 - **Multiplataforma**: Windows, Linux y macOS (experimental)
 - **PDF profesional**: Facturas con logo, productos detallados y totales via ReportLab
 - **Carga asíncrona**: Datos de ganancias sin congelar la UI con threading
+- **Variables de entorno**: `RETAIL_DATA_DIR`, `RETAIL_DB_NAME`, `RETAIL_LOG_LEVEL`, `RETAIL_LOG_DIR`
+- **Encriptación de config**: Contraseñas cifradas en `config.json` vía Fernet (fallback XOR puro Python)
+- **Paletas de color por módulo**: Botones estandarizados con colores diferenciados para ventas (azul) y deudas (rojo)
 
 ---
 
 ## Arquitectura
 
-Arquitectura de 3 capas (MVC-like):
+Arquitectura de 3 capas (MVC-like) con capa de servicios intermedia:
 
 ```
 inicio.py  (punto de entrada + instancia única via socket)
     │
     └── retail/
-        ├── nucleo/               ← Modelo (datos + servicios)
-        │   ├── base_datos.py          (SQLite CRUD completo)
-        │   ├── configuraciones.py     (paths, logging, tema)
-        │   ├── principal.py           (Ventana Tk root)
-        │   └── servicios/             ← Lógica de negocio
-        │       ├── clientes/    ─── CRUD + validaciones
-        │       ├── deudas/      ─── Créditos, pagos, edición
-        │       ├── ganancias/   ─── Reportes diario/semanal/mensual/anual
-        │       ├── inventario/  ─── CRUD + rentabilidad
-        │       ├── sesion/      ─── Re-exports → auth core
-        │       └── ventas/      ─── Carrito, edición, facturas
+        ├── nucleo/                           ← Modelo (datos + servicios)
+        │   ├── base_datos/                   ← Paquete de acceso a datos (13 archivos)
+        │   │   ├── conexion.py               ─── Conexión SQLite (context manager + directa)
+        │   │   ├── _config_db.py             ─── Configuración de ruta de BD
+        │   │   ├── esquema.py                ─── Creación de tablas
+        │   │   ├── clientes.py               ─── CRUD clientes
+        │   │   ├── inventario.py             ─── CRUD productos
+        │   │   ├── ventas.py                 ─── Ventas + detalle_venta
+        │   │   ├── deudas.py                 ─── Deudas + detalle_deuda + pagos
+        │   │   ├── ganancias.py              ─── Totales por periodo
+        │   │   ├── historiales.py            ─── Auditoría
+        │   │   ├── papelera.py               ─── Soft delete
+        │   │   ├── usuarios.py               ─── CRUD usuarios
+        │   │   ├── indices.py                ─── Constantes de índice
+        │   │   └── formateo.py               ─── Formato moneda
+        │   │
+        │   ├── configuraciones.py            ← Paths, logging, tema UI, .env, cifrado
+        │   ├── cifrado.py                    ← Encriptación Fernet + fallback XOR
+        │   ├── principal.py                  ← Ventana Tk root
+        │   └── servicios/                    ← Lógica de negocio (24 archivos)
+        │       ├── base/                     ─── Clases base (transacción, carrito, papelera)
+        │       ├── clientes/servicio_clientes.py
+        │       ├── deudas/                   ─── 7 servicios (deudas, carrito, edición,
+        │       │                                facturas, historial, pagadas, papelera, visualizar)
+        │       ├── ganancias/                ─── 4 servicios (diario, semanal, mensual, anual)
+        │       ├── inventario/servicio_inventario.py
+        │       ├── sesion/                   ─── Re-exports de auth
+        │       └── ventas/                   ─── 7 servicios (ventas, carrito, edición,
+        │                                     facturas, historial, papelera, visualizar)
         │
-        ├── vistas/               ← Vistas principales (tabs)
-        ├── ventas/               ← Sub-vistas UI de ventas
-        ├── deudas/               ← Sub-vistas UI de deudas
-        ├── ganancias/            ← Sub-vistas UI de ganancias
-        ├── inventario/           ← Sub-vistas UI de inventario
+        ├── vistas/               ← 6 vistas principales (tabs del contenedor)
+        ├── ventas/               ← 6 sub-vistas UI de ventas
+        ├── deudas/               ← 7 sub-vistas UI de deudas
+        ├── ganancias/            ← 4 sub-vistas UI de ganancias
+        ├── inventario/           ← 2 sub-vistas UI de inventario
         ├── sesion/               ← Auth + licencias + registro
         └── utilidades/           ← Gestión de logo
 ```
 
 - **Base de datos**: SQLite3 en `%APPDATA%/InnobertRetail/pos.db`
 - **15 tablas**: usuarios, clientes, inventario, ventas, deudas, pagos, ganancias, historiales, papeleras
-- **~250 pruebas** unitarias con pytest y base de datos en memoria
-- **~62 archivos Python**, ~21,800 líneas de código
+- **372 pruebas** unitarias con pytest y base de datos en memoria
+- **95 archivos Python**, ~22,500 líneas de código
 
 ---
 
@@ -239,11 +259,13 @@ Cada módulo incluye documentación visual con GIFs en `docs/gifs/`:
 | **Python 3.11+** | Lenguaje principal |
 | **Tkinter (ttk "clam")** | Interfaz gráfica nativa |
 | **SQLite3** | Base de datos embebida |
-| **ReportLab 4.5.1** | Generación de PDFs |
-| **Pillow 12.2.0** | Procesamiento de imágenes |
-| **pytest** | Pruebas unitarias |
+| **ReportLab** | Generación de PDFs |
+| **Pillow** | Procesamiento de imágenes |
+| **pytest + pytest-cov** | Pruebas unitarias y cobertura |
 | **mypy** | Tipado estático (strict) |
+| **cryptography** | Encriptación Fernet (con fallback XOR puro) |
 | **requests** | Validación de licencias |
+| **pyinstaller** | Empaquetado a ejecutable |
 
 ---
 
@@ -259,7 +281,7 @@ pytest -v
 pytest --cov=retail -v
 
 # Módulo específico
-pytest tests/test_base_datos.py -v
+pytest tests/test_servicio_ventas.py -v
 ```
 
 ### Tipado
@@ -267,6 +289,15 @@ pytest tests/test_base_datos.py -v
 ```bash
 mypy retail/ --strict
 ```
+
+### Variables de Entorno
+
+| Variable | Descripción | Default |
+|----------|-------------|---------|
+| `RETAIL_DATA_DIR` | Directorio de datos de usuario | `%APPDATA%/InnobertRetail` |
+| `RETAIL_DB_NAME` | Nombre de la base de datos | `pos.db` |
+| `RETAIL_LOG_LEVEL` | Nivel de logging | `DEBUG` |
+| `RETAIL_LOG_DIR` | Directorio de logs | `{DATA_DIR}/logs` |
 
 ### Empaquetado (Windows)
 
@@ -276,64 +307,6 @@ pyinstaller --onefile --windowed --icon=icono.ico inicio.py
 ```
 
 El ejecutable se genera en `dist/inicio.exe`.
-
-### Estructura de Archivos
-
-```
-retail/
-├── nucleo/base_datos.py       # 1,335 lines — CRUD SQLite
-├── nucleo/configuraciones.py  # 308 lines — paths, logging, tema
-├── nucleo/principal.py        # 68 lines — ventana Tk root
-├── nucleo/servicios/          # 22 archivos — lógica de negocio
-├── vistas/                    # 6 archivos — vistas principales
-├── ventas/                    # 6 archivos — sub-vistas ventas
-├── deudas/                    # 7 archivos — sub-vistas deudas
-├── ganancias/                 # 4 archivos — reportes
-├── inventario/                # 2 archivos — historial, totales
-├── sesion/                    # 5 archivos — auth, licencias
-└── utilidades/                # 1 archivo — gestor de logo
-```
-
----
-
-## Agente por Voz
-
-El proyecto incluye un módulo de reconocimiento de voz (`retail/agente/`) que permite ejecutar acciones mediante comandos hablados.
-
-### Motor Recomendado: Vosk
-
-- **Peso**: ~50MB el modelo en español
-- **Latencia**: <1s en CPU
-- **Offline**: 100% local, sin internet
-- **Dependencias**: `vosk` (usa API nativa winmm de Windows)
-
-### Instalación del modelo
-
-```bash
-pip install vosk
-```
-
-1. Descarga el modelo pequeño en español desde https://alphacephei.com/vosk/models
-2. Extrae `vosk-model-small-es-0.42` en `retail/agente/modelos/`
-
-### Comandos disponibles
-
-| Comando | Acción |
-|---------|--------|
-| "ventas", "ir a ventas" | Abre módulo Ventas |
-| "deudas", "ir a deudas" | Abre módulo Deudas |
-| "inventario", "ver inventario" | Abre módulo Inventario |
-| "clientes", "ver clientes" | Abre módulo Clientes |
-| "facturas", "ver facturas" | Abre facturas de ventas |
-| "facturas deudas" | Abre facturas de deudas |
-| "carrito", "abrir carrito" | Abre carrito de ventas |
-| "ganancias", "ver ganancias" | Abre reportes de ganancias |
-| "papelera ventas" | Abre papelera de ventas |
-| "ayuda", "comandos" | Muestra lista completa de comandos |
-| "silenciar", "desactivar" | Desactiva el agente |
-| "activar", "encender" | Reactiva el agente |
-
-El botón **🎤 Voz** en el menú superior permite activar/desactivar el agente.
 
 ---
 
