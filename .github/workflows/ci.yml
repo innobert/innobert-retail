@@ -27,12 +27,10 @@ jobs:
           pip install -r requirements.txt
           pip install pytest pytest-cov
 
-      - name: Run tests with pytest
+      - name: Run all tests
         run: |
-          python -m pytest tests/ -x -q --ignore=tests/test_configuraciones.py \
-            -k "not test_guardar_recordar_true and not test_cargar_recordar_true and not test_agregar_al_carrito and not test_confirmar_deuda and not test_producto_rentable and not test_producto_en_perdida and not test_producto_sin_ganancia and not test_crear_licencia_exitosa and not test_crear_licencia_actualiza_existente and not test_renovar_licencia and not test_delega_a_servicio_licencias and not test_delega_con_dias_personalizados" \
-            --tb=short
+          python -m pytest tests/ -q --tb=short
 
-      - name: Run base de datos tests (core)
+      - name: Run core database tests
         run: |
           python -m pytest tests/test_base_datos.py -q --tb=short
