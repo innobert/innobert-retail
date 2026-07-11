@@ -5,6 +5,7 @@ from PIL import Image, ImageTk
 
 from retail.nucleo.servicios.deudas.servicio_deudas import DeudasServicio
 from retail.nucleo.configuraciones import rutas, PRODUCTOS_POR_PAGINA
+from retail.utilidades.paginacion import PaginacionWidget
 
 
 def peso_colombiano(value):
@@ -376,54 +377,20 @@ class Deudas(tk.Frame):
 
         self.canvas.yview_moveto(0)
 
-    def _actualizar_etiqueta_paginacion(self):
-        """Actualiza el texto de la etiqueta de paginación."""
-        if hasattr(self, 'label_paginacion') and self.label_paginacion:
-            total_productos = DeudasServicio.contar_productos(self.filtro_actual)
-            self.label_paginacion.config(
-                text=f"Página {self.pagina_actual} de {self.total_paginas} ({total_productos} productos)"
-            )
+    def _texto_paginacion(self):
+        total = DeudasServicio.contar_productos(self.filtro_actual)
+        return f"Página {self.pagina_actual} de {self.total_paginas} ({total} productos)"
 
-    # ----------------------------------------------------------------------
-    # Paginación (botones)
-    # ----------------------------------------------------------------------
     def crear_controles_paginacion(self):
         for widget in self.frame_paginacion.winfo_children():
             widget.destroy()
-
-        btn_anterior = tk.Button(
+        self.paginacion = PaginacionWidget(
             self.frame_paginacion,
-            text="◀ Anterior",
-            command=self.pagina_anterior,
-            bg="#2196F3",
-            fg="white",
-            relief="flat",
-            padx=10,
-            font=("Helvetica", 10, "bold")
+            on_anterior=self.pagina_anterior,
+            on_siguiente=self.pagina_siguiente,
+            actualizar_texto=self._texto_paginacion,
         )
-        btn_anterior.pack(side="left", padx=5)
-
-        self.label_paginacion = tk.Label(
-            self.frame_paginacion,
-            text="",
-            font=("Helvetica", 10, "bold"),
-            bg="#E6D9E3"
-        )
-        self.label_paginacion.pack(side="left", padx=20, expand=True)
-
-        btn_siguiente = tk.Button(
-            self.frame_paginacion,
-            text="Siguiente ▶",
-            command=self.pagina_siguiente,
-            bg="#2196F3",
-            fg="white",
-            relief="flat",
-            padx=10,
-            font=("Helvetica", 10, "bold")
-        )
-        btn_siguiente.pack(side="right", padx=5)
-
-        self._actualizar_etiqueta_paginacion()
+        self.paginacion.pack(fill="x")
 
     def pagina_anterior(self):
         if self.pagina_actual > 1:

@@ -4,6 +4,7 @@ import os
 from PIL import Image, ImageTk
 
 from retail.nucleo.servicios.clientes.servicio_clientes import ClientesServicio
+from retail.utilidades.paginacion import PaginacionWidget
 
 
 class Clientes(tk.Frame):
@@ -242,64 +243,28 @@ class Clientes(tk.Frame):
 
     # --------------------------
     # Métodos de paginación
-    # --------------------------
+    def _texto_paginacion(self):
+        total = ClientesServicio.contar_clientes(self.filtro_actual)
+        return f"Página {self.pagina_actual} de {self.total_paginas} ({total} clientes)"
+
     def crear_controles_paginacion(self):
-        """Crea los botones y la etiqueta de paginación."""
-        # Limpiar frame previo si existe
         for widget in self.frame_paginacion.winfo_children():
             widget.destroy()
-
-        btn_anterior = tk.Button(
+        self.paginacion = PaginacionWidget(
             self.frame_paginacion,
-            text="◀ Anterior",
-            command=self.pagina_anterior,
-            bg="#2196F3",
-            fg="white",
-            relief="flat",
-            padx=10,
-            font=("Helvetica", 10, "bold")
+            on_anterior=self.pagina_anterior,
+            on_siguiente=self.pagina_siguiente,
+            actualizar_texto=self._texto_paginacion,
         )
-        btn_anterior.pack(side="left", padx=5)
-
-        self.label_paginacion = tk.Label(
-            self.frame_paginacion,
-            text="",
-            font=("Helvetica", 10, "bold"),
-            bg="#E6D9E3"
-        )
-        self.label_paginacion.pack(side="left", padx=20, expand=True)
-
-        btn_siguiente = tk.Button(
-            self.frame_paginacion,
-            text="Siguiente ▶",
-            command=self.pagina_siguiente,
-            bg="#2196F3",
-            fg="white",
-            relief="flat",
-            padx=10,
-            font=("Helvetica", 10, "bold")
-        )
-        btn_siguiente.pack(side="right", padx=5)
-
-        self._actualizar_etiqueta_paginacion()
-
-    def _actualizar_etiqueta_paginacion(self):
-        """Actualiza el texto de la etiqueta con la información de página."""
-        if hasattr(self, 'label_paginacion'):
-            total_clientes = ClientesServicio.contar_clientes(self.filtro_actual)
-            self.label_paginacion.config(
-                text=f"Página {self.pagina_actual} de {self.total_paginas} ({total_clientes} clientes)"
-            )
+        self.paginacion.pack(fill="x")
 
     def _actualizar_totales(self):
-        """Actualiza el número total de páginas según el filtro."""
         total_clientes = ClientesServicio.contar_clientes(self.filtro_actual)
         self.total_paginas = max(1, (total_clientes + self.clientes_por_pagina - 1) // self.clientes_por_pagina)
         if self.pagina_actual > self.total_paginas:
             self.pagina_actual = self.total_paginas
 
     def _cargar_pagina(self):
-        """Obtiene los clientes de la página actual y los muestra en el Treeview."""
         offset = (self.pagina_actual - 1) * self.clientes_por_pagina
         clientes = ClientesServicio.obtener_clientes_paginado(
             offset=offset,
@@ -307,10 +272,10 @@ class Clientes(tk.Frame):
             filtro=self.filtro_actual
         )
         self._mostrar_clientes_en_treeview(clientes)
-        self._actualizar_etiqueta_paginacion()
+        if hasattr(self, 'paginacion'):
+            self.paginacion.actualizar()
 
     def _mostrar_clientes_en_treeview(self, clientes):
-        """Vuelca la lista de clientes en el Treeview."""
         self.tree.delete(*self.tree.get_children())
         for cliente in clientes:
             self.tree.insert(
