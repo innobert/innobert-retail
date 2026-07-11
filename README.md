@@ -214,9 +214,10 @@ python inicio.py
 
 ## Módulos
 
-Cada módulo incluye documentación visual con GIFs en `docs/gifs/`:
-
 ### Inventario
+
+![Inventario](docs/gifs/inventario_agregar_producto.gif)
+
 - Agregar, editar, eliminar productos con imágenes
 - Control de stock automático al vender
 - Historial de movimientos por producto
@@ -224,12 +225,18 @@ Cada módulo incluye documentación visual con GIFs en `docs/gifs/`:
 - Totales de valor, costo y ganancia potencial
 
 ### Clientes
+
+![Clientes](docs/gifs/clientes_agregar.gif)
+
 - Registro con validación de cédula y celular únicos
 - Edición directa en tabla (doble click)
 - Autocompletado inteligente
 - Paginación (20 clientes/página)
 
 ### Ventas
+
+![Ventas](docs/gifs/ventas_pagar.gif)
+
 - Carrito dinámico con validación de stock
 - Cálculo automático de vuelto en tiempo real
 - Ventas rápidas (sin cliente) y por mayor
@@ -238,6 +245,9 @@ Cada módulo incluye documentación visual con GIFs en `docs/gifs/`:
 - Historial completo de cambios
 
 ### Deudas
+
+![Deudas](docs/gifs/deudas_registrar.gif)
+
 - Créditos con cliente obligatorio
 - Abonos parciales con cálculo de vuelto
 - Pagos totales que cierran la deuda automáticamente
@@ -245,6 +255,9 @@ Cada módulo incluye documentación visual con GIFs en `docs/gifs/`:
 - Deudas pagadas con reportes PDF
 
 ### Ganancias
+
+![Ganancias](docs/gifs/ganancias.gif)
+
 - Reportes diario, semanal, mensual y anual
 - Datos combinados: ventas + deudas pagadas
 - Exportación a PDF por periodo
