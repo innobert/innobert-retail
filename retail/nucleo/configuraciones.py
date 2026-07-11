@@ -145,11 +145,13 @@ DEUDAS_BOTON_CARITO =      {"bg": "#EF5350", "fg": "#B71C1C", "activebackground"
 
 _BASE_BOTON = {
     "font": FUENTE_BOTON,
-    "relief": "groove",
-    "bd": 1,
+    "relief": "raised",
+    "bd": 2,
     "cursor": "hand2",
     "padx": 12,
     "pady": 4,
+    "highlightthickness": 1,
+    "highlightbackground": "#999999",
 }
 
 
