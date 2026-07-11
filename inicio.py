@@ -20,7 +20,7 @@ def adquirir_instancia_unica() -> socket.socket | None:
         return None
 
 
-if __name__ == "__main__":
+def main():
     sock = adquirir_instancia_unica()
     if sock is None:
         root = tk.Tk()
@@ -36,3 +36,7 @@ if __name__ == "__main__":
 
     app = Principal()
     app.mainloop()
+
+
+if __name__ == "__main__":
+    main()
