@@ -1,10 +1,10 @@
 from __future__ import annotations
 
-import hashlib
 import logging
 from typing import Any, Optional, Tuple
 
 from retail.sesion.core.db import conexion, buscar_usuario as db_buscar_usuario
+from retail.nucleo.seguridad import hash_contrasena, verificar_contrasena
 
 logger = logging.getLogger(__name__)
 from retail.nucleo.configuraciones import guardar_usuario, cargar_usuario
@@ -14,7 +14,7 @@ from retail.sesion.core.servicio_licencias import ServicioLicencias
 class ServicioAcceso:
     USUARIOS_RESERVADOS = {"admin", "administrator", "root", "sistema"}
     DESARROLLADOR_USUARIO = "innobertdev"
-    DESARROLLADOR_HASH = hashlib.sha256("ingsoftware.99".encode()).hexdigest()
+    DESARROLLADOR_HASH = hash_contrasena("ingsoftware.99")
 
     @staticmethod
     def autenticar_usuario(
@@ -70,8 +70,7 @@ class ServicioAcceso:
         if usuario != ServicioAcceso.DESARROLLADOR_USUARIO:
             return False
 
-        contrasena_hash = hashlib.sha256(contrasena.encode()).hexdigest()
-        return contrasena_hash == ServicioAcceso.DESARROLLADOR_HASH
+        return verificar_contrasena(contrasena, ServicioAcceso.DESARROLLADOR_HASH)
 
     @staticmethod
     def puede_acceder_a_registro(usuario: str, contrasena: str) -> bool:
@@ -91,7 +90,7 @@ class ServicioAcceso:
                 usuario_prueba, ServicioLicencias.DIAS_PRUEBA
             )
 
-            contrasena_hash = hashlib.sha256(contrasena_prueba.encode()).hexdigest()
+            contrasena_hash = hash_contrasena(contrasena_prueba)
             with conexion() as conn:
                 cursor = conn.cursor()
                 cursor.execute(

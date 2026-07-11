@@ -6,10 +6,10 @@ El módulo de sesión está independizado y desacoplado del resto del sistema.
 """
 import logging
 import datetime
-import hashlib
 from typing import Optional, Tuple
 from retail.nucleo.base_datos import obtener_conexion, buscar_usuario as db_buscar_usuario
 from retail.nucleo.configuraciones import guardar_usuario, cargar_usuario
+from retail.nucleo.seguridad import hash_contrasena, verificar_contrasena
 from retail.nucleo.servicios.sesion.servicio_licencias import ServicioLicencias
 
 
@@ -24,7 +24,7 @@ class ServicioAcceso:
     
     # Información del desarrollador (hash seguro, no almacenar credenciales en texto)
     DESARROLLADOR_USUARIO = "innobertdev"
-    DESARROLLADOR_HASH = hashlib.sha256("ingsoftware.99".encode()).hexdigest()
+    DESARROLLADOR_HASH = hash_contrasena("ingsoftware.99")
 
     @staticmethod
     def autenticar_usuario(usuario: str, contrasena: str) -> Tuple[bool, str, Optional[dict]]:
@@ -90,8 +90,7 @@ class ServicioAcceso:
         if usuario != ServicioAcceso.DESARROLLADOR_USUARIO:
             return False
         
-        contrasena_hash = hashlib.sha256(contrasena.encode()).hexdigest()
-        return contrasena_hash == ServicioAcceso.DESARROLLADOR_HASH
+        return verificar_contrasena(contrasena, ServicioAcceso.DESARROLLADOR_HASH)
 
     @staticmethod
     def puede_acceder_a_registro(usuario: str, contrasena: str) -> bool:
@@ -120,7 +119,7 @@ class ServicioAcceso:
             licencia = ServicioLicencias.generar_licencia(usuario_prueba, ServicioLicencias.DIAS_PRUEBA)
             
             # Crear en BD
-            contrasena_hash = hashlib.sha256(contrasena_prueba.encode()).hexdigest()
+            contrasena_hash = hash_contrasena(contrasena_prueba)
             conn = obtener_conexion()
             cursor = conn.cursor()
             cursor.execute(

@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-import hashlib
 from typing import Any, Dict, List, Optional
 
 from retail.sesion.core.db import conexion
+from retail.nucleo.seguridad import hash_contrasena
 from retail.sesion.core.servicio_licencias import ServicioLicencias
 
 
@@ -22,7 +22,7 @@ class ServicioRegistro:
             raise ValueError("Contraseña debe tener al menos 6 caracteres.")
 
         licencia = ServicioLicencias.generar_licencia(usuario, dias_licencia)
-        contrasena_hash = hashlib.sha256(contrasena.encode()).hexdigest()
+        contrasena_hash = hash_contrasena(contrasena)
 
         with conexion() as conn:
             cursor = conn.cursor()
@@ -83,7 +83,7 @@ class ServicioRegistro:
         with conexion() as conn:
             cursor = conn.cursor()
             if nueva_contrasena:
-                contrasena_hash = hashlib.sha256(nueva_contrasena.encode()).hexdigest()
+                contrasena_hash = hash_contrasena(nueva_contrasena)
                 cursor.execute(
                     "UPDATE usuarios SET usuario = ?, contrasena = ? WHERE usuario = ?",
                     (nuevo_usuario, contrasena_hash, usuario_actual),

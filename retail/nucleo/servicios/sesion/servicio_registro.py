@@ -6,10 +6,10 @@ Módulo independizado accesible solo al desarrollador principal.
 """
 
 import datetime
-import hashlib
 import uuid
 from typing import List, Dict, Any
 from retail.nucleo.base_datos import obtener_conexion
+from retail.nucleo.seguridad import hash_contrasena
 from retail.nucleo.servicios.sesion.servicio_licencias import ServicioLicencias
 
 
@@ -46,7 +46,7 @@ class ServicioRegistro:
         licencia = ServicioLicencias.generar_licencia(usuario, dias_licencia)
         
         # Hash de contraseña
-        contrasena_hash = hashlib.sha256(contrasena.encode()).hexdigest()
+        contrasena_hash = hash_contrasena(contrasena)
         
         # Insertar en BD
         conn = obtener_conexion()
@@ -109,7 +109,7 @@ class ServicioRegistro:
         cursor = conn.cursor()
         try:
             if nueva_contrasena:
-                contrasena_hash = hashlib.sha256(nueva_contrasena.encode()).hexdigest()
+                contrasena_hash = hash_contrasena(nueva_contrasena)
                 cursor.execute(
                     "UPDATE usuarios SET usuario = ?, contrasena = ? WHERE usuario = ?",
                     (nuevo_usuario, contrasena_hash, usuario_actual)

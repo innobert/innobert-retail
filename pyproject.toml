@@ -16,6 +16,7 @@ dependencies = [
     "charset-normalizer>=3.4",
     "pillow>=12.2",
     "reportlab>=4.5",
+    "bcrypt>=4.2",
 ]
 
 [project.urls]

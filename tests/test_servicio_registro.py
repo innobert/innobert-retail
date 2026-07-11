@@ -31,8 +31,8 @@ class TestRegistrarUsuario:
     def test_registro_guarda_hash_contrasena(self, registro: Any, db_limpia: Any):
         registro.registrar_usuario("admin", "123456")
         usuarios = _obtener_usuarios_bd(db_limpia)
-        hash_esperado = hashlib.sha256("123456".encode()).hexdigest()
-        assert usuarios[0][1] == hash_esperado
+        from retail.nucleo.seguridad import verificar_contrasena
+        assert verificar_contrasena("123456", usuarios[0][1])
 
     def test_registro_con_dias_licencia(self, registro: Any, db_limpia: Any):
         registro.registrar_usuario("admin", "123456", dias_licencia=60)
@@ -99,8 +99,8 @@ class TestActualizarUsuario:
         assert registro.actualizar_usuario("admin", "superadmin", "654321") is True
         usuarios = _obtener_usuarios_bd(db_limpia)
         admin = [u for u in usuarios if u[0] == "superadmin"][0]
-        hash_esperado = hashlib.sha256("654321".encode()).hexdigest()
-        assert admin[1] == hash_esperado
+        from retail.nucleo.seguridad import verificar_contrasena
+        assert verificar_contrasena("654321", admin[1])
 
     def test_nuevo_usuario_vacio_raises(self, registro: Any):
         registro.registrar_usuario("admin", "123456")
@@ -114,19 +114,19 @@ class TestActualizarUsuario:
 
 
 class TestRenovarSuscripcion:
-    @patch("retail.sesion.core.servicio_registro.ServicioLicencias.renovar_licencia")
+    @patch("retail.nucleo.servicios.sesion.servicio_licencias.ServicioLicencias.renovar_licencia")
     def test_delega_a_servicio_licencias(self, mock_renovar, registro: Any):
         mock_renovar.return_value = True
         assert registro.renovar_suscripcion("admin") is True
         mock_renovar.assert_called_once_with("admin", 30)
 
-    @patch("retail.sesion.core.servicio_registro.ServicioLicencias.renovar_licencia")
+    @patch("retail.nucleo.servicios.sesion.servicio_licencias.ServicioLicencias.renovar_licencia")
     def test_delega_con_dias_personalizados(self, mock_renovar, registro: Any):
         mock_renovar.return_value = True
         assert registro.renovar_suscripcion("admin", dias=60) is True
         mock_renovar.assert_called_once_with("admin", 60)
 
-    @patch("retail.sesion.core.servicio_registro.ServicioLicencias.renovar_licencia")
+    @patch("retail.nucleo.servicios.sesion.servicio_licencias.ServicioLicencias.renovar_licencia")
     def test_retorna_false_si_servicio_falla(self, mock_renovar, registro: Any):
         mock_renovar.return_value = False
         assert registro.renovar_suscripcion("admin") is False

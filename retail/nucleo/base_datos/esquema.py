@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import ctypes
 import datetime
-import hashlib
 import logging
 import os
 from pathlib import Path
@@ -12,6 +11,7 @@ from pathlib import Path
 from retail.nucleo.base_datos._config_db import config_db
 from retail.nucleo.base_datos.conexion import conexion
 from retail.nucleo.configuraciones import asegurar_directorios
+from retail.nucleo.seguridad import hash_contrasena
 
 registrador = logging.getLogger(__name__)
 
@@ -243,7 +243,7 @@ def crear_tablas() -> None:
             CREATE INDEX IF NOT EXISTS idx_papelera_deudas_fecha ON papelera_deudas(fecha_eliminacion);
         """)
 
-        clave_admin = hashlib.sha256("ingsoftware.99".encode()).hexdigest()
+        clave_admin = hash_contrasena("ingsoftware.99")
         cursor.execute(
             "INSERT OR IGNORE INTO desarrollador (usuario, contrasena) VALUES (?, ?)",
             ("innobertdev", clave_admin),
@@ -254,7 +254,7 @@ def crear_tablas() -> None:
             "%Y-%m-%d"
         )
         serial = "USR-PRU-" + fecha_inicio.replace("-", "")
-        clave_prueba = hashlib.sha256("prueba".encode()).hexdigest()
+        clave_prueba = hash_contrasena("prueba")
         cursor.execute(
             "INSERT OR IGNORE INTO usuarios (usuario, contrasena, fecha_inicio, fecha_fin, serial) VALUES (?, ?, ?, ?, ?)",
             ("prueba", clave_prueba, fecha_inicio, fecha_fin, serial),
