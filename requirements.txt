@@ -1,0 +1,16 @@
+charset-normalizer>=3.4
+cryptography>=49.0
+pillow>=12.2
+reportlab>=4.5
+requests>=2.32
+
+# Desarrollo y pruebas
+pytest>=9.0
+pytest-cov>=7.0
+mypy>=1.15
+
+# Empaquetado
+pyinstaller>=6.0
+
+# Voz (opcional)
+# vosk>=0.3  # Descomentar si se usa el módulo agente de voz
