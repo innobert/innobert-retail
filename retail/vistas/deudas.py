@@ -4,7 +4,7 @@ from tkinter import ttk, messagebox
 from PIL import Image, ImageTk
 
 from retail.nucleo.servicios.deudas.servicio_deudas import DeudasServicio
-from retail.nucleo.configuraciones import rutas
+from retail.nucleo.configuraciones import rutas, PRODUCTOS_POR_PAGINA
 
 
 def peso_colombiano(value):
@@ -22,7 +22,7 @@ class Deudas(tk.Frame):
 
         # Variables para paginación bajo demanda
         self.pagina_actual = 1
-        self.productos_por_pagina = 12          # 4x3
+        self.productos_por_pagina = PRODUCTOS_POR_PAGINA
         self.total_paginas = 1
         self.filtro_actual = ""                 # Texto de búsqueda actual
 

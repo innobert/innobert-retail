@@ -4,7 +4,7 @@ from tkinter import filedialog, ttk, messagebox
 from PIL import Image, ImageTk
 import os
 
-from retail.nucleo.configuraciones import rutas
+from retail.nucleo.configuraciones import rutas, PRODUCTOS_POR_PAGINA
 from retail.nucleo.servicios.inventario.servicio_inventario import InventarioServicio, peso_colombiano
 
 
@@ -24,7 +24,7 @@ class Inventario(tk.Frame):
 
         # Variables para paginación bajo demanda
         self.pagina_actual = 1
-        self.productos_por_pagina = 12  # 4x3
+        self.productos_por_pagina = PRODUCTOS_POR_PAGINA
         self.total_paginas = 1
         self.filtro_actual = ""          # Texto de búsqueda actual
 

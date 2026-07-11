@@ -25,7 +25,7 @@ import os
 from retail.nucleo.base_datos import get_connection
 from retail.nucleo.servicios.ventas.servicio_edicion_ventas import ServicioEdicionVentas
 from retail.nucleo.servicios.ventas.servicio_ventas import VentasServicio
-from retail.nucleo.configuraciones import rutas
+from retail.nucleo.configuraciones import rutas, PRODUCTOS_POR_PAGINA
 
 
 # ---------------------------------------------------------------------------
@@ -572,7 +572,7 @@ def _abrir_ventana_agregar_productos(ventana_padre, id_ventas, cliente, monto_re
     btn_siguiente.pack(side="right", padx=5)
 
     pagina_actual = 1
-    productos_por_pagina = 12
+    productos_por_pagina = PRODUCTOS_POR_PAGINA
     total_paginas = 1
     filtro_actual = ""
 

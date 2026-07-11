@@ -4,7 +4,7 @@ from tkinter import ttk, messagebox
 from PIL import Image, ImageTk
 
 from retail.nucleo.servicios.ventas.servicio_ventas import VentasServicio
-from retail.nucleo.configuraciones import rutas
+from retail.nucleo.configuraciones import rutas, PRODUCTOS_POR_PAGINA
 
 
 class Ventas(tk.Frame):
@@ -19,7 +19,7 @@ class Ventas(tk.Frame):
 
         # Variables para paginación bajo demanda
         self.pagina_actual = 1
-        self.productos_por_pagina = 12      # 4x3
+        self.productos_por_pagina = PRODUCTOS_POR_PAGINA
         self.total_paginas = 1
         self.filtro_actual = ""             # Texto de búsqueda actual
 

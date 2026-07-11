@@ -5,8 +5,9 @@ from retail.ganancias.mensual import Mes
 from retail.ganancias.anual import Year
 
 # Tamaño de ventana aumentado para mejor visualización
-VENTANA_ANCHO = 1300
-VENTANA_ALTO = 700
+from retail.nucleo.configuraciones import VENTANA_GANANCIAS_ANCHO, VENTANA_GANANCIAS_ALTO
+VENTANA_ANCHO = VENTANA_GANANCIAS_ANCHO
+VENTANA_ALTO = VENTANA_GANANCIAS_ALTO
 MENU_ALTO = 40
 
 

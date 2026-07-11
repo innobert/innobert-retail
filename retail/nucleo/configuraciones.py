@@ -36,6 +36,14 @@ APPDATA_PATH = _obtener_ruta_base_datos_usuario()
 FOTOS_PATH = os.path.join(APPDATA_PATH, "fotos")
 LOGO_PATH = os.path.join(APPDATA_PATH, "Logo")
 
+PRODUCTOS_POR_PAGINA = 12
+VENTANA_ACCESO_ANCHO = 1000
+VENTANA_ACCESO_ALTO = 700
+VENTANA_CONTENEDOR_ANCHO = 1100
+VENTANA_CONTENEDOR_ALTO = 650
+VENTANA_GANANCIAS_ANCHO = 1300
+VENTANA_GANANCIAS_ALTO = 700
+
 def copiar_fotos_default():
     """
     Copia la carpeta 'fotos' (y su contenido) desde la raíz del proyecto a APPDATA_PATH/fotos si no existe.

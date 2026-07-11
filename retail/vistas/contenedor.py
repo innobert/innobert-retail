@@ -17,8 +17,9 @@ from retail.vistas.inventario import Inventario
 from retail.vistas.deudas import Deudas
 from retail.nucleo.configuraciones import rutas
 
-VENTANA_ANCHO = 1100
-VENTANA_ALTO = 650
+from retail.nucleo.configuraciones import VENTANA_CONTENEDOR_ANCHO, VENTANA_CONTENEDOR_ALTO
+VENTANA_ANCHO = VENTANA_CONTENEDOR_ANCHO
+VENTANA_ALTO = VENTANA_CONTENEDOR_ALTO
 MENU_ALTO = 40
 
 

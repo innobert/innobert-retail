@@ -16,6 +16,7 @@ from PIL import Image, ImageTk
 import os
 
 from retail.nucleo.base_datos import get_connection
+from retail.nucleo.configuraciones import PRODUCTOS_POR_PAGINA
 from retail.nucleo.servicios.deudas.servicio_edicion_deudas import ServicioEdicionDeudas
 from retail.nucleo.servicios.deudas.servicio_deudas import DeudasServicio
 from retail.nucleo.configuraciones import rutas
@@ -360,7 +361,7 @@ def _abrir_ventana_agregar_productos(parent, id_deuda, cliente, usuario_actual, 
     btn_siguiente.pack(side="right", padx=5)
 
     pagina_actual = 1
-    productos_por_pagina = 12
+    productos_por_pagina = PRODUCTOS_POR_PAGINA
     total_paginas = 1
     filtro_actual = ""
 

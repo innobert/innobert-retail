@@ -6,17 +6,16 @@ import re
 from retail.sesion.acceso import Acceso
 from retail.vistas.contenedor import Contenedor
 import retail.nucleo.base_datos as base_de_datos
+from retail.nucleo.configuraciones import VENTANA_ACCESO_ANCHO, VENTANA_ACCESO_ALTO, VENTANA_CONTENEDOR_ANCHO, VENTANA_CONTENEDOR_ALTO
 
 
 class Principal(tk.Tk):
-    # Configuración de tamaños y posiciones
-    ACCESO_ANCHO = 1000
-    ACCESO_ALTO = 700
+    ACCESO_ANCHO = VENTANA_ACCESO_ANCHO
+    ACCESO_ALTO = VENTANA_ACCESO_ALTO
     ACCESO_X = 100
     ACCESO_Y = 10
-    
-    CONTENEDOR_ANCHO = 1100
-    CONTENEDOR_ALTO = 650
+    CONTENEDOR_ANCHO = VENTANA_CONTENEDOR_ANCHO
+    CONTENEDOR_ALTO = VENTANA_CONTENEDOR_ALTO
     CONTENEDOR_X = 100
     CONTENEDOR_Y = 10
     
