@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "innobert-retail"
+version = "1.0.0"
+description = "Sistema POS profesional para pequeños comercios — control de ventas, deudas, inventario, clientes y análisis de ganancias"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "Custom"}
+authors = [
+    {name = "Roberto Vásquez (InnobertDev)", email = "innobert07@gmail.com"},
+]
+dependencies = [
+    "charset-normalizer>=3.4",
+    "pillow>=12.2",
+    "reportlab>=4.5",
+    "requests>=2.32",
+]
+
+[project.urls]
+Homepage = "https://github.com/innobert/innobert-retail"
+Source = "https://github.com/innobert/innobert-retail"
+
+[project.scripts]
+innobert-retail = "inicio:main"
+
+[tool.pytest.ini_options]
+minversion = "9.0"
+testpaths = ["tests"]
+filterwarnings = ["ignore::DeprecationWarning"]
+addopts = "-v"
+
+[tool.coverage.run]
+source = ["retail"]
+omit = ["*/tests/*", "*/venv/*"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if __name__ == .__main__.:",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "logger\\.(warning|error|exception|info)",
+]
+
+[tool.mypy]
+strict = true
+ignore_missing_imports = true
+explicit_package_bases = true
+warn_unused_ignores = false
