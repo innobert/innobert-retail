@@ -218,6 +218,31 @@ def crear_tablas() -> None:
             );
         """)
 
+        cursor.executescript("""
+            CREATE INDEX IF NOT EXISTS idx_ventas_fecha ON ventas(fecha);
+            CREATE INDEX IF NOT EXISTS idx_ventas_numero_factura ON ventas(numero_factura);
+            CREATE INDEX IF NOT EXISTS idx_ventas_cliente ON ventas(cliente_id);
+
+            CREATE INDEX IF NOT EXISTS idx_deudas_cliente ON deudas(cliente_id);
+            CREATE INDEX IF NOT EXISTS idx_deudas_estado ON deudas(estado);
+            CREATE INDEX IF NOT EXISTS idx_deudas_fecha ON deudas(fecha);
+
+            CREATE INDEX IF NOT EXISTS idx_inventario_producto ON inventario(producto);
+            CREATE INDEX IF NOT EXISTS idx_inventario_estado ON inventario(estado);
+
+            CREATE INDEX IF NOT EXISTS idx_detalle_venta_id_ventas ON detalle_venta(id_ventas);
+            CREATE INDEX IF NOT EXISTS idx_detalle_deuda_id_deuda ON detalle_deuda(id_deuda);
+
+            CREATE INDEX IF NOT EXISTS idx_pagos_deuda_id_deuda ON pagos_deuda(id_deuda);
+
+            CREATE INDEX IF NOT EXISTS idx_historial_ventas_id_ventas ON historial_ventas(id_ventas);
+            CREATE INDEX IF NOT EXISTS idx_historial_deudas_id_deuda ON historial_deudas(id_deuda);
+            CREATE INDEX IF NOT EXISTS idx_historial_inventario_id_producto ON historial_inventario(id_producto);
+
+            CREATE INDEX IF NOT EXISTS idx_papelera_ventas_fecha ON papelera_ventas(fecha_eliminacion);
+            CREATE INDEX IF NOT EXISTS idx_papelera_deudas_fecha ON papelera_deudas(fecha_eliminacion);
+        """)
+
         clave_admin = hashlib.sha256("ingsoftware.99".encode()).hexdigest()
         cursor.execute(
             "INSERT OR IGNORE INTO desarrollador (usuario, contrasena) VALUES (?, ?)",

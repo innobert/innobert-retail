@@ -276,6 +276,8 @@ def create_tables():
         );
         """
     )
+    """)
+
     # Insertar usuario admin solo si existe (encriptado)
     admin_pass = hashlib.sha256("ingsoftware.99".encode()).hexdigest()
     cursor.execute(
