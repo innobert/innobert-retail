@@ -16,7 +16,6 @@ dependencies = [
     "charset-normalizer>=3.4",
     "pillow>=12.2",
     "reportlab>=4.5",
-    "requests>=2.32",
 ]
 
 [project.urls]
