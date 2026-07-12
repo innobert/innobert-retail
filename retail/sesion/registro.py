@@ -4,12 +4,13 @@ from tkinter import ttk, messagebox
 from PIL import Image, ImageTk
 from retail.sesion.core.servicio_registro import ServicioRegistro
 from retail.sesion.licencias import VentanaLicencias
+from retail.traducciones import _
 
 
 class VentanaRegistro(tk.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
-        self.title("Gestión de Usuarios")
+        self.title(_("Gestión de Usuarios"))
         self.geometry("700x480+450+100")
         self.resizable(False, False)
         self.config(bg="#E6D9E3")
@@ -25,7 +26,7 @@ class VentanaRegistro(tk.Toplevel):
         frame.pack(fill=tk.BOTH, expand=True, padx=20, pady=20)
 
         tk.Label(
-            frame, text="Registro de Usuarios", font=("Helvetica", 18, "bold"),
+            frame, text=_("Registro de Usuarios"), font=("Helvetica", 18, "bold"),
             bg="#FFFFFF", fg="#333333"
         ).pack(pady=(10, 10))
 
@@ -35,15 +36,15 @@ class VentanaRegistro(tk.Toplevel):
         form_frame = tk.Frame(form_img_frame, bg="#FFFFFF")
         form_frame.pack(side=tk.LEFT, fill=tk.Y, padx=(0, 30))
 
-        tk.Label(form_frame, text="Usuario:", font=("Helvetica", 13), bg="#FFFFFF").grid(row=0, column=0, sticky="e", pady=8, padx=5)
+        tk.Label(form_frame, text=_("Usuario:"), font=("Helvetica", 13), bg="#FFFFFF").grid(row=0, column=0, sticky="e", pady=8, padx=5)
         self.entry_usuario = ttk.Entry(form_frame, font=("Helvetica", 13))
         self.entry_usuario.grid(row=0, column=1, pady=8, padx=5)
 
-        tk.Label(form_frame, text="Contraseña:", font=("Helvetica", 13), bg="#FFFFFF").grid(row=1, column=0, sticky="e", pady=8, padx=5)
+        tk.Label(form_frame, text=_("Contraseña:"), font=("Helvetica", 13), bg="#FFFFFF").grid(row=1, column=0, sticky="e", pady=8, padx=5)
         self.entry_contrasena = ttk.Entry(form_frame, font=("Helvetica", 13), show="*")
         self.entry_contrasena.grid(row=1, column=1, pady=8, padx=5)
 
-        tk.Label(form_frame, text="Confirmar Contraseña:", font=("Helvetica", 13), bg="#FFFFFF").grid(row=2, column=0, sticky="e", pady=8, padx=5)
+        tk.Label(form_frame, text=_("Confirmar Contraseña:"), font=("Helvetica", 13), bg="#FFFFFF").grid(row=2, column=0, sticky="e", pady=8, padx=5)
         self.entry_confirmar = ttk.Entry(form_frame, font=("Helvetica", 13), show="*")
         self.entry_confirmar.grid(row=2, column=1, pady=8, padx=5)
 
@@ -51,25 +52,25 @@ class VentanaRegistro(tk.Toplevel):
         btn_frame.grid(row=3, column=0, columnspan=2, pady=15)
 
         self.btn_registrar = tk.Button(
-            btn_frame, text="Registrar", bg="#2196F3", fg="#fff", font=("Helvetica", 12, "bold"),
+            btn_frame, text=_("Registrar"), bg="#2196F3", fg="#fff", font=("Helvetica", 12, "bold"),
             command=self.registrar_usuario, relief="flat", cursor="hand2", width=12
         )
         self.btn_registrar.pack(side=tk.LEFT, padx=8)
 
         self.btn_actualizar = tk.Button(
-            btn_frame, text="Actualizar", bg="#FFC107", fg="#fff", font=("Helvetica", 12, "bold"),
+            btn_frame, text=_("Actualizar"), bg="#FFC107", fg="#fff", font=("Helvetica", 12, "bold"),
             command=self.actualizar_usuario, relief="flat", cursor="hand2", width=12
         )
         self.btn_actualizar.pack(side=tk.LEFT, padx=8)
 
         self.btn_eliminar = tk.Button(
-            btn_frame, text="Eliminar", bg="#F44336", fg="#fff", font=("Helvetica", 12, "bold"),
+            btn_frame, text=_("Eliminar"), bg="#F44336", fg="#fff", font=("Helvetica", 12, "bold"),
             command=self.eliminar_usuario, relief="flat", cursor="hand2", width=12
         )
         self.btn_eliminar.pack(side=tk.LEFT, padx=8)
 
         self.btn_licencias = tk.Button(
-            btn_frame, text="Licencias", bg="#9C27B0", fg="#fff", font=("Helvetica", 12, "bold"),
+            btn_frame, text=_("Licencias"), bg="#9C27B0", fg="#fff", font=("Helvetica", 12, "bold"),
             command=self.abrir_licencias, relief="flat", cursor="hand2", width=12
         )
         self.btn_licencias.pack(side=tk.LEFT, padx=8)
@@ -83,7 +84,7 @@ class VentanaRegistro(tk.Toplevel):
             self.img_login_tk = ImageTk.PhotoImage(img_login)
             tk.Label(img_frame, image=self.img_login_tk, bg="#FFFFFF").pack(padx=10, pady=10)
         except Exception:
-            tk.Label(img_frame, text="Sin imagen", bg="#FFFFFF", fg="red", font=("Helvetica", 12, "bold")).pack(padx=10, pady=10)
+            tk.Label(img_frame, text=_("Sin imagen"), bg="#FFFFFF", fg="red", font=("Helvetica", 12, "bold")).pack(padx=10, pady=10)
 
         # Tabla
         tabla_frame = tk.Frame(frame, bg="#FFFFFF")
@@ -97,11 +98,11 @@ class VentanaRegistro(tk.Toplevel):
 
         columns = ("usuario", "fecha_inicio", "fecha_fin", "dias_restantes", "serial")
         self.tabla = ttk.Treeview(tabla_frame, columns=columns, show="headings", height=7, style="Treeview")
-        self.tabla.heading("usuario", text="Usuario")
-        self.tabla.heading("fecha_inicio", text="Inicio")
-        self.tabla.heading("fecha_fin", text="Fin")
-        self.tabla.heading("dias_restantes", text="Días")
-        self.tabla.heading("serial", text="Serial")
+        self.tabla.heading("usuario", text=_("Usuario"))
+        self.tabla.heading("fecha_inicio", text=_("Inicio"))
+        self.tabla.heading("fecha_fin", text=_("Fin"))
+        self.tabla.heading("dias_restantes", text=_("Días"))
+        self.tabla.heading("serial", text=_("Serial"))
         self.tabla.column("usuario", width=100, anchor="center")
         self.tabla.column("fecha_inicio", width=80, anchor="center")
         self.tabla.column("fecha_fin", width=80, anchor="center")
@@ -125,23 +126,23 @@ class VentanaRegistro(tk.Toplevel):
         contrasena = self.entry_contrasena.get().strip()
         confirmar = self.entry_confirmar.get().strip()
         if not usuario or not contrasena or not confirmar:
-            messagebox.showwarning("Campos requeridos", "Complete todos los campos.", parent=self)
+            messagebox.showwarning(_("Campos requeridos"), _("Complete todos los campos."), parent=self)
             return
         if contrasena != confirmar:
-            messagebox.showwarning("Contraseña", "Las contraseñas no coinciden.", parent=self)
+            messagebox.showwarning(_("Contraseña"), _("Las contraseñas no coinciden."), parent=self)
             return
         if len(contrasena) < 6:
-            messagebox.showwarning("Contraseña", "La contraseña debe tener al menos 6 caracteres.", parent=self)
+            messagebox.showwarning(_("Contraseña"), _("La contraseña debe tener al menos 6 caracteres."), parent=self)
             return
         try:
             ServicioRegistro.registrar_usuario(usuario, contrasena)
             self.cargar_usuarios()
-            messagebox.showinfo("Éxito", "Usuario registrado correctamente.", parent=self)
+            messagebox.showinfo(_("Éxito"), _("Usuario registrado correctamente."), parent=self)
             self.entry_usuario.delete(0, tk.END)
             self.entry_contrasena.delete(0, tk.END)
             self.entry_confirmar.delete(0, tk.END)
         except Exception as e:
-            messagebox.showerror("Error", f"No se pudo registrar el usuario: {e}", parent=self)
+            messagebox.showerror(_("Error"), _("No se pudo registrar el usuario: {0}").format(e), parent=self)
 
     def seleccionar_usuario(self, event):
         seleccionado = self.tabla.selection()
@@ -152,7 +153,7 @@ class VentanaRegistro(tk.Toplevel):
         usuario_actual = valores[0]
 
         edit_win = tk.Toplevel(self)
-        edit_win.title("Editar Usuario")
+        edit_win.title(_("Editar Usuario"))
         edit_win.geometry("540x400+500+200")
         edit_win.config(bg="#FFFFFF")
         edit_win.transient(self)
@@ -161,16 +162,16 @@ class VentanaRegistro(tk.Toplevel):
         frame = tk.Frame(edit_win, bg="#FFFFFF", bd=2, relief="groove")
         frame.pack(fill=tk.BOTH, expand=True, padx=30, pady=30)
 
-        tk.Label(frame, text="Usuario:", font=("Helvetica", 16, "bold"), bg="#FFFFFF", fg="#333").pack(pady=(10, 5))
+        tk.Label(frame, text=_("Usuario:"), font=("Helvetica", 16, "bold"), bg="#FFFFFF", fg="#333").pack(pady=(10, 5))
         entry_usuario = ttk.Entry(frame, font=("Helvetica", 15))
         entry_usuario.pack(pady=5, fill=tk.X, padx=10)
         entry_usuario.insert(0, usuario_actual)
 
-        tk.Label(frame, text="Nueva Contraseña:", font=("Helvetica", 16, "bold"), bg="#FFFFFF", fg="#333").pack(pady=(15, 5))
+        tk.Label(frame, text=_("Nueva Contraseña:"), font=("Helvetica", 16, "bold"), bg="#FFFFFF", fg="#333").pack(pady=(15, 5))
         entry_contrasena = ttk.Entry(frame, font=("Helvetica", 15), show="*")
         entry_contrasena.pack(pady=5, fill=tk.X, padx=10)
 
-        tk.Label(frame, text="Confirmar Contraseña:", font=("Helvetica", 16, "bold"), bg="#FFFFFF", fg="#333").pack(pady=(15, 5))
+        tk.Label(frame, text=_("Confirmar Contraseña:"), font=("Helvetica", 16, "bold"), bg="#FFFFFF", fg="#333").pack(pady=(15, 5))
         entry_confirmar = ttk.Entry(frame, font=("Helvetica", 15), show="*")
         entry_confirmar.pack(pady=5, fill=tk.X, padx=10)
 
@@ -179,22 +180,22 @@ class VentanaRegistro(tk.Toplevel):
             nueva_contrasena = entry_contrasena.get().strip()
             confirmar = entry_confirmar.get().strip()
             if not nuevo_usuario:
-                messagebox.showwarning("Campos requeridos", "El usuario no puede estar vacío.", parent=edit_win)
+                messagebox.showwarning(_("Campos requeridos"), _("El usuario no puede estar vacío."), parent=edit_win)
                 return
             if nueva_contrasena:
                 if nueva_contrasena != confirmar:
-                    messagebox.showwarning("Contraseña", "Las contraseñas no coinciden.", parent=edit_win)
+                    messagebox.showwarning(_("Contraseña"), _("Las contraseñas no coinciden."), parent=edit_win)
                     return
                 if len(nueva_contrasena) < 6:
-                    messagebox.showwarning("Contraseña", "La contraseña debe tener al menos 6 caracteres.", parent=edit_win)
+                    messagebox.showwarning(_("Contraseña"), _("La contraseña debe tener al menos 6 caracteres."), parent=edit_win)
                     return
             try:
                 ServicioRegistro.actualizar_usuario(usuario_actual, nuevo_usuario, nueva_contrasena if nueva_contrasena else None)
                 self.cargar_usuarios()
-                messagebox.showinfo("Éxito", "Usuario editado correctamente.", parent=edit_win)
+                messagebox.showinfo(_("Éxito"), _("Usuario editado correctamente."), parent=edit_win)
                 edit_win.destroy()
             except Exception as e:
-                messagebox.showerror("Error", f"No se pudo editar el usuario: {e}", parent=edit_win)
+                messagebox.showerror(_("Error"), _("No se pudo editar el usuario: {0}").format(e), parent=edit_win)
 
         def cancelar_edicion():
             edit_win.destroy()
@@ -203,13 +204,13 @@ class VentanaRegistro(tk.Toplevel):
         btn_frame.pack(pady=28)
 
         btn_confirmar = tk.Button(
-            btn_frame, text="Confirmar", bg="#2196F3", fg="#fff", font=("Helvetica", 14, "bold"),
+            btn_frame, text=_("Confirmar"), bg="#2196F3", fg="#fff", font=("Helvetica", 14, "bold"),
             command=guardar_edicion, relief="flat", cursor="hand2", width=14
         )
         btn_confirmar.pack(side=tk.LEFT, padx=12)
 
         btn_cancelar = tk.Button(
-            btn_frame, text="Cancelar", bg="#F44336", fg="#fff", font=("Helvetica", 14, "bold"),
+            btn_frame, text=_("Cancelar"), bg="#F44336", fg="#fff", font=("Helvetica", 14, "bold"),
             command=cancelar_edicion, relief="flat", cursor="hand2", width=14
         )
         btn_cancelar.pack(side=tk.LEFT, padx=12)
@@ -217,7 +218,7 @@ class VentanaRegistro(tk.Toplevel):
     def actualizar_usuario(self):
         seleccionado = self.tabla.selection()
         if not seleccionado:
-            messagebox.showwarning("Seleccione", "Seleccione un usuario para actualizar.", parent=self)
+            messagebox.showwarning(_("Seleccione"), _("Seleccione un usuario para actualizar."), parent=self)
             return
         item = seleccionado[0]
         valores = self.tabla.item(item, "values")
@@ -226,32 +227,32 @@ class VentanaRegistro(tk.Toplevel):
         try:
             ServicioRegistro.renovar_suscripcion(usuario)
             self.cargar_usuarios()
-            messagebox.showinfo("Éxito", "Suscripción actualizada correctamente.", parent=self)
+            messagebox.showinfo(_("Éxito"), _("Suscripción actualizada correctamente."), parent=self)
             self.entry_usuario.delete(0, tk.END)
             self.entry_contrasena.delete(0, tk.END)
             self.entry_confirmar.delete(0, tk.END)
         except Exception as e:
-            messagebox.showerror("Error", f"No se pudo actualizar la suscripción: {e}", parent=self)
+            messagebox.showerror(_("Error"), _("No se pudo actualizar la suscripción: {0}").format(e), parent=self)
 
     def eliminar_usuario(self):
         seleccionado = self.tabla.selection()
         if not seleccionado:
-            messagebox.showwarning("Seleccione", "Seleccione un usuario para eliminar.", parent=self)
+            messagebox.showwarning(_("Seleccione"), _("Seleccione un usuario para eliminar."), parent=self)
             return
         item = seleccionado[0]
         valores = self.tabla.item(item, "values")
         usuario = valores[0]
-        if not messagebox.askyesno("Confirmar", f"¿Está seguro de eliminar el usuario '{usuario}'?", parent=self):
+        if not messagebox.askyesno(_("Confirmar"), _("¿Está seguro de eliminar el usuario '{0}'?").format(usuario), parent=self):
             return
         try:
             ServicioRegistro.eliminar_usuario(usuario)
             self.cargar_usuarios()
-            messagebox.showinfo("Éxito", "Usuario eliminado correctamente.", parent=self)
+            messagebox.showinfo(_("Éxito"), _("Usuario eliminado correctamente."), parent=self)
             self.entry_usuario.delete(0, tk.END)
             self.entry_contrasena.delete(0, tk.END)
             self.entry_confirmar.delete(0, tk.END)
         except Exception as e:
-            messagebox.showerror("Error", f"No se pudo eliminar el usuario: {e}", parent=self)
+            messagebox.showerror(_("Error"), _("No se pudo eliminar el usuario: {0}").format(e), parent=self)
 
     def abrir_licencias(self):
         VentanaLicencias(self)

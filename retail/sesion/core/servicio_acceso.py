@@ -5,6 +5,7 @@ from typing import Any, Optional, Tuple
 
 from retail.sesion.core.db import conexion, buscar_usuario as db_buscar_usuario
 from retail.nucleo.seguridad import hash_contrasena, verificar_contrasena
+from retail.traducciones import _
 
 logger = logging.getLogger(__name__)
 from retail.nucleo.configuraciones import guardar_usuario, cargar_usuario
@@ -21,28 +22,28 @@ class ServicioAcceso:
         usuario: str, contrasena: str
     ) -> Tuple[bool, str, Optional[dict[str, Any]]]:
         if not usuario or not contrasena:
-            return False, "Credenciales incompletas.", None
+            return False, _("Credenciales incompletas."), None
 
         if usuario.lower() in ServicioAcceso.USUARIOS_RESERVADOS:
-            return False, "Acceso denegado.", None
+            return False, _("Acceso denegado."), None
 
         resultado = db_buscar_usuario(usuario, contrasena)
         if not resultado:
-            return False, "Credenciales inválidas.", None
+            return False, _("Credenciales inválidas."), None
 
-        _, usuario_bd, _, fecha_inicio, fecha_fin, serial = resultado
+        __, usuario_bd, __, fecha_inicio, fecha_fin, serial = resultado
 
         es_valida, mensaje_validacion = ServicioLicencias.validar_licencia(
             usuario_bd, serial
         )
         if not es_valida:
-            return False, f"Licencia: {mensaje_validacion}", None
+            return False, _("Licencia: {0}").format(mensaje_validacion), None
 
         dias_restantes = ServicioLicencias.dias_restantes(usuario_bd)
 
         return (
             True,
-            "Autenticación exitosa",
+            _("Autenticación exitosa"),
             {
                 "usuario": usuario_bd,
                 "serial": serial,

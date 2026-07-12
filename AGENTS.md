@@ -1,7 +1,7 @@
 # Contexto del Proyecto — Innobert Retail
 
 ## Última sesión (11 Jul 2026)
-Se completaron 5 hitos principales:
+Se completaron 7 hitos principales:
 
 ### 1. Refactorización base_datos ✅
 - Monolito `base_datos.py` (1160 líneas) → paquete modular `base_datos/`
@@ -24,10 +24,26 @@ Se completaron 5 hitos principales:
 ### 5. Tests 372/372 ✅
 - Suite completa al 100% verde
 
+### 6. CI/CD (ruff + mypy) ✅
+- ruff: 164 errores → 0 limpio
+- mypy: estricto en 22 módulos core, 0 errores
+- CI pipeline: ruff check → mypy → pytest 372 tests
+
+### 7. Consolidación rutas duplicadas ✅
+- Eliminado `retail/nucleo/servicios/sesion/` (4 archivos legacy)
+- Todos los imports apuntan a `retail/sesion/core/*`
+- Tests 372/372, ruff 0, mypy 0
+
+## En progreso
+### 8. Internacionalización (i18n) 🔄
+- ✅ Módulo `retail/traducciones/` con `_()` y `establecer_idioma()`
+- ✅ Archivos `es.json` y `en.json` con ~180 traducciones
+- ✅ Strings envueltas en: `sesion/core/*` (3 servicios), `sesion/acceso.py`, `sesion/registro.py`, `sesion/licencias.py`
+- [ ] Envolver strings en `retail/vistas/*` (ventas.py, deudas.py, inventario.py, ganancias.py, contenedor.py)
+- [ ] Configurar selector de idioma en la UI (menú de configuración)
+- [ ] Tests para verificar cambio de idioma
+
 ## Próximos pasos pendientes
-- [ ] Mejorar CI/CD (agregar mypy, ruff linting)
-- [ ] Consolidar rutas duplicadas: `retail/nucleo/servicios/sesion/` y `retail/sesion/core/`
 - [ ] Módulo de backup/restore de la BD
-- [ ] Internacionalización (i18n)
 - [ ] Agregar `__main__.py` para instalación vía pip
 - [ ] Verificar funcionamiento del entry point `innobert-retail`

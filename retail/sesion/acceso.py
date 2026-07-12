@@ -4,6 +4,7 @@ import os
 from PIL import Image, ImageTk
 from retail.sesion.registro import VentanaRegistro
 from retail.sesion.core.servicio_acceso import ServicioAcceso
+from retail.traducciones import _
 
 
 class Acceso(tk.Frame):
@@ -26,7 +27,7 @@ class Acceso(tk.Frame):
 
         titulo = tk.Label(
             frame2,
-            text="INICIO DE SESIÓN",
+            text=_("INICIO DE SESIÓN"),
             font=("Calibri", 20, "bold"),
             bg="#FFFFFF",
             fg="#333333",
@@ -34,12 +35,12 @@ class Acceso(tk.Frame):
         titulo.pack(pady=5)
 
         # Campo Usuario
-        tk.Label(frame2, text="Usuario", font=("Calibri", 14), bg="#FFFFFF", fg="#333333").pack(anchor="w", pady=5)
+        tk.Label(frame2, text=_("Usuario"), font=("Calibri", 14), bg="#FFFFFF", fg="#333333").pack(anchor="w", pady=5)
         self.entry_usuario = ttk.Entry(frame2, font=("Calibri", 14))
         self.entry_usuario.pack(fill=tk.X, pady=5)
 
         # Campo Contraseña
-        tk.Label(frame2, text="Contraseña", font=("Calibri", 14), bg="#FFFFFF", fg="#333333").pack(anchor="w", pady=5)
+        tk.Label(frame2, text=_("Contraseña"), font=("Calibri", 14), bg="#FFFFFF", fg="#333333").pack(anchor="w", pady=5)
         self.entry_contrasena = ttk.Entry(frame2, font=("Calibri", 14), show="*")
         self.entry_contrasena.pack(fill=tk.X, pady=5)
 
@@ -47,7 +48,7 @@ class Acceso(tk.Frame):
         self.recordar_var = tk.IntVar()
         self.checkbox_recordar = tk.Checkbutton(
             frame2,
-            text="Recordar Datos",
+            text=_("Recordar Datos"),
             variable=self.recordar_var,
             bg="#FFFFFF",
             font=("Calibri", 12),
@@ -61,7 +62,7 @@ class Acceso(tk.Frame):
         # Botón Iniciar Sesión
         self.btn_login = tk.Button(
             frame2,
-            text="Iniciar Sesión",
+            text=_("Iniciar Sesión"),
             command=self.login,
             font=("Calibri", 14, "bold"),
             bg="#4CAF50",
@@ -76,7 +77,7 @@ class Acceso(tk.Frame):
         # Botón Registrar
         self.btn_registrar = tk.Button(
             frame2,
-            text="Registrar",
+            text=_("Registrar"),
             command=self.abrir_registro,
             font=("Calibri", 14, "bold"),
             bg="#2196F3",
@@ -102,7 +103,7 @@ class Acceso(tk.Frame):
             label_imagen = tk.Label(frame_imagen, image=self.img_negocio, bg="#FFFFFF")
             label_imagen.pack(expand=True)
         except Exception:
-            tk.Label(frame_imagen, text="No se pudo cargar la imagen", bg="#FFFFFF", fg="red").pack()
+            tk.Label(frame_imagen, text=_("No se pudo cargar la imagen"), bg="#FFFFFF", fg="red").pack()
 
         # Footer con información de contacto
         frame_footer = tk.Frame(frame_imagen, bg="#ffffff", highlightthickness=0)
@@ -180,27 +181,27 @@ class Acceso(tk.Frame):
         recordar = self.recordar_var.get()
 
         if not usuario or not contrasena:
-            messagebox.showwarning("Advertencia", "Ingrese usuario y contraseña.")
+            messagebox.showwarning(_("Advertencia"), _("Ingrese usuario y contraseña."))
             return
 
         # Autenticación con validación de licencia (módulo independizado)
         exito, mensaje, datos_usuario = ServicioAcceso.autenticar_usuario(usuario, contrasena)
         if exito:
             # Mostrar info de licencia (sin rutas de BD)
-            msg_bienvenida = f"Bienvenido, {usuario}!"
+            msg_bienvenida = _("Bienvenido, {0}!").format(usuario)
             
             if datos_usuario.get("dias_restantes") is not None:
                 dias = datos_usuario["dias_restantes"]
                 if dias <= 7:
-                    msg_bienvenida += f"\n⚠️ Licencia vence en {dias} días."
+                    msg_bienvenida += _("\n⚠️ Licencia vence en {0} días.").format(dias)
             
-            messagebox.showinfo("Éxito", msg_bienvenida)
+            messagebox.showinfo(_("Éxito"), msg_bienvenida)
             ServicioAcceso.guardar_preferencias_sesion(usuario, contrasena, recordar)
             self.controlador.usuario_actual = usuario
             self.controlador.geometry("1100x650+130+20")
             self.controlador.show_frame("Contenedor")
         else:
-            messagebox.showerror("Error", mensaje)
+            messagebox.showerror(_("Error"), mensaje)
 
     def cargar_usuario(self):
         usuario, contrasena, recordar = ServicioAcceso.cargar_preferencias_sesion()
@@ -220,8 +221,8 @@ class Acceso(tk.Frame):
         # Solo desarrollador puede acceder a registro
         if not ServicioAcceso.puede_acceder_a_registro(usuario, contrasena):
             messagebox.showwarning(
-                "Acceso restringido",
-                "Registro de usuarios restringido para mantenimiento.",
+                _("Acceso restringido"),
+                _("Registro de usuarios restringido para mantenimiento."),
             )
             return
         

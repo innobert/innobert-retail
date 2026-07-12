@@ -6,6 +6,7 @@ import uuid
 from typing import Any, Dict, Optional, Tuple
 
 from retail.sesion.core.db import conexion
+from retail.traducciones import _
 
 logger = logging.getLogger(__name__)
 
@@ -60,7 +61,7 @@ class ServicioLicencias:
                 resultado = cursor.fetchone()
 
             if not resultado:
-                return False, "Licencia no encontrada."
+                return False, _("Licencia no encontrada.")
 
             fecha_fin_str = resultado[0]
             fecha_fin = datetime.datetime.strptime(fecha_fin_str, "%Y-%m-%d").date()
@@ -68,11 +69,11 @@ class ServicioLicencias:
 
             if hoy > fecha_fin:
                 dias_vencidos = (hoy - fecha_fin).days
-                return False, f"Licencia vencida hace {dias_vencidos} días."
+                return False, _("Licencia vencida hace {0} días.").format(dias_vencidos)
 
-            return True, "Licencia válida."
+            return True, _("Licencia válida.")
         except Exception as e:
-            return False, f"Error al validar licencia: {e}"
+            return False, _("Error al validar licencia: {0}").format(e)
 
     @staticmethod
     def obtener_licencia(usuario: str) -> Optional[Dict[str, Any]]:
@@ -131,7 +132,7 @@ class ServicioLicencias:
         if not licencia:
             return {
                 "estado": "no_encontrada",
-                "mensaje": "Licencia no registrada",
+                "mensaje": _("Licencia no registrada"),
                 "dias_restantes": 0,
             }
 
@@ -140,28 +141,28 @@ class ServicioLicencias:
         if dias_restantes < 0:
             return {
                 "estado": "vencida",
-                "mensaje": f"Licencia vencida hace {abs(dias_restantes)} días",
+                "mensaje": _("Licencia vencida hace {0} días").format(abs(dias_restantes)),
                 "dias_restantes": 0,
                 "serial": licencia["serial"],
             }
         elif dias_restantes == 0:
             return {
                 "estado": "vencido_hoy",
-                "mensaje": "Licencia vence hoy",
+                "mensaje": _("Licencia vence hoy"),
                 "dias_restantes": 0,
                 "serial": licencia["serial"],
             }
         elif ServicioLicencias.licencia_proxima_a_vencer(usuario, 7):
             return {
                 "estado": "proxima_a_vencer",
-                "mensaje": f"Licencia vence en {dias_restantes} días",
+                "mensaje": _("Licencia vence en {0} días").format(dias_restantes),
                 "dias_restantes": dias_restantes,
                 "serial": licencia["serial"],
             }
         else:
             return {
                 "estado": "vigente",
-                "mensaje": f"Licencia vigente. Vence en {dias_restantes} días",
+                "mensaje": _("Licencia vigente. Vence en {0} días").format(dias_restantes),
                 "dias_restantes": dias_restantes,
                 "serial": licencia["serial"],
             }

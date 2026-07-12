@@ -5,6 +5,7 @@ from typing import Any, Dict, List, Optional
 from retail.sesion.core.db import conexion
 from retail.nucleo.seguridad import hash_contrasena
 from retail.sesion.core.servicio_licencias import ServicioLicencias
+from retail.traducciones import _
 
 
 class ServicioRegistro:
@@ -13,13 +14,13 @@ class ServicioRegistro:
         usuario: str, contrasena: str, dias_licencia: int = 30
     ) -> bool:
         if not usuario or not contrasena:
-            raise ValueError("Usuario y contraseña son requeridos.")
+            raise ValueError(_("Usuario y contraseña son requeridos."))
 
         if len(usuario) < 3:
-            raise ValueError("Usuario debe tener al menos 3 caracteres.")
+            raise ValueError(_("Usuario debe tener al menos 3 caracteres."))
 
         if len(contrasena) < 6:
-            raise ValueError("Contraseña debe tener al menos 6 caracteres.")
+            raise ValueError(_("Contraseña debe tener al menos 6 caracteres."))
 
         licencia = ServicioLicencias.generar_licencia(usuario, dias_licencia)
         contrasena_hash = hash_contrasena(contrasena)
@@ -75,10 +76,10 @@ class ServicioRegistro:
         usuario_actual: str, nuevo_usuario: str, nueva_contrasena: Optional[str] = None
     ) -> bool:
         if not nuevo_usuario:
-            raise ValueError("Nuevo usuario no puede estar vacío.")
+            raise ValueError(_("Nuevo usuario no puede estar vacío."))
 
         if nueva_contrasena and len(nueva_contrasena) < 6:
-            raise ValueError("Contraseña debe tener al menos 6 caracteres.")
+            raise ValueError(_("Contraseña debe tener al menos 6 caracteres."))
 
         with conexion() as conn:
             cursor = conn.cursor()

@@ -2,12 +2,13 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 from retail.sesion.core.servicio_licencias import ServicioLicencias
 from retail.sesion.core.servicio_registro import ServicioRegistro
+from retail.traducciones import _
 
 
 class VentanaLicencias(tk.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
-        self.title("Gestión de Licencias")
+        self.title(_("Gestión de Licencias"))
         self.geometry("820x520+300+60")
         self.resizable(False, False)
         self.config(bg="#E6D9E3")
@@ -22,7 +23,7 @@ class VentanaLicencias(tk.Toplevel):
         frame.pack(fill=tk.BOTH, expand=True, padx=20, pady=20)
 
         tk.Label(
-            frame, text="Gestión de Licencias", font=("Helvetica", 18, "bold"),
+            frame, text=_("Gestión de Licencias"), font=("Helvetica", 18, "bold"),
             bg="#FFFFFF", fg="#333333"
         ).pack(pady=(10, 10))
 
@@ -34,23 +35,23 @@ class VentanaLicencias(tk.Toplevel):
         act_frame = tk.Frame(top_frame, bg="#FFFFFF")
         act_frame.pack(side=tk.LEFT, fill=tk.X, expand=True)
 
-        tk.Label(act_frame, text="Usuario:", font=("Helvetica", 12), bg="#FFFFFF").grid(row=0, column=0, sticky="e", padx=(0, 5), pady=3)
+        tk.Label(act_frame, text=_("Usuario:"), font=("Helvetica", 12), bg="#FFFFFF").grid(row=0, column=0, sticky="e", padx=(0, 5), pady=3)
         self.entry_usuario = ttk.Entry(act_frame, font=("Helvetica", 12), width=18)
         self.entry_usuario.grid(row=0, column=1, padx=(0, 10), pady=3)
 
-        tk.Label(act_frame, text="Serial:", font=("Helvetica", 12), bg="#FFFFFF").grid(row=0, column=2, sticky="e", padx=(0, 5), pady=3)
+        tk.Label(act_frame, text=_("Serial:"), font=("Helvetica", 12), bg="#FFFFFF").grid(row=0, column=2, sticky="e", padx=(0, 5), pady=3)
         self.entry_serial = ttk.Entry(act_frame, font=("Helvetica", 12), width=30)
         self.entry_serial.grid(row=0, column=3, padx=(0, 10), pady=3)
 
         self.btn_activar = tk.Button(
-            act_frame, text="Activar", bg="#4CAF50", fg="#fff", font=("Helvetica", 11, "bold"),
+            act_frame, text=_("Activar"), bg="#4CAF50", fg="#fff", font=("Helvetica", 11, "bold"),
             command=self.activar_licencia, relief="flat", cursor="hand2", width=10
         )
         self.btn_activar.grid(row=0, column=4, padx=(0, 5), pady=3)
 
         # Botón para ver estado detallado
         self.btn_estado = tk.Button(
-            act_frame, text="Ver Estado", bg="#2196F3", fg="#fff", font=("Helvetica", 11, "bold"),
+            act_frame, text=_("Ver Estado"), bg="#2196F3", fg="#fff", font=("Helvetica", 11, "bold"),
             command=self.ver_estado, relief="flat", cursor="hand2", width=10
         )
         self.btn_estado.grid(row=0, column=5, pady=3)
@@ -67,12 +68,12 @@ class VentanaLicencias(tk.Toplevel):
 
         columns = ("usuario", "fecha_inicio", "fecha_fin", "dias_restantes", "estado", "serial")
         self.tabla = ttk.Treeview(tabla_frame, columns=columns, show="headings", height=7, style="Treeview")
-        self.tabla.heading("usuario", text="Usuario")
-        self.tabla.heading("fecha_inicio", text="Inicio")
-        self.tabla.heading("fecha_fin", text="Fin")
-        self.tabla.heading("dias_restantes", text="Días")
-        self.tabla.heading("estado", text="Estado")
-        self.tabla.heading("serial", text="Serial")
+        self.tabla.heading("usuario", text=_("Usuario"))
+        self.tabla.heading("fecha_inicio", text=_("Inicio"))
+        self.tabla.heading("fecha_fin", text=_("Fin"))
+        self.tabla.heading("dias_restantes", text=_("Días"))
+        self.tabla.heading("estado", text=_("Estado"))
+        self.tabla.heading("serial", text=_("Serial"))
         self.tabla.column("usuario", width=100, anchor="center")
         self.tabla.column("fecha_inicio", width=80, anchor="center")
         self.tabla.column("fecha_fin", width=80, anchor="center")
@@ -110,38 +111,45 @@ class VentanaLicencias(tk.Toplevel):
         usuario = self.entry_usuario.get().strip()
         serial = self.entry_serial.get().strip()
         if not usuario or not serial:
-            messagebox.showwarning("Campos requeridos", "Ingrese usuario y serial.", parent=self)
+            messagebox.showwarning(_("Campos requeridos"), _("Ingrese usuario y serial."), parent=self)
             return
         valida, mensaje = ServicioLicencias.validar_licencia(usuario, serial)
         if valida:
-            messagebox.showinfo("Licencia válida", mensaje, parent=self)
+            messagebox.showinfo(_("Licencia válida"), mensaje, parent=self)
         else:
-            if messagebox.askyesno("Licencia inválida", f"{mensaje}\n¿Desea renovar la licencia?", parent=self):
+            if messagebox.askyesno(_("Licencia inválida"), _("{0}\n¿Desea renovar la licencia?").format(mensaje), parent=self):
                 ServicioLicencias.renovar_licencia(usuario)
                 self.cargar_licencias()
-                messagebox.showinfo("Renovada", "Licencia renovada por 30 días.", parent=self)
+                messagebox.showinfo(_("Renovada"), _("Licencia renovada por 30 días."), parent=self)
         self.entry_usuario.delete(0, tk.END)
         self.entry_serial.delete(0, tk.END)
 
     def ver_estado(self):
         usuario = self.entry_usuario.get().strip()
         if not usuario:
-            messagebox.showwarning("Campo requerido", "Ingrese un nombre de usuario.", parent=self)
+            messagebox.showwarning(_("Campo requerido"), _("Ingrese un nombre de usuario."), parent=self)
             return
         estado = ServicioLicencias.obtener_estado_licencia(usuario)
         licencia = ServicioLicencias.obtener_licencia(usuario)
         if not licencia:
-            messagebox.showinfo("Sin licencia", f"El usuario '{usuario}' no tiene licencia registrada.", parent=self)
+            messagebox.showinfo(_("Sin licencia"), _("El usuario '{0}' no tiene licencia registrada.").format(usuario), parent=self)
         else:
             info = (
-                f"Usuario: {usuario}\n"
-                f"Estado: {estado.get('mensaje', '')}\n"
-                f"Inicio: {licencia['fecha_inicio']}\n"
-                f"Fin: {licencia['fecha_fin']}\n"
-                f"Serial: {licencia['serial']}\n"
-                f"Días restantes: {ServicioLicencias.dias_restantes(usuario)}"
+                _("Usuario: {0}\n"
+                  "Estado: {1}\n"
+                  "Inicio: {2}\n"
+                  "Fin: {3}\n"
+                  "Serial: {4}\n"
+                  "Días restantes: {5}").format(
+                    usuario,
+                    estado.get("mensaje", ""),
+                    licencia["fecha_inicio"],
+                    licencia["fecha_fin"],
+                    licencia["serial"],
+                    ServicioLicencias.dias_restantes(usuario),
+                )
             )
-            messagebox.showinfo(f"Estado de Licencia - {usuario}", info, parent=self)
+            messagebox.showinfo(_("Estado de Licencia - {0}").format(usuario), info, parent=self)
         self.entry_usuario.delete(0, tk.END)
 
     def mostrar_detalle(self, event):
@@ -156,7 +164,7 @@ class VentanaLicencias(tk.Toplevel):
         licencia = ServicioLicencias.obtener_licencia(usuario)
 
         edit_win = tk.Toplevel(self)
-        edit_win.title(f"Licencia - {usuario}")
+        edit_win.title(_("Licencia - {0}").format(usuario))
         edit_win.geometry("500x400+500+200")
         edit_win.config(bg="#FFFFFF")
         edit_win.transient(self)
@@ -165,26 +173,32 @@ class VentanaLicencias(tk.Toplevel):
         frame = tk.Frame(edit_win, bg="#FFFFFF", bd=2, relief="groove")
         frame.pack(fill=tk.BOTH, expand=True, padx=30, pady=30)
 
-        tk.Label(frame, text="Gestión de Licencia", font=("Helvetica", 16, "bold"), bg="#FFFFFF", fg="#333").pack(pady=(10, 15))
+        tk.Label(frame, text=_("Gestión de Licencia"), font=("Helvetica", 16, "bold"), bg="#FFFFFF", fg="#333").pack(pady=(10, 15))
 
-        info_text = f"Usuario: {usuario}\n\n"
+        info_text = _("Usuario: {0}\n\n").format(usuario)
         if licencia:
-            info_text += (
-                f"Estado: {estado.get('mensaje', '')}\n"
-                f"Inicio: {licencia['fecha_inicio']}\n"
-                f"Fin: {licencia['fecha_fin']}\n"
-                f"Serial: {licencia['serial']}\n"
-                f"Días restantes: {ServicioLicencias.dias_restantes(usuario)}"
+            info_text += _(
+                "Estado: {0}\n"
+                "Inicio: {1}\n"
+                "Fin: {2}\n"
+                "Serial: {3}\n"
+                "Días restantes: {4}"
+            ).format(
+                estado.get("mensaje", ""),
+                licencia["fecha_inicio"],
+                licencia["fecha_fin"],
+                licencia["serial"],
+                ServicioLicencias.dias_restantes(usuario),
             )
         else:
-            info_text += "Sin licencia registrada."
+            info_text += _("Sin licencia registrada.")
 
         tk.Label(frame, text=info_text, font=("Helvetica", 12), bg="#FFFFFF", fg="#333", justify=tk.LEFT).pack(pady=10)
 
         def renovar():
             ServicioLicencias.renovar_licencia(usuario)
             self.cargar_licencias()
-            messagebox.showinfo("Renovada", "Licencia renovada por 30 días.", parent=edit_win)
+            messagebox.showinfo(_("Renovada"), _("Licencia renovada por 30 días."), parent=edit_win)
             edit_win.destroy()
 
         def cancelar():
@@ -194,13 +208,13 @@ class VentanaLicencias(tk.Toplevel):
         btn_frame.pack(pady=20)
 
         btn_renovar = tk.Button(
-            btn_frame, text="Renovar Licencia", bg="#4CAF50", fg="#fff", font=("Helvetica", 13, "bold"),
+            btn_frame, text=_("Renovar Licencia"), bg="#4CAF50", fg="#fff", font=("Helvetica", 13, "bold"),
             command=renovar, relief="flat", cursor="hand2", width=16
         )
         btn_renovar.pack(side=tk.LEFT, padx=10)
 
         btn_cancelar = tk.Button(
-            btn_frame, text="Cerrar", bg="#F44336", fg="#fff", font=("Helvetica", 13, "bold"),
+            btn_frame, text=_("Cerrar"), bg="#F44336", fg="#fff", font=("Helvetica", 13, "bold"),
             command=cancelar, relief="flat", cursor="hand2", width=10
         )
         btn_cancelar.pack(side=tk.LEFT, padx=10)
