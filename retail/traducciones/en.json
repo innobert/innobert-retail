@@ -189,6 +189,16 @@
     "Cliente borrado": "Customer Cleared",
     "Cliente requerido": "Customer Required",
 
+    "Agregar {0} a deuda": "Add {0} to debt",
+    "El producto '{0}' no tiene stock disponible.\nStock en inventario: {1} | En carrito: {2}": "The product '{0}' is out of stock.\nInventory stock: {1} | In cart: {2}",
+    "Stock disponible para agregar: {0} unidades\n(Stock inventario: {1} - Ya en carrito: {2})": "Available stock to add: {0} units\n(Inventory stock: {1} - Already in cart: {2})",
+    "El carrito contiene productos. Si cambia de cliente, se eliminarán todos los productos del carrito.\n\n¿Desea continuar?": "The cart contains products. Changing the customer will clear all cart items.\n\nDo you want to continue?",
+    "Ha borrado el cliente. El carrito se limpiará automáticamente.\n\n¿Desea continuar?": "You have cleared the customer. The cart will be cleared automatically.\n\nDo you want to continue?",
+    "Deuda creada correctamente. ID: {0}": "Debt created successfully. ID: {0}",
+    "No se pudo crear la deuda: {0}": "Could not create debt: {0}",
+    "No se pudo obtener el stock actual.": "Could not get current stock.",
+    "Producto agotado": "Out of Stock",
+
     "Día": "Day",
     "Semana": "Week",
     "Mes": "Month",

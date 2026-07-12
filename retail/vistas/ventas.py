@@ -593,7 +593,7 @@ class Ventas(tk.Frame):
     # ----------------------------------------------------------------------
     def actualizar_combobox_clientes(self, event=None):
         """Actualiza el combobox de clientes con la lista de nombres."""
-        nombres, _ = VentasServicio.obtener_clientes_formateados()
+        nombres, _tmp = VentasServicio.obtener_clientes_formateados()
         self.entry_cliente["values"] = nombres
 
     def _validar_y_actualizar_tipo_venta(self, nuevo_tipo_venta):
@@ -618,7 +618,7 @@ class Ventas(tk.Frame):
         if not texto:
             self.cliente_id_seleccionado = None
             self._validar_y_actualizar_tipo_venta("rapida")
-            nombres, _ = VentasServicio.obtener_clientes_formateados()
+            nombres, _tmp = VentasServicio.obtener_clientes_formateados()
             self.entry_cliente["values"] = nombres
         else:
             clientes_filtrados = VentasServicio.filtrar_clientes_por_texto(texto)

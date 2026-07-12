@@ -3,6 +3,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 from PIL import Image, ImageTk
 
+from retail.traducciones import _
 from retail.nucleo.servicios.deudas.servicio_deudas import DeudasServicio
 from retail.nucleo.configuraciones import PRODUCTOS_POR_PAGINA
 from retail.utilidades.paginacion import PaginacionWidget
@@ -46,7 +47,7 @@ class Deudas(tk.Frame):
         # Título Principal
         label_titulo = tk.Label(
             self,
-            text="Deudas",
+            text=_("Deudas"),
             font=("Helvetica", 15, "bold"),
             bg="#F44336",
             fg="#0A0A0A",
@@ -56,7 +57,7 @@ class Deudas(tk.Frame):
         # Canvas para productos con scrollbar vertical solamente
         frame_canvas = tk.LabelFrame(
             self,
-            text="Productos",
+            text=_("Productos"),
             font=("Helvetica", 12, "bold"),
             bg="#E6D9E3",
         )
@@ -102,7 +103,7 @@ class Deudas(tk.Frame):
         # Label Frame Detalles de Deuda
         frame_detalles = tk.LabelFrame(
             self,
-            text="Detalles de Deuda",
+            text=_("Detalles de Deuda"),
             font=("Helvetica", 12, "bold"),
             bg="#E6D9E3",
         )
@@ -113,7 +114,7 @@ class Deudas(tk.Frame):
         # Cliente
         label_cliente = tk.Label(
             frame_detalles,
-            text="Cliente",
+            text=_("Cliente"),
             font=("Calibri", 14, "bold"),
             bg="#E6D9E3",
             fg="#333333",
@@ -132,7 +133,7 @@ class Deudas(tk.Frame):
         # Producto
         label_producto = tk.Label(
             frame_detalles,
-            text="Producto",
+            text=_("Producto"),
             font=("Calibri", 14, "bold"),
             bg="#E6D9E3",
             fg="#333333",
@@ -164,7 +165,7 @@ class Deudas(tk.Frame):
         # Botón Carrito
         self.btn_carrito = tk.Button(
             frame_detalles,
-            text="CARRITO",
+            text=_("CARRITO"),
             image=self.img_carrito,
             compound="left",
             font=("Helvetica", 13, "bold"),
@@ -185,7 +186,7 @@ class Deudas(tk.Frame):
         self.var_total_carrito = tk.StringVar(value="$0")
         lf_total_detalles = tk.LabelFrame(
             frame_detalles,
-            text="Total Deuda",
+            text=_("Total Deuda"),
             font=("Helvetica", 11, "bold"),
             bg="#E6E5D9",
         )
@@ -202,7 +203,7 @@ class Deudas(tk.Frame):
         # Opciones
         frame_opciones = tk.LabelFrame(
             frame_detalles,
-            text="Opciones",
+            text=_("Opciones"),
             font=("Helvetica", 12, "bold"),
             bg="#E6D9E3",
         )
@@ -210,7 +211,7 @@ class Deudas(tk.Frame):
 
         self.btn_facturas = tk.Button(
             frame_opciones,
-            text="FACTURAS",
+            text=_("FACTURAS"),
             image=self.img_facturas,
             compound="left" if self.img_facturas else None,
             font=("Helvetica", 13, "bold"),
@@ -229,7 +230,7 @@ class Deudas(tk.Frame):
 
         self.btn_pagadas = tk.Button(
             frame_opciones,
-            text="PAGADAS",
+            text=_("PAGADAS"),
             image=self.img_pagadas,
             compound="left" if self.img_pagadas else None,
             font=("Helvetica", 13, "bold"),
@@ -288,13 +289,13 @@ class Deudas(tk.Frame):
                 self.frame_contenedor, producto, row, col,
                 on_select=lambda f, s=self: s._seleccionar_producto_canvas(f),
                 on_double_click=lambda d, f, s=self: s._solicitar_cantidad_producto(d, f),
-                texto_estado=lambda e: "Disponible" if e == 1 else "Agotado",
+                texto_estado=lambda e: _("Disponible") if e == 1 else _("Agotado"),
             )
         self.canvas.yview_moveto(0)
 
     def _texto_paginacion(self):
         total = DeudasServicio.contar_productos(self.filtro_actual)
-        return f"Página {self.pagina_actual} de {self.total_paginas} ({total} productos)"
+        return _("Página {0} de {1} ({2} productos)").format(self.pagina_actual, self.total_paginas, total)
 
     def crear_controles_paginacion(self):
         for widget in self.frame_paginacion.winfo_children():
@@ -399,8 +400,8 @@ class Deudas(tk.Frame):
         # Validar que un cliente esté seleccionado (OBLIGATORIO para deudas)
         if not self.cliente_id_seleccionado:
             messagebox.showwarning(
-                "Cliente requerido",
-                "Primero debe seleccionar un cliente para agregar productos al carrito de deudas.",
+                _("Cliente requerido"),
+                _("Primero debe seleccionar un cliente para agregar productos al carrito de deudas."),
                 parent=self
             )
             return
@@ -408,8 +409,8 @@ class Deudas(tk.Frame):
         cliente_nombre = self.entry_cliente.get().strip()
         if not cliente_nombre:
             messagebox.showwarning(
-                "Cliente requerido",
-                "Primero debe seleccionar un cliente válido.",
+                _("Cliente requerido"),
+                _("Primero debe seleccionar un cliente válido."),
                 parent=self
             )
             return
@@ -417,7 +418,7 @@ class Deudas(tk.Frame):
         id_producto = data["id_producto"]
         stock_actual = DeudasServicio.obtener_stock_actual(id_producto)
         if stock_actual is None:
-            messagebox.showerror("Error", "No se pudo obtener el stock actual del producto.", parent=self)
+            messagebox.showerror(_("Error"), _("No se pudo obtener el stock actual del producto."), parent=self)
             return
 
         # Calcular stock real disponible restando lo ya en carrito
@@ -429,9 +430,10 @@ class Deudas(tk.Frame):
 
         if stock_real_disponible <= 0:
             messagebox.showwarning(
-                "Producto agotado",
-                f"El producto '{data['producto']}' no tiene stock disponible.\n"
-                f"Stock en inventario: {stock_actual} | En carrito: {cantidad_en_carrito}",
+                _("Producto agotado"),
+                _("El producto '{0}' no tiene stock disponible.\n"
+                  "Stock en inventario: {1} | En carrito: {2}").format(
+                    data["producto"], stock_actual, cantidad_en_carrito),
                 parent=self
             )
             self.actualizar_canvas_productos()
@@ -439,7 +441,7 @@ class Deudas(tk.Frame):
 
         # Ventana para ingresar cantidad
         top = tk.Toplevel(self)
-        top.title(f"Agregar {data['producto']} a deuda")
+        top.title(_("Agregar {0} a deuda").format(data["producto"]))
         top.geometry("340x210+400+200")
         top.configure(bg="#E6D9E3")
         top.resizable(False, False)
@@ -462,7 +464,7 @@ class Deudas(tk.Frame):
 
         tk.Label(
             frame_main,
-            text=f"Stock Disponible: {stock_real_disponible}",
+            text=_("Stock Disponible: {0}").format(stock_real_disponible),
             font=("Helvetica", 15),
             bg="#E6D9E3",
             fg="#004203",
@@ -470,7 +472,7 @@ class Deudas(tk.Frame):
 
         frame_cantidad = tk.Frame(frame_main, bg="#E6D9E3")
         frame_cantidad.pack(pady=(0, 25))
-        tk.Label(frame_cantidad, text="Cantidad:", font=("Helvetica", 12), bg="#E6D9E3").pack(side="left", padx=(0, 10))
+        tk.Label(frame_cantidad, text=_("Cantidad:"), font=("Helvetica", 12), bg="#E6D9E3").pack(side="left", padx=(0, 10))
 
         def validar_entero(valor):
             return valor == "" or (valor.isdigit() and int(valor) > 0)
@@ -490,13 +492,13 @@ class Deudas(tk.Frame):
             try:
                 cantidad = int(entry_cantidad.get())
                 if cantidad <= 0:
-                    messagebox.showwarning("Cantidad inválida", "Ingrese una cantidad mayor a cero.", parent=top)
+                    messagebox.showwarning(_("Cantidad inválida"), _("Ingrese una cantidad mayor a cero."), parent=top)
                     return
 
                 # Validar stock actualizado
                 stock_inventario_actual = DeudasServicio.obtener_stock_actual(id_producto)
                 if stock_inventario_actual is None:
-                    messagebox.showerror("Error", "No se pudo obtener el stock actual.", parent=top)
+                    messagebox.showerror(_("Error"), _("No se pudo obtener el stock actual."), parent=top)
                     return
 
                 cantidad_en_carrito_ahora = sum(
@@ -507,9 +509,10 @@ class Deudas(tk.Frame):
 
                 if cantidad > stock_real_ahora:
                     messagebox.showwarning(
-                        "Stock insuficiente",
-                        f"Stock disponible para agregar: {stock_real_ahora} unidades\n"
-                        f"(Stock inventario: {stock_inventario_actual} - Ya en carrito: {cantidad_en_carrito_ahora})",
+                        _("Stock insuficiente"),
+                        _("Stock disponible para agregar: {0} unidades\n"
+                          "(Stock inventario: {1} - Ya en carrito: {2})").format(
+                            stock_real_ahora, stock_inventario_actual, cantidad_en_carrito_ahora),
                         parent=top
                     )
                     return
@@ -523,20 +526,20 @@ class Deudas(tk.Frame):
                     cliente_nombre=cliente_nombre
                 )
                 if error:
-                    messagebox.showwarning("Error", mensaje, parent=top)
+                    messagebox.showwarning(_("Error"), mensaje, parent=top)
                     return
 
                 self.carrito_deuda = nuevo_carrito
                 self.actualizar_total_carrito_display()
                 top.destroy()
             except ValueError:
-                messagebox.showwarning("Cantidad inválida", "Ingrese un número válido.", parent=top)
+                messagebox.showwarning(_("Cantidad inválida"), _("Ingrese un número válido."), parent=top)
 
         entry_cantidad.bind("<Return>", lambda e: agregar())
 
         btn_agregar = tk.Button(
             frame_main,
-            text="Agregar",
+            text=_("Agregar"),
             font=("Helvetica", 12, "bold"),
             bg="#4CAF50",
             fg="white",
@@ -547,7 +550,7 @@ class Deudas(tk.Frame):
 
         btn_cancelar = tk.Button(
             frame_main,
-            text="Cancelar",
+            text=_("Cancelar"),
             font=("Helvetica", 12, "bold"),
             bg="#F44336",
             fg="white",
@@ -560,7 +563,7 @@ class Deudas(tk.Frame):
     # Métodos para clientes (usando servicio)
     # ----------------------------------------------------------------------
     def actualizar_combobox_clientes(self):
-        nombres, _ = DeudasServicio.obtener_clientes_formateados()
+        nombres, _tmp = DeudasServicio.obtener_clientes_formateados()
         self.entry_cliente["values"] = nombres
 
     def _validar_y_limpiar_carrito_si_cambia_cliente(self, nuevo_id):
@@ -570,13 +573,13 @@ class Deudas(tk.Frame):
 
         if self.cliente_id_seleccionado is None or self.cliente_id_seleccionado != nuevo_id:
             if messagebox.askyesno(
-                "Cambio de cliente",
-                "El carrito contiene productos. Si cambia de cliente, se eliminarán todos los productos del carrito.\n\n¿Desea continuar?",
+                _("Cambio de cliente"),
+                _("El carrito contiene productos. Si cambia de cliente, se eliminarán todos los productos del carrito.\n\n¿Desea continuar?"),
                 parent=self
             ):
                 self.carrito_deuda.clear()
                 self.actualizar_total_carrito_display()
-                messagebox.showinfo("Carrito limpiado", "El carrito ha sido vaciado.", parent=self)
+                messagebox.showinfo(_("Carrito limpiado"), _("El carrito ha sido vaciado."), parent=self)
                 return True
             else:
                 return False
@@ -589,8 +592,8 @@ class Deudas(tk.Frame):
             # Vacío: restaurar lista completa
             if self.carrito_deuda:
                 if messagebox.askyesno(
-                    "Cliente borrado",
-                    "Ha borrado el cliente. El carrito se limpiará automáticamente.\n\n¿Desea continuar?",
+                    _("Cliente borrado"),
+                    _("Ha borrado el cliente. El carrito se limpiará automáticamente.\n\n¿Desea continuar?"),
                     parent=self
                 ):
                     self.carrito_deuda.clear()
@@ -605,7 +608,7 @@ class Deudas(tk.Frame):
                     return
             else:
                 self.cliente_id_seleccionado = None
-            nombres, _ = DeudasServicio.obtener_clientes_formateados()
+            nombres, _tmp = DeudasServicio.obtener_clientes_formateados()
             self.entry_cliente["values"] = nombres
             return
 
@@ -649,11 +652,11 @@ class Deudas(tk.Frame):
 
     def confirmar_deuda(self):
         if not self.carrito_deuda:
-            messagebox.showwarning("Carrito vacío", "No hay productos para crear la deuda.", parent=self)
+            messagebox.showwarning(_("Carrito vacío"), _("No hay productos para crear la deuda."), parent=self)
             return
 
         if not self.cliente_id_seleccionado:
-            messagebox.showerror("Cliente requerido", "Debe seleccionar un cliente para crear la deuda.", parent=self)
+            messagebox.showerror(_("Cliente requerido"), _("Debe seleccionar un cliente para crear la deuda."), parent=self)
             return
 
         try:
@@ -669,9 +672,9 @@ class Deudas(tk.Frame):
             self.entry_producto.delete(0, tk.END)
             self.actualizar_total_carrito_display()
             self.actualizar_canvas_productos()
-            messagebox.showinfo("Éxito", f"Deuda creada correctamente. ID: {result['id_deuda']}", parent=self)
+            messagebox.showinfo(_("Éxito"), _("Deuda creada correctamente. ID: {0}").format(result['id_deuda']), parent=self)
         except Exception as e:
-            messagebox.showerror("Error", f"No se pudo crear la deuda: {e}", parent=self)
+            messagebox.showerror(_("Error"), _("No se pudo crear la deuda: {0}").format(e), parent=self)
 
     # ----------------------------------------------------------------------
     # Scroll canvas (solo vertical)
