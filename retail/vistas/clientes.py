@@ -3,6 +3,7 @@ from tkinter import ttk, messagebox, END
 import os
 from PIL import Image, ImageTk
 
+from retail.traducciones import _
 from retail.nucleo.servicios.clientes.servicio_clientes import ClientesServicio
 from retail.utilidades.paginacion import PaginacionWidget
 
@@ -28,7 +29,7 @@ class Clientes(tk.Frame):
         # Título Principal
         label_titulo = tk.Label(
             self,
-            text="Clientes",
+            text=_("Clientes"),
             font=("Helvetica", 15, "bold"),
             bg="#FF9800",
             fg="#0A0A0A",
@@ -58,7 +59,7 @@ class Clientes(tk.Frame):
         # LabelFrame Búsqueda
         lf_buscar = tk.LabelFrame(
             frame1,
-            text="Búsqueda",
+            text=_("Búsqueda"),
             font=("Helvetica", 12, "bold"),
             bg="#E6D9E3",
             fg="#0A0A0A",
@@ -80,11 +81,11 @@ class Clientes(tk.Frame):
         frame_form.pack(fill="x", pady=10)
 
         campos = [
-            ("Nombres", "entry_nombres"),
-            ("Apellidos", "entry_apellidos"),
-            ("Cédula", "entry_cedula"),
-            ("Celular", "entry_celular"),
-            ("Zona", "entry_zona"),
+            (_("Nombres"), "entry_nombres"),
+            (_("Apellidos"), "entry_apellidos"),
+            (_("Cédula"), "entry_cedula"),
+            (_("Celular"), "entry_celular"),
+            (_("Zona"), "entry_zona"),
         ]
 
         self.entries = {}
@@ -109,7 +110,7 @@ class Clientes(tk.Frame):
         # LabelFrame Opciones (botones)
         lf_opciones = tk.LabelFrame(
             frame1,
-            text="Opciones",
+            text=_("Opciones"),
             font=("Helvetica", 12, "bold"),
             bg="#E6D9E3",
         )
@@ -131,7 +132,7 @@ class Clientes(tk.Frame):
         # Botón Agregar
         self.btn_agregar = tk.Button(
             lf_opciones,
-            text="  Agregar",
+            text=_("  Agregar"),
             image=img_add,
             compound="left",
             font=("Helvetica", 13, "bold"),
@@ -152,7 +153,7 @@ class Clientes(tk.Frame):
         # Botón Eliminar
         self.btn_eliminar = tk.Button(
             lf_opciones,
-            text="  Eliminar",
+            text=_("  Eliminar"),
             image=img_delete,
             compound="left",
             font=("Helvetica", 13, "bold"),
@@ -173,7 +174,7 @@ class Clientes(tk.Frame):
         # Botón Limpiar
         self.btn_limpiar = tk.Button(
             lf_opciones,
-            text="  Limpiar",
+            text=_("  Limpiar"),
             image=img_clear,
             compound="left",
             font=("Helvetica", 13, "bold"),
@@ -214,12 +215,12 @@ class Clientes(tk.Frame):
         )
 
         columnas = [
-            ("id_cliente", "ID", 50),
-            ("nombres", "Nombres", 150),
-            ("apellidos", "Apellidos", 150),
-            ("cedula", "Cédula", 120),
-            ("celular", "Celular", 120),
-            ("zona", "Zona", 120),
+            ("id_cliente", _("ID"), 50),
+            ("nombres", _("Nombres"), 150),
+            ("apellidos", _("Apellidos"), 150),
+            ("cedula", _("Cédula"), 120),
+            ("celular", _("Celular"), 120),
+            ("zona", _("Zona"), 120),
         ]
         for col_id, col_text, width in columnas:
             self.tree.heading(col_id, text=col_text)
@@ -245,7 +246,7 @@ class Clientes(tk.Frame):
     # Métodos de paginación
     def _texto_paginacion(self):
         total = ClientesServicio.contar_clientes(self.filtro_actual)
-        return f"Página {self.pagina_actual} de {self.total_paginas} ({total} clientes)"
+        return _("Página {0} de {1} ({2} clientes)").format(self.pagina_actual, self.total_paginas, total)
 
     def crear_controles_paginacion(self):
         for widget in self.frame_paginacion.winfo_children():
@@ -330,7 +331,7 @@ class Clientes(tk.Frame):
         nombres, apellidos, cedula, celular, zona = datos
 
         if not all(datos):
-            messagebox.showwarning("Campos vacíos", "Todos los campos son obligatorios")
+            messagebox.showwarning(_("Campos vacíos"), _("Todos los campos son obligatorios"))
             return
 
         exito, mensaje = ClientesServicio.agregar_cliente(
@@ -341,17 +342,17 @@ class Clientes(tk.Frame):
             self._actualizar_totales()
             self._cargar_pagina()
             self.limpiar_campos()
-            messagebox.showinfo("Éxito", mensaje)
+            messagebox.showinfo(_("Éxito"), mensaje)
         else:
-            messagebox.showerror("Error", mensaje)
+            messagebox.showerror(_("Error"), mensaje)
 
     def eliminar_cliente(self, event=None):
         seleccionado = self.tree.selection()
         if not seleccionado:
-            messagebox.showwarning("Advertencia", "Seleccione un cliente para eliminar")
+            messagebox.showwarning(_("Advertencia"), _("Seleccione un cliente para eliminar"))
             return
         id_cliente = self.tree.item(seleccionado[0], "values")[0]
-        if messagebox.askyesno("Confirmar eliminación", "¿Está seguro de eliminar este cliente?"):
+        if messagebox.askyesno(_("Confirmar eliminación"), _("¿Está seguro de eliminar este cliente?")):
             exito, mensaje = ClientesServicio.eliminar_cliente(id_cliente)
             if exito:
                 # Recargar la página actual. Si la página se queda vacía y no es la primera, retroceder
@@ -361,27 +362,27 @@ class Clientes(tk.Frame):
                     self.pagina_actual -= 1
                     self._cargar_pagina()
                 self.limpiar_campos()
-                messagebox.showinfo("Éxito", mensaje)
+                messagebox.showinfo(_("Éxito"), mensaje)
             else:
-                messagebox.showerror("Error", mensaje)
+                messagebox.showerror(_("Error"), mensaje)
 
     def editar_celda(self, event):
         columna = self.tree.identify_column(event.x)
         item = self.tree.selection()[0]
         columna_texto = self.tree.heading(columna)["text"]
-        if columna_texto == "ID":
+        if columna_texto == _("ID"):
             return
 
         columnas_db = {
-            "Nombres": "nombres",
-            "Apellidos": "apellidos",
-            "Cédula": "cedula",
-            "Celular": "celular",
-            "Zona": "zona",
+            _("Nombres"): "nombres",
+            _("Apellidos"): "apellidos",
+            _("Cédula"): "cedula",
+            _("Celular"): "celular",
+            _("Zona"): "zona",
         }
         campo_db = columnas_db.get(columna_texto)
         if not campo_db:
-            messagebox.showerror("Error", "No se puede editar esta columna")
+            messagebox.showerror(_("Error"), _("No se puede editar esta columna"))
             return
 
         valor_actual = self.tree.item(item, "values")[int(columna[1:]) - 1]
@@ -389,7 +390,7 @@ class Clientes(tk.Frame):
 
         # Ventana de edición
         popup = tk.Toplevel(self)
-        popup.title(f"Editar {columna_texto}")
+        popup.title(_("Editar {0}").format(columna_texto))
         popup.geometry("400x250+450+200")
         popup.resizable(False, False)
         popup.transient(self)
@@ -402,7 +403,7 @@ class Clientes(tk.Frame):
 
         tk.Label(
             frame_popup,
-            text=f"Editar {columna_texto}",
+            text=_("Editar {0}").format(columna_texto),
             font=("Helvetica", 14, "bold"),
             bg="#F5F5F5",
             fg="#333333",
@@ -410,7 +411,7 @@ class Clientes(tk.Frame):
 
         tk.Label(
             frame_popup,
-            text="Nuevo valor:",
+            text=_("Nuevo valor:"),
             font=("Helvetica", 12),
             bg="#F5F5F5",
             fg="#333333",
@@ -426,22 +427,22 @@ class Clientes(tk.Frame):
         def guardar_cambios(event=None):
             nuevo_texto = nuevo_valor.get().strip()
             if not nuevo_texto:
-                messagebox.showwarning("Valor vacío", "El nuevo valor no puede estar vacío", parent=popup)
+                messagebox.showwarning(_("Valor vacío"), _("El nuevo valor no puede estar vacío"), parent=popup)
                 return
             exito, mensaje = ClientesServicio.actualizar_cliente(id_cliente, campo_db, nuevo_texto)
             if exito:
                 # Recargar la página para reflejar el cambio (puede afectar el orden/filtro)
                 self._cargar_pagina()
                 popup.destroy()
-                messagebox.showinfo("Éxito", mensaje, parent=self)
+                messagebox.showinfo(_("Éxito"), mensaje, parent=self)
             else:
-                messagebox.showerror("Error", mensaje, parent=popup)
+                messagebox.showerror(_("Error"), mensaje, parent=popup)
 
         popup.bind("<Return>", guardar_cambios)
 
         tk.Button(
             frame_botones,
-            text="Guardar",
+            text=_("Guardar"),
             command=guardar_cambios,
             font=("Helvetica", 12, "bold"),
             bg="#4CAF50",
@@ -451,7 +452,7 @@ class Clientes(tk.Frame):
 
         tk.Button(
             frame_botones,
-            text="Cancelar",
+            text=_("Cancelar"),
             command=popup.destroy,
             font=("Helvetica", 12, "bold"),
             bg="#F44336",

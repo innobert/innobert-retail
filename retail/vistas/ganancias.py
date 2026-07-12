@@ -1,4 +1,5 @@
 import tkinter as tk
+from retail.traducciones import _
 from retail.ganancias.diario import Dia
 from retail.ganancias.semanal import Semana
 from retail.ganancias.mensual import Mes
@@ -54,7 +55,7 @@ class GananciasContenedor(tk.Frame):
         for idx, (nombre, color) in enumerate(secciones):
             btn = tk.Button(
                 frame_menu,
-                text=nombre,
+                text=_(nombre),
                 font=("Calibri", 13, "bold"),
                 bg=color,
                 fg="#fff" if nombre == self.seccion_activa else "#222",
@@ -121,7 +122,7 @@ class GananciasContenedor(tk.Frame):
 
 def ver_ganancias(parent, pos_x=10, pos_y=5):
     ventana_ganancias = tk.Toplevel(parent)
-    ventana_ganancias.title("Ganancias")
+    ventana_ganancias.title(_("Ganancias"))
     ventana_ganancias.geometry(f"{VENTANA_ANCHO}x{VENTANA_ALTO}+{pos_x}+{pos_y}")
     ventana_ganancias.resizable(False, False)
     ventana_ganancias.configure(bg="#F5F5F5")
