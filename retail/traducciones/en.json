@@ -188,6 +188,12 @@
     "Carrito limpiado": "Cart Cleared",
     "Cliente borrado": "Customer Cleared",
     "Cliente requerido": "Customer Required",
+    "Estado:": "Status:",
+    "Estado": "Status",
+    "Error inesperado: {0}": "Unexpected error: {0}",
+    "Seleccione un producto para eliminar.": "Select a product to delete.",
+    "¿Está seguro de eliminar '{0}'?": "Are you sure you want to delete '{0}'?",
+    "Error al cargar imagen: {0}": "Error loading image: {0}",
 
     "Agregar {0} a deuda": "Add {0} to debt",
     "El producto '{0}' no tiene stock disponible.\nStock en inventario: {1} | En carrito: {2}": "The product '{0}' is out of stock.\nInventory stock: {1} | In cart: {2}",

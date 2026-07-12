@@ -4,6 +4,7 @@ from tkinter import filedialog, ttk, messagebox
 from PIL import Image, ImageTk
 import os
 
+from retail.traducciones import _
 from retail.nucleo.configuraciones import rutas, PRODUCTOS_POR_PAGINA
 from retail.utilidades.paginacion import PaginacionWidget
 from retail.utilidades.producto_card import crear_producto_card
@@ -49,7 +50,7 @@ class Inventario(tk.Frame):
         # Título Principal
         label_titulo = tk.Label(
             self,
-            text="Inventario",
+            text=_("Inventario"),
             font=("Helvetica", 15, "bold"),
             bg="#2196F3",
             fg="#0A0A0A",
@@ -68,7 +69,7 @@ class Inventario(tk.Frame):
 
         # --- LabelFrame Buscar ---
         lf_buscar = tk.LabelFrame(
-            frame_datos, text="Buscar", font=("Helvetica", 12, "bold"), bg="#E6D9E3"
+            frame_datos,             text=_("Buscar"), font=("Helvetica", 12, "bold"), bg="#E6D9E3"
         )
         lf_buscar.place(x=10, y=10, width=230, height=70)
         self.entry_buscar = ttk.Combobox(lf_buscar, font=("Helvetica", 11))
@@ -78,12 +79,12 @@ class Inventario(tk.Frame):
         # --- LabelFrame Selección ---
         lf_seleccion = tk.LabelFrame(
             frame_datos,
-            text="Selección",
+            text=_("Selección"),
             font=("Helvetica", 12, "bold"),
             bg="#E6D9E3",
         )
         lf_seleccion.place(x=10, y=90, width=250, height=190)
-        labels = ["Producto:", "Precio:", "Costo:", "Stock:", "Estado:"]
+        labels = [_("Producto:"), _("Precio:"), _("Costo:"), _("Stock:"), _("Estado:")]
         self.seleccion_vars = {}
         self.estado_label = None
         for i, text in enumerate(labels):
@@ -117,7 +118,7 @@ class Inventario(tk.Frame):
         # --- LabelFrame Opciones ---
         lf_opciones = tk.LabelFrame(
             frame_datos,
-            text="Opciones",
+            text=_("Opciones"),
             font=("Helvetica", 12, "bold"),
             bg="#E6D9E3",
         )
@@ -139,7 +140,7 @@ class Inventario(tk.Frame):
         # Botón Agregar
         self.btn_agregar = tk.Button(
             lf_opciones,
-            text="  Agregar",
+            text=_("  Agregar"),
             image=img_add,
             compound="left",
             font=("Helvetica", 13, "bold"),
@@ -160,7 +161,7 @@ class Inventario(tk.Frame):
         # Botón Eliminar
         self.btn_eliminar = tk.Button(
             lf_opciones,
-            text="  Eliminar",
+            text=_("  Eliminar"),
             image=img_delete,
             compound="left",
             font=("Helvetica", 13, "bold"),
@@ -181,7 +182,7 @@ class Inventario(tk.Frame):
         # Botón Historial
         self.btn_historial = tk.Button(
             lf_opciones,
-            text="  Historial",
+            text=_("  Historial"),
             image=img_historial,
             compound="left",
             font=("Helvetica", 13, "bold"),
@@ -202,7 +203,7 @@ class Inventario(tk.Frame):
         # Botón Totales
         self.btn_totales = tk.Button(
             lf_opciones,
-            text="  Totales",
+            text=_("  Totales"),
             image=img_total,
             compound="left",
             font=("Helvetica", 13, "bold"),
@@ -223,7 +224,7 @@ class Inventario(tk.Frame):
         # --- LabelFrame Productos ---
         lf_productos = tk.LabelFrame(
             self,
-            text="Productos",
+            text=_("Productos"),
             font=("Helvetica", 12, "bold"),
             bg="#E6D9E3",
         )
@@ -303,14 +304,14 @@ class Inventario(tk.Frame):
                 self.frame_contenedor, producto, row, col,
                 on_select=lambda d, f, s=self: s.mostrar_seleccion(d, f),
                 on_double_click=lambda d, f, s=self: s.tl_editar(d, f),
-                texto_estado=lambda e: "Disponible" if e == 1 else "Agotado",
+                texto_estado=lambda e: _("Disponible") if e == 1 else _("Agotado"),
                 formatear_precio=peso_colombiano,
             )
         self.canvas.yview_moveto(0)
 
     def _texto_paginacion(self):
         total = InventarioServicio.contar_productos(self.filtro_actual)
-        return f"Página {self.pagina_actual} de {self.total_paginas} ({total} productos)"
+        return _("Página {0} de {1} ({2} productos)").format(self.pagina_actual, self.total_paginas, total)
 
     def crear_controles_paginacion(self):
         for widget in self.frame_paginacion.winfo_children():
@@ -429,7 +430,7 @@ class Inventario(tk.Frame):
             )
         except Exception as e:
             logging.error(f"Error al cargar imagen: {e}")
-            img_label = tk.Label(frame_producto, text="Sin imagen", bg="white")
+            img_label = tk.Label(frame_producto, text=_("Sin imagen"), bg="white")
             img_label.pack(pady=(3, 2))
 
         frame_producto.bind(
@@ -506,7 +507,7 @@ class Inventario(tk.Frame):
 
     def _abrir_dialogo_producto(self, editar=False, datos=None):
         top = tk.Toplevel(self)
-        top.title("Agregar Producto" if not editar else "Editar Producto")
+        top.title(_("Agregar Producto") if not editar else _("Editar Producto"))
         top.geometry("700x400+300+100")
         top.configure(bg="#E6D9E3")
         top.resizable(False, False)
@@ -531,14 +532,14 @@ class Inventario(tk.Frame):
         frame_campos.place(x=0, y=10, width=280, height=300)
 
         # Botones
-        lf_botones = tk.LabelFrame(frame_principal, text="Opciones", font=("Helvetica", 12, "bold"), bg="#E6D9E3")
+        lf_botones = tk.LabelFrame(frame_principal, text=_("Opciones"), font=("Helvetica", 12, "bold"), bg="#E6D9E3")
         lf_botones.place(x=0, y=290, width=270, height=60)
 
-        btn_guardar = tk.Button(lf_botones, text="Guardar", font=("Helvetica", 12, "bold"),
+        btn_guardar = tk.Button(lf_botones, text=_("Guardar"), font=("Helvetica", 12, "bold"),
                                 bg="#4CAF50", fg="white", command=self._guardar_producto_desde_dialogo)
         btn_guardar.place(x=10, y=0)
 
-        btn_cancelar = tk.Button(lf_botones, text="Cancelar", font=("Helvetica", 12, "bold"),
+        btn_cancelar = tk.Button(lf_botones, text=_("Cancelar"), font=("Helvetica", 12, "bold"),
                                  bg="#f44336", fg="white", command=self.cerrar_ventana)
         btn_cancelar.place(x=140, y=0)
 
@@ -564,36 +565,36 @@ class Inventario(tk.Frame):
         except Exception as e:
             logging.error(f"Error al cargar imagen por defecto: {e}")
 
-        btn_cargar_imagen = tk.Button(frame_principal, text="Cargar Imágen", font=("Helvetica", 11, "bold"),
+        btn_cargar_imagen = tk.Button(frame_principal, text=_("Cargar Imágen"), font=("Helvetica", 11, "bold"),
                                       bg="#2196F3", fg="white", command=self.cargar_imagen)
         btn_cargar_imagen.place(x=370, y=320)
 
         # Campos
-        tk.Label(frame_campos, text="Producto", font=("Helvetica", 12, "bold"), bg="#E6D9E3").pack(anchor="w")
+        tk.Label(frame_campos, text=_("Producto"), font=("Helvetica", 12, "bold"), bg="#E6D9E3").pack(anchor="w")
         self.entry_producto = tk.Entry(frame_campos, font=("Helvetica", 12))
         self.entry_producto.pack(fill="x", pady=(0, 10))
         if editar:
             self.entry_producto.insert(0, datos["producto"])
 
-        tk.Label(frame_campos, text="Precio", font=("Helvetica", 12, "bold"), bg="#E6D9E3").pack(anchor="w")
+        tk.Label(frame_campos, text=_("Precio"), font=("Helvetica", 12, "bold"), bg="#E6D9E3").pack(anchor="w")
         self.entry_precio = tk.Entry(frame_campos, font=("Helvetica", 12), validate="key", validatecommand=vcmd_entero)
         self.entry_precio.pack(fill="x", pady=(0, 10))
         if editar:
             self.entry_precio.insert(0, str(int(datos["precio"])))
 
-        tk.Label(frame_campos, text="Costo", font=("Helvetica", 12, "bold"), bg="#E6D9E3").pack(anchor="w")
+        tk.Label(frame_campos, text=_("Costo"), font=("Helvetica", 12, "bold"), bg="#E6D9E3").pack(anchor="w")
         self.entry_costo = tk.Entry(frame_campos, font=("Helvetica", 12), validate="key", validatecommand=vcmd_entero)
         self.entry_costo.pack(fill="x", pady=(0, 10))
         if editar:
             self.entry_costo.insert(0, str(int(datos["costo"])))
 
-        tk.Label(frame_campos, text="Stock", font=("Helvetica", 12, "bold"), bg="#E6D9E3").pack(anchor="w")
+        tk.Label(frame_campos, text=_("Stock"), font=("Helvetica", 12, "bold"), bg="#E6D9E3").pack(anchor="w")
         self.entry_stock = tk.Entry(frame_campos, font=("Helvetica", 12), validate="key", validatecommand=vcmd_entero)
         self.entry_stock.pack(fill="x", pady=(0, 10))
         if editar:
             self.entry_stock.insert(0, str(datos["stock"]))
 
-        tk.Label(frame_campos, text="Estado", font=("Helvetica", 12, "bold"), bg="#E6D9E3").pack(anchor="w")
+        tk.Label(frame_campos, text=_("Estado"), font=("Helvetica", 12, "bold"), bg="#E6D9E3").pack(anchor="w")
         self.entry_estado = ttk.Combobox(frame_campos, font=("Helvetica", 12), values=["Disponible", "Agotado"],
                                          state="readonly")
         self.entry_estado.pack(fill="x", pady=(0, 10))
@@ -611,17 +612,17 @@ class Inventario(tk.Frame):
             stock_str = self.entry_stock.get().strip()
 
             if not all([producto, precio_str, costo_str, stock_str]):
-                messagebox.showerror("Error", "Todos los campos son obligatorios", parent=self.top)
+                messagebox.showerror(_("Error"), _("Todos los campos son obligatorios"), parent=self.top)
                 return
 
             if not (precio_str.isdigit() and int(precio_str) > 0):
-                messagebox.showerror("Error", "El precio debe ser un número entero positivo", parent=self.top)
+                messagebox.showerror(_("Error"), _("El precio debe ser un número entero positivo"), parent=self.top)
                 return
             if not (costo_str.isdigit() and int(costo_str) > 0):
-                messagebox.showerror("Error", "El costo debe ser un número entero positivo", parent=self.top)
+                messagebox.showerror(_("Error"), _("El costo debe ser un número entero positivo"), parent=self.top)
                 return
             if not (stock_str.isdigit() and int(stock_str) > 0):
-                messagebox.showerror("Error", "El stock debe ser un número entero positivo", parent=self.top)
+                messagebox.showerror(_("Error"), _("El stock debe ser un número entero positivo"), parent=self.top)
                 return
 
             precio = int(precio_str)
@@ -648,27 +649,27 @@ class Inventario(tk.Frame):
                 self.cargar_productos()
                 self.actualizar_combobox_productos()
                 self._actualizar_otras_vistas()
-                messagebox.showinfo("Éxito", mensaje, parent=self.top)
+                messagebox.showinfo(_("Éxito"), mensaje, parent=self.top)
                 self.cerrar_ventana()
             else:
-                messagebox.showerror("Error", mensaje, parent=self.top)
+                messagebox.showerror(_("Error"), mensaje, parent=self.top)
         except Exception as e:
-            messagebox.showerror("Error", f"Error inesperado: {e}", parent=self.top)
+            messagebox.showerror(_("Error"), _("Error inesperado: {0}").format(e), parent=self.top)
 
     def tl_editar(self, data, frame):
         self._abrir_dialogo_producto(editar=True, datos=data)
 
     def eliminar_producto_seleccionado(self):
         if not self.producto_seleccionado_id:
-            messagebox.showwarning("Advertencia", "Seleccione un producto para eliminar.")
+            messagebox.showwarning(_("Advertencia"), _("Seleccione un producto para eliminar."))
             return
 
         producto = self.seleccion_vars["producto"].get()
         if not producto:
-            messagebox.showwarning("Advertencia", "Seleccione un producto para eliminar.")
+            messagebox.showwarning(_("Advertencia"), _("Seleccione un producto para eliminar."))
             return
 
-        if messagebox.askyesno("Confirmar", f"¿Está seguro de eliminar '{producto}'?"):
+        if messagebox.askyesno(_("Confirmar"), _("¿Está seguro de eliminar '{0}'?").format(producto)):
             exito, mensaje = InventarioServicio.eliminar_producto(self.producto_seleccionado_id)
             if exito:
                 self.cargar_productos()
@@ -677,9 +678,9 @@ class Inventario(tk.Frame):
                 for var in self.seleccion_vars.values():
                     var.set("")
                 self.producto_seleccionado_id = None
-                messagebox.showinfo("Éxito", mensaje)
+                messagebox.showinfo(_("Éxito"), mensaje)
             else:
-                messagebox.showerror("Error", mensaje)
+                messagebox.showerror(_("Error"), mensaje)
 
     def cargar_imagen(self):
         try:
@@ -688,10 +689,10 @@ class Inventario(tk.Frame):
             file_path = filedialog.askopenfilename(
                 parent=dialog,
                 initialdir=self.ultimo_directorio,
-                title="Seleccionar imagen",
+                title=_("Seleccionar imagen"),
                 filetypes=[
-                    ("Imágenes", "*.png;*.jpg;*.jpeg;*.bmp;*.gif;*.webp;*.tiff;*.ico"),
-                    ("Todos los archivos", "*.*"),
+                    (_("Imágenes"), "*.png;*.jpg;*.jpeg;*.bmp;*.gif;*.webp;*.tiff;*.ico"),
+                    (_("Todos los archivos"), "*.*"),
                 ]
             )
             dialog.destroy()
@@ -711,7 +712,7 @@ class Inventario(tk.Frame):
                 img_label.pack(fill="both", expand=True)
                 self.image_path = image_save_path
         except Exception as e:
-            messagebox.showerror("Error", f"Error al cargar imagen: {e}", parent=self.top)
+            messagebox.showerror(_("Error"), _("Error al cargar imagen: {0}").format(e), parent=self.top)
 
     def cerrar_ventana(self):
         if hasattr(self, 'top') and self.top and self.top.winfo_exists():
