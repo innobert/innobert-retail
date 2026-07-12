@@ -229,6 +229,7 @@
     "Valor vacío": "Empty Value",
     "El nuevo valor no puede estar vacío": "The new value cannot be empty",
     "Página {0} de {1} ({2} clientes)": "Page {0} of {1} ({2} customers)",
+    "Idioma:": "Language:",
 
     "  Agregar": "  Add",
     "  Eliminar": "  Delete",
