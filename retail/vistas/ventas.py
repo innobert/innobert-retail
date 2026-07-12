@@ -7,6 +7,7 @@ from retail.nucleo.servicios.ventas.servicio_ventas import VentasServicio
 from retail.nucleo.configuraciones import PRODUCTOS_POR_PAGINA
 from retail.utilidades.paginacion import PaginacionWidget
 from retail.utilidades.producto_card import crear_producto_card
+from retail.traducciones import _
 
 
 class Ventas(tk.Frame):
@@ -43,7 +44,7 @@ class Ventas(tk.Frame):
         # Título Principal
         label_titulo = tk.Label(
             self,
-            text="Ventas",
+            text=_("Ventas"),
             font=("Helvetica", 15, "bold"),
             bg="#4CAF50",
             fg="#0A0A0A",
@@ -53,7 +54,7 @@ class Ventas(tk.Frame):
         # Canvas para productos con scrollbar vertical solamente
         frame_canvas = tk.LabelFrame(
             self,
-            text="Productos",
+            text=_("Productos"),
             font=("Helvetica", 12, "bold"),
             bg="#E6D9E3",
         )
@@ -99,7 +100,7 @@ class Ventas(tk.Frame):
         # Label Frame Detalles de Venta
         frame_detalles = tk.LabelFrame(
             self,
-            text="Detalles de Venta",
+            text=_("Detalles de Venta"),
             font=("Helvetica", 12, "bold"),
             bg="#E6D9E3",
         )
@@ -111,7 +112,7 @@ class Ventas(tk.Frame):
         # Producto
         label_stock = tk.Label(
             frame_detalles,
-            text="Producto",
+            text=_("Producto"),
             font=("Calibri", 14, "bold"),
             bg="#E6D9E3",
             fg="#333333",
@@ -128,7 +129,7 @@ class Ventas(tk.Frame):
         # Cliente
         label_cliente = tk.Label(
             frame_detalles,
-            text="Cliente",
+            text=_("Cliente"),
             font=("Calibri", 14, "bold"),
             bg="#E6D9E3",
             fg="#333333",
@@ -161,7 +162,7 @@ class Ventas(tk.Frame):
         # Botón Carrito
         self.btn_carrito = tk.Button(
             frame_detalles,
-            text="CARRITO",
+            text=_("CARRITO"),
             image=self.img_carrito,
             compound="left",
             font=("Helvetica", 13, "bold"),
@@ -182,7 +183,7 @@ class Ventas(tk.Frame):
         self.var_total_carrito = tk.StringVar(value="$0")
         lf_total_detalles = tk.LabelFrame(
             frame_detalles,
-            text="Total Carrito",
+            text=_("Total Carrito"),
             font=("Helvetica", 11, "bold"),
             bg="#E6E5D9",
         )
@@ -199,7 +200,7 @@ class Ventas(tk.Frame):
         # Opciones
         frame_opciones = tk.LabelFrame(
             frame_detalles,
-            text="Opciones",
+            text=_("Opciones"),
             font=("Helvetica", 12, "bold"),
             bg="#E6D9E3",
         )
@@ -207,7 +208,7 @@ class Ventas(tk.Frame):
 
         self.btn_facturas = tk.Button(
             frame_opciones,
-            text="FACTURAS",
+            text=_("FACTURAS"),
             image=self.img_facturas,
             compound="left" if self.img_facturas else None,
             font=("Helvetica", 13, "bold"),
@@ -226,7 +227,7 @@ class Ventas(tk.Frame):
 
         self.btn_ganancias = tk.Button(
             frame_opciones,
-            text="GANANCIAS",
+            text=_("GANANCIAS"),
             image=self.img_ganancias,
             compound="left" if self.img_ganancias else None,
             font=("Helvetica", 13, "bold"),
@@ -290,7 +291,7 @@ class Ventas(tk.Frame):
 
     def _texto_paginacion(self):
         total = VentasServicio.contar_productos(self.filtro_actual)
-        return f"Página {self.pagina_actual} de {self.total_paginas} ({total} productos)"
+        return _("Página {0} de {1} ({2} productos)").format(self.pagina_actual, self.total_paginas, total)
 
     def crear_controles_paginacion(self):
         for widget in self.frame_paginacion.winfo_children():
@@ -399,7 +400,7 @@ class Ventas(tk.Frame):
         # Obtener stock actualizado
         stock_actual = VentasServicio.obtener_stock_actual(id_producto)
         if stock_actual is None:
-            messagebox.showerror("Error", "No se pudo obtener el stock actual del producto.", parent=self)
+            messagebox.showerror(_("Error"), _("No se pudo obtener el stock actual del producto."), parent=self)
             return
 
         # Calcular stock real disponible (restando lo ya en carrito)
@@ -425,20 +426,21 @@ class Ventas(tk.Frame):
         )
         if producto_en_carrito:
             messagebox.showinfo(
-                "Producto ya agregado",
-                f"El producto '{data['producto']}' ya ha sido agregado al carrito.\n"
-                "Si desea modificar la cantidad, hágalo desde el carrito.\n"
-                "Si lo elimina del carrito, podrá volver a agregarlo.",
+                _("Producto ya agregado"),
+                _("El producto '{0}' ya ha sido agregado al carrito.\n"
+                  "Si desea modificar la cantidad, hágalo desde el carrito.\n"
+                  "Si lo elimina del carrito, podrá volver a agregarlo.").format(data["producto"]),
                 parent=self,
             )
             return
 
         if stock_real_disponible <= 0:
             messagebox.showwarning(
-                "Producto agotado o sin stock disponible",
-                f"El producto '{data['producto']}' no tiene stock disponible.\n"
-                f"Stock en inventario: {stock_actual} | En carrito: {cantidad_en_carrito}\n"
-                "Debe solicitar un pedido y actualizar el stock desde la sección de Inventario.",
+                _("Producto agotado o sin stock disponible"),
+                _("El producto '{0}' no tiene stock disponible.\n"
+                  "Stock en inventario: {1} | En carrito: {2}\n"
+                  "Debe solicitar un pedido y actualizar el stock desde la sección de Inventario.").format(
+                    data["producto"], stock_actual, cantidad_en_carrito),
                 parent=self,
             )
             self.actualizar_canvas_productos()
@@ -446,7 +448,7 @@ class Ventas(tk.Frame):
 
         # Crear ventana de diálogo
         top = tk.Toplevel(self)
-        top.title(f"Agregar {data['producto']}")
+        top.title(_("Agregar {0}").format(data["producto"]))
         top.geometry("340x210+400+200")
         top.configure(bg="#E6D9E3")
         top.resizable(False, False)
@@ -483,7 +485,7 @@ class Ventas(tk.Frame):
 
         tk.Label(
             frame_main,
-            text=f"Stock Disponible: {stock_real_disponible}",
+            text=_("Stock Disponible: {0}").format(stock_real_disponible),
             font=("Helvetica", 15),
             bg="#E6D9E3",
             fg="#004203",
@@ -493,7 +495,7 @@ class Ventas(tk.Frame):
         frame_cantidad.pack(pady=(0, 25))
         tk.Label(
             frame_cantidad,
-            text="Cantidad:",
+            text=_("Cantidad:"),
             font=("Helvetica", 12),
             bg="#E6D9E3",
         ).pack(side="left", padx=(0, 10))
@@ -519,13 +521,13 @@ class Ventas(tk.Frame):
             try:
                 cantidad = int(entry_cantidad.get())
                 if cantidad <= 0:
-                    messagebox.showwarning("Cantidad inválida", "Ingrese una cantidad mayor a cero.", parent=top)
+                    messagebox.showwarning(_("Cantidad inválida"), _("Ingrese una cantidad mayor a cero."), parent=top)
                     return
 
                 # Validar stock actualizado (por si hubo cambios)
                 stock_inventario_actual = VentasServicio.obtener_stock_actual(id_producto)
                 if stock_inventario_actual is None:
-                    messagebox.showerror("Error", "No se pudo obtener el stock actual del producto.", parent=top)
+                    messagebox.showerror(_("Error"), _("No se pudo obtener el stock actual del producto."), parent=top)
                     return
 
                 cantidad_en_carrito_ahora = sum(
@@ -536,10 +538,11 @@ class Ventas(tk.Frame):
 
                 if cantidad > stock_real_ahora:
                     messagebox.showwarning(
-                        "Stock insuficiente",
-                        f"Stock disponible para agregar: {stock_real_ahora} unidades\n"
-                        f"(Stock inventario: {stock_inventario_actual} - Ya en carrito: {cantidad_en_carrito_ahora})\n\n"
-                        f"Solicita: {cantidad} unidades.",
+                        _("Stock insuficiente"),
+                        _("Stock disponible para agregar: {0} unidades\n"
+                          "(Stock inventario: {1} - Ya en carrito: {2})\n\n"
+                          "Solicita: {3} unidades.").format(
+                            stock_real_ahora, stock_inventario_actual, cantidad_en_carrito_ahora, cantidad),
                         parent=top,
                     )
                     return
@@ -559,13 +562,13 @@ class Ventas(tk.Frame):
                 self.actualizar_total_carrito_display()
                 top.destroy()
             except ValueError:
-                messagebox.showwarning("Cantidad inválida", "Ingrese un número válido.", parent=top)
+                messagebox.showwarning(_("Cantidad inválida"), _("Ingrese un número válido."), parent=top)
 
         entry_cantidad.bind("<Return>", lambda e: agregar())
 
         btn_agregar = tk.Button(
             frame_botones,
-            text="Agregar",
+            text=_("Agregar"),
             font=("Helvetica", 12, "bold"),
             bg="#4CAF50",
             fg="white",
@@ -576,7 +579,7 @@ class Ventas(tk.Frame):
 
         btn_cancelar = tk.Button(
             frame_botones,
-            text="Cancelar",
+            text=_("Cancelar"),
             font=("Helvetica", 12, "bold"),
             bg="#F44336",
             fg="white",
@@ -602,8 +605,8 @@ class Ventas(tk.Frame):
             return
 
         messagebox.showwarning(
-            "Cambio de tipo de venta",
-            "El carrito contiene productos y será limpiado.",
+            _("Cambio de tipo de venta"),
+            _("El carrito contiene productos y será limpiado."),
             parent=self
         )
         self.carrito.clear()

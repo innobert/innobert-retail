@@ -17,6 +17,7 @@ from retail.vistas.inventario import Inventario
 from retail.vistas.deudas import Deudas
 
 from retail.nucleo.configuraciones import VENTANA_CONTENEDOR_ANCHO, VENTANA_CONTENEDOR_ALTO
+from retail.traducciones import _
 VENTANA_ANCHO = VENTANA_CONTENEDOR_ANCHO
 VENTANA_ALTO = VENTANA_CONTENEDOR_ALTO
 MENU_ALTO = 40
@@ -178,7 +179,7 @@ class Contenedor(tk.Frame):
         for idx, (nombre, clase, color) in enumerate(secciones):
             btn = tk.Button(
                 frame_menu,
-                text=nombre,
+                text=_(nombre),
                 image=self.iconos[nombre],
                 compound="left",
                 font=("Calibri", 13, "bold"),
