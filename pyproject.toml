@@ -26,6 +26,12 @@ Source = "https://github.com/innobert/innobert-retail"
 [project.scripts]
 innobert-retail = "inicio:main"
 
+[tool.setuptools.packages.find]
+include = ["retail*"]
+
+[tool.setuptools]
+py-modules = ["inicio"]
+
 [tool.ruff]
 target-version = "py311"
 line-length = 120

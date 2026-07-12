@@ -34,16 +34,34 @@ Se completaron 7 hitos principales:
 - Todos los imports apuntan a `retail/sesion/core/*`
 - Tests 372/372, ruff 0, mypy 0
 
-## En progreso
-### 8. Internacionalización (i18n) 🔄
-- ✅ Módulo `retail/traducciones/` con `_()` y `establecer_idioma()`
-- ✅ Archivos `es.json` y `en.json` con ~180 traducciones
-- ✅ Strings envueltas en: `sesion/core/*` (3 servicios), `sesion/acceso.py`, `sesion/registro.py`, `sesion/licencias.py`
-- [ ] Envolver strings en `retail/vistas/*` (ventas.py, deudas.py, inventario.py, ganancias.py, contenedor.py)
-- [ ] Configurar selector de idioma en la UI (menú de configuración)
-- [ ] Tests para verificar cambio de idioma
+## ✅ Completado (12 Jul 2026)
 
-## Próximos pasos pendientes
-- [ ] Módulo de backup/restore de la BD
-- [ ] Agregar `__main__.py` para instalación vía pip
-- [ ] Verificar funcionamiento del entry point `innobert-retail`
+### 8. `__main__.py` y empaquetado pip ✅
+- `retail/__main__.py` creado — permite `python -m retail`
+- `pyproject.toml` arreglado: `[tool.setuptools.packages.find]` + `py-modules = ["inicio"]`
+- `pip install -e .`funciona, wheel se genera correctamente
+- Entry point `innobert-retail` instalado como ejecutable
+
+### 9. Módulo de backup/restore ✅
+- `retail/nucleo/base_datos/backup.py` con: `crear_backup()`, `listar_backups()`, `restaurar_backup()`, `limpiar_backups()`
+- 9 tests en `tests/test_backup.py`
+- Backups con UUID para evitar colisiones de nombre
+- Restaura usando `sqlite3.backup()` con rollback automático en caso de error
+
+### 10. Validación final ✅
+- **ruff**: 0 errores
+- **mypy**: 0 errores en 23 archivos core
+- **pytest**: 381/381 pruebas pasan (372 originales + 9 backup)
+- **Wheel**: `innobert_retail-1.0.0-py3-none-any.whl` generado sin errores
+
+### 11. Ejecutable PyInstaller ✅
+- `dist/InnobertRetail.exe` — ejecutable standalone de 35 MB
+- `--onefile`: no requiere Python ni dependencias instaladas
+- Incluye: `img/` (25 iconos), `fotos/` (default.png), `icono.ico`, traducciones
+- Entry point: `inicio.py` con detección de instancia única
+- Compatible con `resource_path()` para rutas en modo frozen
+
+## Estado actual
+- Aplicación completamente funcional como ejecutable `.exe`
+- También instalable vía `pip` (wheel o `pip install -e .`)
+- Alternativas de distribución: ejecutable en `dist/`, wheel en `dist/` (generado con `pip wheel . --no-deps`), o publicar en PyPI

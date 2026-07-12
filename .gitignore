@@ -33,6 +33,7 @@ Logo/logo.png
 build/
 dist/
 *.spec
+*.egg-info/
 
 # Archivos temporales del sistema
 *.log
