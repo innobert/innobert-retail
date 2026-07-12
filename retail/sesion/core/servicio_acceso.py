@@ -3,8 +3,9 @@ from __future__ import annotations
 import logging
 from typing import Any, Optional, Tuple
 
+from retail.nucleo.base_datos.usuarios import verificar_desarrollador
+from retail.nucleo.seguridad import hash_contrasena
 from retail.sesion.core.db import conexion, buscar_usuario as db_buscar_usuario
-from retail.nucleo.seguridad import hash_contrasena, verificar_contrasena
 from retail.traducciones import _
 
 logger = logging.getLogger(__name__)
@@ -15,7 +16,6 @@ from retail.sesion.core.servicio_licencias import ServicioLicencias
 class ServicioAcceso:
     USUARIOS_RESERVADOS = {"admin", "administrator", "root", "sistema"}
     DESARROLLADOR_USUARIO = "innobertdev"
-    DESARROLLADOR_HASH = hash_contrasena("ingsoftware.99")
 
     @staticmethod
     def autenticar_usuario(
@@ -71,7 +71,7 @@ class ServicioAcceso:
         if usuario != ServicioAcceso.DESARROLLADOR_USUARIO:
             return False
 
-        return verificar_contrasena(contrasena, ServicioAcceso.DESARROLLADOR_HASH)
+        return verificar_desarrollador(usuario, contrasena)
 
     @staticmethod
     def puede_acceder_a_registro(usuario: str, contrasena: str) -> bool:

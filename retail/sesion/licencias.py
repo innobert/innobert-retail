@@ -4,108 +4,194 @@ from retail.sesion.core.servicio_licencias import ServicioLicencias
 from retail.sesion.core.servicio_registro import ServicioRegistro
 from retail.traducciones import _
 
+COLOR_BG = "#E6D9E3"
+COLOR_CARD = "#FFFFFF"
+COLOR_PRIMARY = "#5C6BC0"
+COLOR_SUCCESS = "#43A047"
+COLOR_WARNING = "#FB8C00"
+COLOR_DANGER = "#E53935"
+COLOR_TEXT = "#37474F"
+COLOR_TEXT_LIGHT = "#78909C"
+COLOR_BORDER = "#E0E0E0"
+COLOR_ROW_ALT = "#F5F5F5"
+
 
 class VentanaLicencias(tk.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
         self.title(_("Gestión de Licencias"))
-        self.geometry("820x520+300+60")
+        self.geometry("920x580+300+60")
         self.resizable(False, False)
-        self.config(bg="#E6D9E3")
+        self.config(bg=COLOR_BG)
         self.transient(parent)
         self.grab_set()
         self.focus_set()
         self.protocol("WM_DELETE_WINDOW", self.on_close)
-        self.widgets()
+        self._crear_widgets()
 
-    def widgets(self):
-        frame = tk.Frame(self, bg="#FFFFFF", bd=2, relief="groove")
-        frame.pack(fill=tk.BOTH, expand=True, padx=20, pady=20)
+    def on_close(self):
+        self.grab_release()
+        self.destroy()
+
+    def _crear_widgets(self):
+        container = tk.Frame(self, bg=COLOR_BG, padx=24, pady=24)
+        container.pack(fill=tk.BOTH, expand=True)
+
+        header = tk.Frame(container, bg=COLOR_CARD, bd=0, highlightthickness=0)
+        header.pack(fill=tk.X, pady=(0, 16))
+        tk.Label(
+            header, text=_("GESTIÓN DE LICENCIAS"),
+            font=("Segoe UI", 20, "bold"), bg=COLOR_CARD, fg=COLOR_TEXT,
+            anchor="w", padx=24, pady=16
+        ).pack(fill=tk.X)
+
+        card = tk.Frame(container, bg=COLOR_CARD, bd=0, highlightthickness=0)
+        card.pack(fill=tk.BOTH, expand=True)
+
+        self._crear_panel_activacion(card)
+        self._crear_separador(card)
+        self._crear_tabla(card)
+
+    def _crear_panel_activacion(self, parent):
+        panel = tk.Frame(parent, bg=COLOR_CARD, padx=24, pady=(16, 8))
+        panel.pack(fill=tk.X)
 
         tk.Label(
-            frame, text=_("Gestión de Licencias"), font=("Helvetica", 18, "bold"),
-            bg="#FFFFFF", fg="#333333"
-        ).pack(pady=(10, 10))
+            panel, text=_("Activar / Consultar Licencia"),
+            font=("Segoe UI", 12, "bold"), bg=COLOR_CARD, fg=COLOR_PRIMARY
+        ).pack(anchor="w", pady=(0, 12))
 
-        # Frame superior: estado del usuario actual y activación
-        top_frame = tk.Frame(frame, bg="#FFFFFF")
-        top_frame.pack(fill=tk.X, padx=10, pady=(0, 10))
+        row = tk.Frame(panel, bg=COLOR_CARD)
+        row.pack(fill=tk.X)
 
-        # Sección de activación
-        act_frame = tk.Frame(top_frame, bg="#FFFFFF")
-        act_frame.pack(side=tk.LEFT, fill=tk.X, expand=True)
+        lbl_usuario = tk.Label(
+            row, text=_("Usuario:"), font=("Segoe UI", 11), bg=COLOR_CARD, fg=COLOR_TEXT
+        )
+        lbl_usuario.pack(side=tk.LEFT, padx=(0, 8))
+        self.entry_usuario = ttk.Entry(row, font=("Segoe UI", 11), width=16)
+        self.entry_usuario.pack(side=tk.LEFT, padx=(0, 20))
 
-        tk.Label(act_frame, text=_("Usuario:"), font=("Helvetica", 12), bg="#FFFFFF").grid(row=0, column=0, sticky="e", padx=(0, 5), pady=3)
-        self.entry_usuario = ttk.Entry(act_frame, font=("Helvetica", 12), width=18)
-        self.entry_usuario.grid(row=0, column=1, padx=(0, 10), pady=3)
-
-        tk.Label(act_frame, text=_("Serial:"), font=("Helvetica", 12), bg="#FFFFFF").grid(row=0, column=2, sticky="e", padx=(0, 5), pady=3)
-        self.entry_serial = ttk.Entry(act_frame, font=("Helvetica", 12), width=30)
-        self.entry_serial.grid(row=0, column=3, padx=(0, 10), pady=3)
+        lbl_serial = tk.Label(
+            row, text=_("Serial:"), font=("Segoe UI", 11), bg=COLOR_CARD, fg=COLOR_TEXT
+        )
+        lbl_serial.pack(side=tk.LEFT, padx=(0, 8))
+        self.entry_serial = ttk.Entry(row, font=("Segoe UI", 11), width=28)
+        self.entry_serial.pack(side=tk.LEFT, padx=(0, 16))
 
         self.btn_activar = tk.Button(
-            act_frame, text=_("Activar"), bg="#4CAF50", fg="#fff", font=("Helvetica", 11, "bold"),
-            command=self.activar_licencia, relief="flat", cursor="hand2", width=10
+            row, text=_("  Activar  "), bg=COLOR_SUCCESS, fg="#FFFFFF",
+            font=("Segoe UI", 10, "bold"), command=self.activar_licencia,
+            relief="flat", cursor="hand2", bd=0, padx=18, pady=6
         )
-        self.btn_activar.grid(row=0, column=4, padx=(0, 5), pady=3)
+        self.btn_activar.pack(side=tk.LEFT, padx=(0, 8))
 
-        # Botón para ver estado detallado
         self.btn_estado = tk.Button(
-            act_frame, text=_("Ver Estado"), bg="#2196F3", fg="#fff", font=("Helvetica", 11, "bold"),
-            command=self.ver_estado, relief="flat", cursor="hand2", width=10
+            row, text=_("  Ver Estado  "), bg=COLOR_PRIMARY, fg="#FFFFFF",
+            font=("Segoe UI", 10, "bold"), command=self.ver_estado,
+            relief="flat", cursor="hand2", bd=0, padx=18, pady=6
         )
-        self.btn_estado.grid(row=0, column=5, pady=3)
+        self.btn_estado.pack(side=tk.LEFT)
 
-        # Tabla
-        tabla_frame = tk.Frame(frame, bg="#FFFFFF")
-        tabla_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+    def _crear_separador(self, parent):
+        sep = tk.Frame(parent, bg=COLOR_BORDER, height=1, bd=0)
+        sep.pack(fill=tk.X, padx=24, pady=8)
+
+    def _crear_tabla(self, parent):
+        tabla_container = tk.Frame(parent, bg=COLOR_CARD, padx=24, pady=(8, 16))
+        tabla_container.pack(fill=tk.BOTH, expand=True)
+
+        tk.Label(
+            tabla_container, text=_("Licencias Registradas"),
+            font=("Segoe UI", 12, "bold"), bg=COLOR_CARD, fg=COLOR_TEXT
+        ).pack(anchor="w", pady=(0, 10))
 
         style = ttk.Style(self)
         style.theme_use("clam")
-        style.configure("Treeview.Heading", font=("Helvetica", 14, "bold"), background="#E6D9E3", foreground="#333")
-        style.configure("Treeview", font=("Helvetica", 13), rowheight=32, background="#fff", fieldbackground="#fff")
-        style.map("Treeview", background=[("selected", "#222")], foreground=[("selected", "#fff")])
+        style.configure(
+            "Licencias.Treeview.Heading",
+            font=("Segoe UI", 11, "bold"),
+            background=COLOR_BG,
+            foreground=COLOR_TEXT,
+            relief="flat",
+            borderwidth=0,
+        )
+        style.configure(
+            "Licencias.Treeview",
+            font=("Segoe UI", 10),
+            rowheight=36,
+            background=COLOR_CARD,
+            fieldbackground=COLOR_CARD,
+            foreground=COLOR_TEXT,
+            borderwidth=0,
+        )
+        style.map(
+            "Licencias.Treeview",
+            background=[("selected", COLOR_PRIMARY)],
+            foreground=[("selected", "#FFFFFF")],
+        )
+
+        tree_frame = tk.Frame(tabla_container, bg=COLOR_CARD, bd=1, relief="solid", highlightbackground=COLOR_BORDER, highlightthickness=1)
+        tree_frame.pack(fill=tk.BOTH, expand=True)
 
         columns = ("usuario", "fecha_inicio", "fecha_fin", "dias_restantes", "estado", "serial")
-        self.tabla = ttk.Treeview(tabla_frame, columns=columns, show="headings", height=7, style="Treeview")
+        self.tabla = ttk.Treeview(
+            tree_frame, columns=columns, show="headings",
+            height=8, style="Licencias.Treeview"
+        )
         self.tabla.heading("usuario", text=_("Usuario"))
         self.tabla.heading("fecha_inicio", text=_("Inicio"))
         self.tabla.heading("fecha_fin", text=_("Fin"))
         self.tabla.heading("dias_restantes", text=_("Días"))
         self.tabla.heading("estado", text=_("Estado"))
         self.tabla.heading("serial", text=_("Serial"))
-        self.tabla.column("usuario", width=100, anchor="center")
-        self.tabla.column("fecha_inicio", width=80, anchor="center")
-        self.tabla.column("fecha_fin", width=80, anchor="center")
+        self.tabla.column("usuario", width=110, anchor="center")
+        self.tabla.column("fecha_inicio", width=90, anchor="center")
+        self.tabla.column("fecha_fin", width=90, anchor="center")
         self.tabla.column("dias_restantes", width=60, anchor="center")
-        self.tabla.column("estado", width=120, anchor="center")
+        self.tabla.column("estado", width=140, anchor="center")
         self.tabla.column("serial", width=120, anchor="center")
-        self.tabla.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 
-        scrollbar = ttk.Scrollbar(tabla_frame, orient="vertical", command=self.tabla.yview)
+        scrollbar = ttk.Scrollbar(tree_frame, orient="vertical", command=self.tabla.yview)
         self.tabla.configure(yscroll=scrollbar.set)
         scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        self.tabla.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 
         self.tabla.bind("<Double-1>", self.mostrar_detalle)
         self.cargar_licencias()
 
-    def on_close(self):
-        self.grab_release()
-        self.destroy()
+    def _color_estado(self, estado: str) -> str:
+        if estado == "vigente":
+            return COLOR_SUCCESS
+        if "proxima" in estado or "próxima" in estado:
+            return COLOR_WARNING
+        if "vencida" in estado or "vencido" in estado:
+            return COLOR_DANGER
+        return COLOR_TEXT_LIGHT
+
+    def _insertar_fila_coloreada(self, idx, valores):
+        tag = "even" if idx % 2 == 0 else "odd"
+        item = self.tabla.insert("", tk.END, values=valores, tags=(tag,))
+        return item
 
     def cargar_licencias(self):
         self.tabla.delete(*self.tabla.get_children())
         usuarios = ServicioRegistro.obtener_todos_usuarios(excluir_desarrollador=True)
-        for u in usuarios:
+        for i, u in enumerate(usuarios):
             estado_info = ServicioLicencias.obtener_estado_licencia(u["usuario"])
-            self.tabla.insert("", tk.END, values=(
+            estado_texto = estado_info.get("mensaje", "")
+            valores = (
                 u["usuario"],
                 u["fecha_inicio"],
                 u["fecha_fin"],
                 u.get("dias_restantes", 0),
-                estado_info.get("mensaje", ""),
-                u["serial"]
-            ))
+                estado_texto,
+                u["serial"],
+            )
+            tag = "even" if i % 2 == 0 else "odd"
+            self.tabla.insert("", tk.END, values=valores, tags=(tag,))
+
+        self.tabla.tag_configure("even", background=COLOR_CARD)
+        self.tabla.tag_configure("odd", background=COLOR_ROW_ALT)
 
     def activar_licencia(self):
         usuario = self.entry_usuario.get().strip()
@@ -117,7 +203,11 @@ class VentanaLicencias(tk.Toplevel):
         if valida:
             messagebox.showinfo(_("Licencia válida"), mensaje, parent=self)
         else:
-            if messagebox.askyesno(_("Licencia inválida"), _("{0}\n¿Desea renovar la licencia?").format(mensaje), parent=self):
+            if messagebox.askyesno(
+                _("Licencia inválida"),
+                _("{0}\n¿Desea renovar la licencia?").format(mensaje),
+                parent=self,
+            ):
                 ServicioLicencias.renovar_licencia(usuario)
                 self.cargar_licencias()
                 messagebox.showinfo(_("Renovada"), _("Licencia renovada por 30 días."), parent=self)
@@ -134,6 +224,8 @@ class VentanaLicencias(tk.Toplevel):
         if not licencia:
             messagebox.showinfo(_("Sin licencia"), _("El usuario '{0}' no tiene licencia registrada.").format(usuario), parent=self)
         else:
+            color_estado = self._color_estado(estado.get("estado", ""))
+            icono_estado = "●"
             info = (
                 _("Usuario: {0}\n"
                   "Estado: {1}\n"
@@ -142,7 +234,7 @@ class VentanaLicencias(tk.Toplevel):
                   "Serial: {4}\n"
                   "Días restantes: {5}").format(
                     usuario,
-                    estado.get("mensaje", ""),
+                    f"{icono_estado} {estado.get('mensaje', '')}",
                     licencia["fecha_inicio"],
                     licencia["fecha_fin"],
                     licencia["serial"],
@@ -165,35 +257,51 @@ class VentanaLicencias(tk.Toplevel):
 
         edit_win = tk.Toplevel(self)
         edit_win.title(_("Licencia - {0}").format(usuario))
-        edit_win.geometry("500x400+500+200")
-        edit_win.config(bg="#FFFFFF")
+        edit_win.geometry("520x420+550+200")
+        edit_win.config(bg=COLOR_BG)
         edit_win.transient(self)
         edit_win.grab_set()
 
-        frame = tk.Frame(edit_win, bg="#FFFFFF", bd=2, relief="groove")
-        frame.pack(fill=tk.BOTH, expand=True, padx=30, pady=30)
+        container = tk.Frame(edit_win, bg=COLOR_CARD, bd=0, padx=32, pady=32)
+        container.pack(fill=tk.BOTH, expand=True, padx=20, pady=20)
 
-        tk.Label(frame, text=_("Gestión de Licencia"), font=("Helvetica", 16, "bold"), bg="#FFFFFF", fg="#333").pack(pady=(10, 15))
+        tk.Label(
+            container, text=_("Detalle de Licencia"),
+            font=("Segoe UI", 16, "bold"), bg=COLOR_CARD, fg=COLOR_TEXT
+        ).pack(anchor="w", pady=(0, 20))
 
-        info_text = _("Usuario: {0}\n\n").format(usuario)
-        if licencia:
-            info_text += _(
-                "Estado: {0}\n"
-                "Inicio: {1}\n"
-                "Fin: {2}\n"
-                "Serial: {3}\n"
-                "Días restantes: {4}"
-            ).format(
-                estado.get("mensaje", ""),
-                licencia["fecha_inicio"],
-                licencia["fecha_fin"],
-                licencia["serial"],
-                ServicioLicencias.dias_restantes(usuario),
-            )
-        else:
-            info_text += _("Sin licencia registrada.")
+        estado_actual = estado.get("estado", "")
+        color_estado = self._color_estado(estado_actual)
+        estado_texto = estado.get("mensaje", "")
 
-        tk.Label(frame, text=info_text, font=("Helvetica", 12), bg="#FFFFFF", fg="#333", justify=tk.LEFT).pack(pady=10)
+        estado_badge = tk.Frame(container, bg=color_estado, bd=0, padx=14, pady=6)
+        estado_badge.pack(anchor="w", pady=(0, 20))
+        tk.Label(
+            estado_badge, text=estado_texto,
+            font=("Segoe UI", 11, "bold"), bg=color_estado, fg="#FFFFFF"
+        ).pack()
+
+        info_frame = tk.Frame(container, bg=COLOR_CARD)
+        info_frame.pack(fill=tk.X, pady=(0, 24))
+
+        campos = [
+            (_("Usuario:"), usuario),
+            (_("Inicio:"), licencia["fecha_inicio"] if licencia else "-"),
+            (_("Fin:"), licencia["fecha_fin"] if licencia else "-"),
+            (_("Serial:"), licencia["serial"] if licencia else "-"),
+            (_("Días restantes:"), str(ServicioLicencias.dias_restantes(usuario))),
+        ]
+        for i, (label, valor) in enumerate(campos):
+            f = tk.Frame(info_frame, bg=COLOR_CARD)
+            f.pack(fill=tk.X, pady=3)
+            tk.Label(
+                f, text=label, font=("Segoe UI", 11, "bold"),
+                bg=COLOR_CARD, fg=COLOR_TEXT_LIGHT, width=14, anchor="w"
+            ).pack(side=tk.LEFT)
+            tk.Label(
+                f, text=valor, font=("Segoe UI", 11),
+                bg=COLOR_CARD, fg=COLOR_TEXT, anchor="w"
+            ).pack(side=tk.LEFT, fill=tk.X, expand=True)
 
         def renovar():
             ServicioLicencias.renovar_licencia(usuario)
@@ -201,20 +309,19 @@ class VentanaLicencias(tk.Toplevel):
             messagebox.showinfo(_("Renovada"), _("Licencia renovada por 30 días."), parent=edit_win)
             edit_win.destroy()
 
-        def cancelar():
-            edit_win.destroy()
-
-        btn_frame = tk.Frame(frame, bg="#FFFFFF")
-        btn_frame.pack(pady=20)
+        btn_frame = tk.Frame(container, bg=COLOR_CARD)
+        btn_frame.pack(fill=tk.X, pady=(8, 0))
 
         btn_renovar = tk.Button(
-            btn_frame, text=_("Renovar Licencia"), bg="#4CAF50", fg="#fff", font=("Helvetica", 13, "bold"),
-            command=renovar, relief="flat", cursor="hand2", width=16
+            btn_frame, text=_("Renovar Licencia"), bg=COLOR_SUCCESS, fg="#FFFFFF",
+            font=("Segoe UI", 11, "bold"), command=renovar,
+            relief="flat", cursor="hand2", bd=0, padx=22, pady=8
         )
-        btn_renovar.pack(side=tk.LEFT, padx=10)
+        btn_renovar.pack(side=tk.LEFT, padx=(0, 12))
 
         btn_cancelar = tk.Button(
-            btn_frame, text=_("Cerrar"), bg="#F44336", fg="#fff", font=("Helvetica", 13, "bold"),
-            command=cancelar, relief="flat", cursor="hand2", width=10
+            btn_frame, text=_("Cerrar"), bg=COLOR_DANGER, fg="#FFFFFF",
+            font=("Segoe UI", 11, "bold"), command=edit_win.destroy,
+            relief="flat", cursor="hand2", bd=0, padx=22, pady=8
         )
-        btn_cancelar.pack(side=tk.LEFT, padx=10)
+        btn_cancelar.pack(side=tk.LEFT)
