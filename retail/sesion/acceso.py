@@ -4,7 +4,7 @@ import os
 from PIL import Image, ImageTk
 from retail.sesion.registro import VentanaRegistro
 from retail.sesion.core.servicio_acceso import ServicioAcceso
-from retail.traducciones import _, establecer_idioma, idioma_actual
+from retail.traducciones import _
 
 
 class Acceso(tk.Frame):
@@ -88,28 +88,6 @@ class Acceso(tk.Frame):
             cursor="hand2",
         )
         self.btn_registrar.pack(pady=10, fill=tk.X)
-
-        # Selector de idioma
-        frame_idioma = tk.Frame(frame2, bg="#FFFFFF")
-        frame_idioma.pack(pady=(30, 0))
-        tk.Label(frame_idioma, text=_("Idioma:"), font=("Calibri", 10), bg="#FFFFFF", fg="#333333").pack(side=tk.LEFT, padx=(0, 5))
-        idioma_act = idioma_actual()
-        for codigo, etiqueta in [("es", "ES"), ("en", "EN")]:
-            bg = "#2196F3" if codigo == idioma_act else "#E0E0E0"
-            fg = "#FFFFFF" if codigo == idioma_act else "#333333"
-            btn = tk.Button(
-                frame_idioma,
-                text=etiqueta,
-                font=("Calibri", 10, "bold"),
-                bg=bg,
-                fg=fg,
-                relief="flat",
-                bd=0,
-                cursor="hand2",
-                width=4,
-                command=lambda c=codigo: self._cambiar_idioma(c),
-            )
-            btn.pack(side=tk.LEFT, padx=2)
 
         # Frame para la imagen del negocio
         frame_imagen = tk.Frame(
@@ -235,14 +213,6 @@ class Acceso(tk.Frame):
             self.recordar_var.set(1)
         else:
             self.recordar_var.set(0)
-
-    def _cambiar_idioma(self, codigo):
-        establecer_idioma(codigo)
-        for widget in self.winfo_children():
-            widget.destroy()
-        self.widgets()
-        self.cargar_usuario()
-        self.bind("<Return>", lambda event: self.login())
 
     def abrir_registro(self):
         usuario = self.entry_usuario.get().strip()
