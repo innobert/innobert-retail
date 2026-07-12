@@ -4,7 +4,7 @@ from tkinter import ttk, messagebox
 from PIL import Image, ImageTk
 
 from retail.nucleo.servicios.deudas.servicio_deudas import DeudasServicio
-from retail.nucleo.configuraciones import rutas, PRODUCTOS_POR_PAGINA
+from retail.nucleo.configuraciones import PRODUCTOS_POR_PAGINA
 from retail.utilidades.paginacion import PaginacionWidget
 from retail.utilidades.producto_card import crear_producto_card
 

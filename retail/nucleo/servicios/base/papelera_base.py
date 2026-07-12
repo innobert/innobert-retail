@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import logging
 from datetime import datetime, timedelta
-from typing import Any, Dict, List
+from typing import Any
 
 from retail.nucleo.base_datos import conexion
 

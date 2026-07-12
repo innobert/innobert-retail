@@ -1,7 +1,5 @@
-import os
 import tkinter as tk
 from tkinter import ttk, messagebox
-from PIL import Image, ImageTk
 from retail.nucleo.servicios.sesion.servicio_licencias import ServicioLicencias
 from retail.nucleo.servicios.sesion.servicio_registro import ServicioRegistro
 
@@ -167,7 +165,7 @@ class VentanaLicencias(tk.Toplevel):
         frame = tk.Frame(edit_win, bg="#FFFFFF", bd=2, relief="groove")
         frame.pack(fill=tk.BOTH, expand=True, padx=30, pady=30)
 
-        tk.Label(frame, text=f"Gestión de Licencia", font=("Helvetica", 16, "bold"), bg="#FFFFFF", fg="#333").pack(pady=(10, 15))
+        tk.Label(frame, text="Gestión de Licencia", font=("Helvetica", 16, "bold"), bg="#FFFFFF", fg="#333").pack(pady=(10, 15))
 
         info_text = f"Usuario: {usuario}\n\n"
         if licencia:

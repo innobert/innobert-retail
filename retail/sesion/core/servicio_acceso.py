@@ -105,6 +105,6 @@ class ServicioAcceso:
                 )
 
             return True
-        except Exception as e:
+        except Exception:
             logger.exception("Error al crear usuario de prueba")
             return False

@@ -8,7 +8,7 @@ Servicio para gestionar la lógica de negocio del reporte semanal de ganancias:
 """
 
 import datetime
-from typing import List, Tuple, Dict, Any
+from typing import List, Tuple
 from retail.nucleo.base_datos import obtener_conexion
 
 

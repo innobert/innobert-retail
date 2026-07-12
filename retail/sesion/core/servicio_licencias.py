@@ -44,7 +44,7 @@ class ServicioLicencias:
                     (fecha_inicio, fecha_fin, serial, usuario),
                 )
             return True
-        except Exception as e:
+        except Exception:
             logger.exception("Error al crear licencia")
             return False
 
@@ -95,7 +95,7 @@ class ServicioLicencias:
                 "fecha_fin": fecha_fin,
                 "serial": serial,
             }
-        except Exception as e:
+        except Exception:
             logger.exception("Error al obtener licencia")
             return None
 

@@ -6,7 +6,6 @@ import shutil
 import subprocess
 import time
 import threading
-from typing import Optional
 
 def _obtener_ruta_base_datos_usuario() -> str:
     """
@@ -149,7 +148,7 @@ def obtener_ruta_carpeta_ventas():
 
 def resource_path(relative_path: str) -> str:
     if getattr(sys, "frozen", False):
-        base_path = sys._MEIPASS
+        base_path = sys._MEIPASS  # type: ignore[attr-defined]
     else:
         base_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
     return os.path.join(base_path, relative_path)

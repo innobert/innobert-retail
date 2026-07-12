@@ -1,8 +1,6 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
 from retail.nucleo.base_datos import obtener_productos, obtener_conexion
-import os
-from PIL import Image, ImageTk
 
 def mostrar_historial_inventario(parent):
     # Buscar el producto seleccionado en el frame de selección

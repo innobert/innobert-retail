@@ -21,7 +21,7 @@ def crear_producto_card(frame_contenedor, producto, row, col,
     if formatear_precio is None:
         formatear_precio = peso_colombiano
     if texto_estado is None:
-        texto_estado = lambda e: str(e)
+        def texto_estado(e): return str(e)
 
     frame_producto = tk.Frame(
         frame_contenedor,

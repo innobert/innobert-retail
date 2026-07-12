@@ -19,7 +19,6 @@ from retail.nucleo.base_datos import (
     obtener_conexion,
     combobox_productos,
 )
-from retail.nucleo.configuraciones import rutas
 
 
 def peso_colombiano(value):

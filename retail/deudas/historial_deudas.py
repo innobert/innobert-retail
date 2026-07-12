@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
-import datetime
 from retail.nucleo.servicios.deudas.servicio_historial_deudas import ServicioHistorialDeudas
 
 

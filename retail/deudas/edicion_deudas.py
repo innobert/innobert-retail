@@ -10,10 +10,9 @@ Los cambios se aplican directamente a la base de datos y se registran en el hist
 
 import logging
 import tkinter as tk
-from tkinter import ttk, messagebox, filedialog
+from tkinter import ttk, messagebox
 import os
 from PIL import Image, ImageTk
-import os
 
 from retail.nucleo.base_datos import obtener_conexion
 from retail.nucleo.configuraciones import PRODUCTOS_POR_PAGINA
@@ -455,7 +454,7 @@ def _abrir_ventana_agregar_productos(parent, id_deuda, cliente, usuario_actual, 
         try:
             nombres = DeudasServicio.obtener_nombres_productos_para_busqueda(filtro_actual)
             entry_buscar["values"] = nombres
-        except:
+        except Exception:
             pass
 
     btn_anterior.config(command=pagina_anterior)

@@ -15,7 +15,6 @@ from retail.vistas.ventas import Ventas
 from retail.vistas.clientes import Clientes
 from retail.vistas.inventario import Inventario
 from retail.vistas.deudas import Deudas
-from retail.nucleo.configuraciones import rutas
 
 from retail.nucleo.configuraciones import VENTANA_CONTENEDOR_ANCHO, VENTANA_CONTENEDOR_ALTO
 VENTANA_ANCHO = VENTANA_CONTENEDOR_ANCHO

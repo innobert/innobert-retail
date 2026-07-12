@@ -120,7 +120,7 @@ def _solicitar_monto_recibido(ventana_padre, cliente, total_actual, monto_anteri
             monto = float(monto_str) if monto_str else 0
             vuelto = monto - total_actual
             var_vuelto.set(f"${max(0, vuelto):,.0f}".replace(",", "."))
-        except:
+        except Exception:
             var_vuelto.set("$0")
     entry_monto.bind("<KeyRelease>", lambda e: actualizar_vuelto())
 
@@ -135,7 +135,7 @@ def _solicitar_monto_recibido(ventana_padre, cliente, total_actual, monto_anteri
                 return
             monto_resultado[0] = monto
             ventana.destroy()
-        except:
+        except Exception:
             messagebox.showwarning("Valor inválido", "Ingrese un número.", parent=ventana)
 
     entry_monto.bind("<Return>", lambda e: confirmar())
@@ -607,7 +607,7 @@ def _abrir_ventana_agregar_productos(ventana_padre, id_ventas, cliente, monto_re
                 lbl_img = tk.Label(frame_prod, image=img_tk, bg="white")
                 lbl_img.image = img_tk
                 lbl_img.pack(pady=(5,2))
-            except:
+            except Exception:
                 lbl_img = tk.Label(frame_prod, text="Sin imagen", bg="white", font=("Helvetica",9))
                 lbl_img.pack(pady=(30,2))
 
@@ -650,7 +650,7 @@ def _abrir_ventana_agregar_productos(ventana_padre, id_ventas, cliente, monto_re
         try:
             nombres = VentasServicio.obtener_nombres_productos_para_busqueda(filtro_actual)
             entry_buscar["values"] = nombres
-        except:
+        except Exception:
             pass
 
     btn_anterior.config(command=pagina_anterior)
@@ -766,9 +766,7 @@ def _agregar_producto_a_venta(producto, parent, id_ventas, monto_recibido, usuar
                 lbl_mensaje.config(text=f"⚠️ El máximo permitido con el monto actual es {cantidad_maxima}.")
             else:
                 lbl_mensaje.config(text="")
-        except ValueError:
-            lbl_mensaje.config(text="")
-        except:
+        except (ValueError, Exception):
             lbl_mensaje.config(text="")
 
     entry_cant.bind("<KeyRelease>", actualizar_mensaje)

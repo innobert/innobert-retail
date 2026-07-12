@@ -8,7 +8,7 @@ Diseño compacto: buscador arriba, tabla central, paginación abajo.
 
 import logging
 import tkinter as tk
-from tkinter import ttk, messagebox
+from tkinter import ttk
 from retail.nucleo.servicios.ventas.servicio_papelera_ventas import ServicioPapeleraVentas
 
 

@@ -7,7 +7,6 @@ Controla la validación, generación y renovación de licencias.
 
 import logging
 import datetime
-import hashlib
 import uuid
 from typing import Optional, Tuple, Dict, Any
 from retail.nucleo.base_datos import obtener_conexion

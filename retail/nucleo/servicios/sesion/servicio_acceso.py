@@ -5,7 +5,6 @@ Servicio para gestionar la autenticación de usuarios, validación de licencia y
 El módulo de sesión está independizado y desacoplado del resto del sistema.
 """
 import logging
-import datetime
 from typing import Optional, Tuple
 from retail.nucleo.base_datos import obtener_conexion, buscar_usuario as db_buscar_usuario
 from retail.nucleo.configuraciones import guardar_usuario, cargar_usuario

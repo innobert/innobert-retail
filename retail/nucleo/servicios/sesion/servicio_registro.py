@@ -5,8 +5,6 @@ Servicio para gestionar el registro, actualización y eliminación de usuarios.
 Módulo independizado accesible solo al desarrollador principal.
 """
 
-import datetime
-import uuid
 from typing import List, Dict, Any
 from retail.nucleo.base_datos import obtener_conexion
 from retail.nucleo.seguridad import hash_contrasena

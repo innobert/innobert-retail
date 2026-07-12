@@ -1,8 +1,6 @@
 import logging
 import tkinter as tk
-from tkinter import ttk, simpledialog, messagebox
-import os
-import re
+from tkinter import ttk
 from retail.sesion.acceso import Acceso
 from retail.vistas.contenedor import Contenedor
 import retail.nucleo.base_datos as base_de_datos

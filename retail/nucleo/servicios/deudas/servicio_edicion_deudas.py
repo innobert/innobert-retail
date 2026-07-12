@@ -10,8 +10,7 @@ Servicio para gestionar la edición de deudas:
 """
 
 from typing import List, Dict, Any, Tuple
-import datetime
-from retail.nucleo.base_datos import obtener_conexion, registrar_historial_deuda, mover_deuda_a_papelera
+from retail.nucleo.base_datos import obtener_conexion, registrar_historial_deuda
 
 
 class ServicioEdicionDeudas:

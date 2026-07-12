@@ -1,7 +1,6 @@
 import logging
 import tkinter as tk
 from tkinter import ttk, messagebox, filedialog
-import datetime
 import os
 import threading
 from reportlab.pdfgen import canvas
@@ -242,7 +241,7 @@ class Semana(tk.Frame):
 
         except Exception as e:
             logging.error(f"Error cargando semanas: {e}")
-            self.after(0, lambda: messagebox.showerror("Error", f"No se pudieron cargar los datos: {e}", parent=self))
+            self.after(0, lambda err=e: messagebox.showerror("Error", f"No se pudieron cargar los datos: {err}", parent=self))
 
     def _mostrar_pagina(self):
         start = (self.pagina_actual - 1) * self.semanas_por_pagina

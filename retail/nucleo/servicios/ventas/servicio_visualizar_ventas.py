@@ -5,7 +5,7 @@ Servicio para obtener información detallada de una factura de venta,
 incluyendo todos sus productos, subtotales, totales, cliente, etc.
 """
 
-from typing import Dict, Any, List
+from typing import Dict, Any
 from retail.nucleo.base_datos import obtener_conexion
 
 

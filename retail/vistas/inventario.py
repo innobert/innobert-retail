@@ -6,7 +6,7 @@ import os
 
 from retail.nucleo.configuraciones import rutas, PRODUCTOS_POR_PAGINA
 from retail.utilidades.paginacion import PaginacionWidget
-from retail.utilidades.producto_card import crear_producto_card, peso_colombiano
+from retail.utilidades.producto_card import crear_producto_card
 from retail.nucleo.servicios.inventario.servicio_inventario import InventarioServicio, peso_colombiano
 
 

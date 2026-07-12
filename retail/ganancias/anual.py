@@ -239,7 +239,7 @@ class Year(tk.Frame):
 
         except Exception as e:
             logging.error(f"Error cargando períodos: {e}")
-            self.after(0, lambda: messagebox.showerror("Error", f"No se pudieron cargar los datos: {e}", parent=self))
+            self.after(0, lambda err=e: messagebox.showerror("Error", f"No se pudieron cargar los datos: {err}", parent=self))
 
     def _mostrar_pagina(self):
         start = (self.pagina_actual - 1) * self.periodos_por_pagina

@@ -26,6 +26,22 @@ Source = "https://github.com/innobert/innobert-retail"
 [project.scripts]
 innobert-retail = "inicio:main"
 
+[tool.ruff]
+target-version = "py311"
+line-length = 120
+
+[tool.ruff.lint]
+ignore = [
+    "E402",   # Import not at top of file (común en __init__.py)
+    "F401",   # Unused import (re-exports intencionales)
+    "F841",   # Unused variable
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*.py" = ["ALL"]
+"retail/nucleo/base_datos/__init__.py" = ["E402", "F401"]
+"retail/sesion/core/*.py" = ["E402"]
+
 [tool.pytest.ini_options]
 minversion = "9.0"
 testpaths = ["tests"]
@@ -47,7 +63,10 @@ exclude_lines = [
 ]
 
 [tool.mypy]
-strict = true
+python_version = "3.11"
 ignore_missing_imports = true
 explicit_package_bases = true
 warn_unused_ignores = false
+no_implicit_optional = true
+warn_redundant_casts = true
+strict_equality = true

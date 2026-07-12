@@ -4,7 +4,6 @@ from tkinter import ttk, messagebox, filedialog
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
-from datetime import datetime
 from PIL import Image, ImageTk
 
 from retail.deudas.visualizar_deudas import ver_detalle_deuda

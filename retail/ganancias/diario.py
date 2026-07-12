@@ -288,7 +288,7 @@ class Dia(tk.Frame):
 
         except Exception as e:
             logging.error(f"Error cargando datos: {e}")
-            self.after(0, lambda: messagebox.showerror("Error", f"No se pudieron cargar los datos: {e}", parent=self))
+            self.after(0, lambda err=e: messagebox.showerror("Error", f"No se pudieron cargar los datos: {err}", parent=self))
 
     def _actualizar_tabla(self, registros_tabla, total_ganancia, total_monto):
         self.tree.delete(*self.tree.get_children())

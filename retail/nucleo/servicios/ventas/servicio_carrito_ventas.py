@@ -8,7 +8,7 @@ Servicio para gestionar la lógica del carrito de ventas:
 - Cálculo de totales por cliente
 """
 
-from typing import List, Dict, Any, Tuple, Optional
+from typing import List, Dict, Any, Tuple
 from retail.nucleo.servicios.ventas.servicio_ventas import VentasServicio
 
 

@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import ttk, messagebox, filedialog
 import os
 from PIL import Image, ImageTk
-from datetime import datetime
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
