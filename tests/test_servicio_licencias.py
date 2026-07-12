@@ -7,7 +7,7 @@ import pytest
 
 @pytest.fixture
 def licencias(db: Any) -> Any:
-    from retail.nucleo.servicios.sesion.servicio_licencias import ServicioLicencias
+    from retail.sesion.core.servicio_licencias import ServicioLicencias
     return ServicioLicencias
 
 

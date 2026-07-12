@@ -3,7 +3,7 @@ from tkinter import ttk, messagebox
 import os
 from PIL import Image, ImageTk
 from retail.sesion.registro import VentanaRegistro
-from retail.nucleo.servicios.sesion.servicio_acceso import ServicioAcceso
+from retail.sesion.core.servicio_acceso import ServicioAcceso
 
 
 class Acceso(tk.Frame):

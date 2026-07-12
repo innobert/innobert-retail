@@ -2,7 +2,7 @@ import os
 import tkinter as tk
 from tkinter import ttk, messagebox
 from PIL import Image, ImageTk
-from retail.nucleo.servicios.sesion.servicio_registro import ServicioRegistro
+from retail.sesion.core.servicio_registro import ServicioRegistro
 from retail.sesion.licencias import VentanaLicencias
 
 

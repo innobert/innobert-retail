@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
-from retail.nucleo.servicios.sesion.servicio_licencias import ServicioLicencias
-from retail.nucleo.servicios.sesion.servicio_registro import ServicioRegistro
+from retail.sesion.core.servicio_licencias import ServicioLicencias
+from retail.sesion.core.servicio_registro import ServicioRegistro
 
 
 class VentanaLicencias(tk.Toplevel):

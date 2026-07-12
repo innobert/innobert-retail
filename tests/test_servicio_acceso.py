@@ -10,7 +10,7 @@ from retail.nucleo.cifrado import cifrar
 
 @pytest.fixture
 def servicio_acceso(db: Any) -> Any:
-    from retail.nucleo.servicios.sesion.servicio_acceso import ServicioAcceso
+    from retail.sesion.core.servicio_acceso import ServicioAcceso
     return ServicioAcceso
 
 

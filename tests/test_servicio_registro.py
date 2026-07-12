@@ -17,7 +17,7 @@ def db_limpia(db: Any) -> Any:
 @pytest.fixture
 def registro(db_limpia: Any) -> Any:
     """Retorna la clase ServicioRegistro con BD limpia."""
-    from retail.nucleo.servicios.sesion.servicio_registro import ServicioRegistro
+    from retail.sesion.core.servicio_registro import ServicioRegistro
     return ServicioRegistro
 
 
@@ -114,19 +114,19 @@ class TestActualizarUsuario:
 
 
 class TestRenovarSuscripcion:
-    @patch("retail.nucleo.servicios.sesion.servicio_licencias.ServicioLicencias.renovar_licencia")
+    @patch("retail.sesion.core.servicio_licencias.ServicioLicencias.renovar_licencia")
     def test_delega_a_servicio_licencias(self, mock_renovar, registro: Any):
         mock_renovar.return_value = True
         assert registro.renovar_suscripcion("admin") is True
         mock_renovar.assert_called_once_with("admin", 30)
 
-    @patch("retail.nucleo.servicios.sesion.servicio_licencias.ServicioLicencias.renovar_licencia")
+    @patch("retail.sesion.core.servicio_licencias.ServicioLicencias.renovar_licencia")
     def test_delega_con_dias_personalizados(self, mock_renovar, registro: Any):
         mock_renovar.return_value = True
         assert registro.renovar_suscripcion("admin", dias=60) is True
         mock_renovar.assert_called_once_with("admin", 60)
 
-    @patch("retail.nucleo.servicios.sesion.servicio_licencias.ServicioLicencias.renovar_licencia")
+    @patch("retail.sesion.core.servicio_licencias.ServicioLicencias.renovar_licencia")
     def test_retorna_false_si_servicio_falla(self, mock_renovar, registro: Any):
         mock_renovar.return_value = False
         assert registro.renovar_suscripcion("admin") is False
